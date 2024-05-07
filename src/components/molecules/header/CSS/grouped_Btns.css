@@ -1,0 +1,14 @@
+.grouped-btns-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 35%;
+}
+
+.btn-header{
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgb(236, 124, 76);
+    width: 40%;
+    height: max-content;
+}
