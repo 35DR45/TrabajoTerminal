@@ -5,10 +5,29 @@
     width: 35%;
 }
 
+.btn-header:nth-child(2){
+    background-color: #F2FFEB;
+    color: #242424;
+}
+.btn-header:nth-child(2):hover{
+    background-color: #9D1B51;
+    color: #FFFFFF;
+}
+
 .btn-header{
     text-align: center;
     border-radius: 10px;
-    background-color: rgb(236, 124, 76);
+    background-color: #9D1B51;
+    border: 5px solid #9D1B51;
+    color: #FFFFFF;
     width: 40%;
     height: max-content;
+    text-decoration: none;
 }
+
+.btn-header:nth-child(1):hover{
+    color: #242424;
+    background-color: #FFFFFF;
+    border: 5px solid #9D1B51;
+}
+

@@ -1,6 +1,10 @@
 .header-container{
-    margin: 30px 30px 10px 30px;
+    padding: 45px 45px 45px 45px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    /* background-color: #242424; */
+    background-color: #474747;
+    font-size: larger;
+    font-weight: bold;
 }
