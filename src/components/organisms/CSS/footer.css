@@ -1,0 +1,40 @@
+.footer-container{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-evenly; */
+    justify-content: space-around;
+    background-color: #811642;
+    padding: 20px;
+}
+
+.AU-container{
+    width: 55%;
+    text-align: right;
+}
+
+.AU-logos{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.logos-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 35%;
+    align-items: center;
+}
+
+img{
+    height: 150px;
+}
+
+.links-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-weight: bolder;
+    font-size: larger;
+    align-items: center;
+}

@@ -1,0 +1,12 @@
+.lp-container{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.lp-text{
+    color: #474747;
+    margin: 0px;
+    padding: 0px 30px 0px 30px;
+    text-align: justify;
+}
