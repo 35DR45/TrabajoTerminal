@@ -63,9 +63,10 @@ export default function Register_form(){
     const handleSubmit = async (e) => {
         e.preventDefault();
         const FormData = {
-            name: username, 
+            user: username, 
             pass: password,
-            mail: email
+            mail: email,
+            phone: '12345'
         }
         console.log(FormData);
         try {
