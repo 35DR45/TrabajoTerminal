@@ -36,7 +36,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`Usuario` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`Usuario` (
-  `idUsuario` INT NOT NULL,
+  `idUsuario` INT NOT NULL auto_increment,
   `NombreUsuario` VARCHAR(45) NOT NULL,
   `Correo` VARCHAR(45) NOT NULL,
   `pass` VARCHAR(45) NOT NULL,

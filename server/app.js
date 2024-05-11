@@ -1,35 +1,43 @@
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
-const bodyParser = require("body-parser");
+
 const app = express();
 
-const PORT = process.env.PORT || 8080;
-app.use(bodyParser.urlencoded({extender:true}));
-app.use(express.json)
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
+const PORT = process.env.PORT || 3000;
 ////////TODOO
-/*app.use(cors({
+app.use(cors({
     origin: 'http://127.0.0.1:5173',
     methods: ["GET","POST","DELETE","PUT"],
     credentials: true,
 }));
-*/
+
 const db=mysql.createConnection({
     host:"localhost",
     user: "root",
     password: "1234",
-    database: "name_db",
+    database: "mydb",
 });
 
-app.listen(PORT,()=> console.log("Servidor iniciado"))
+
+
+
 
 //TODO Agregar la BD y modificar los campos
-
+app.get('/',(req,res)=>{
+    res.json({status: "INICIO"});
+});
 //LOGIN DE USUARIO
+
 app.post('/api/Login',(req,res)=>{
-    const query = "SELECT * FROM usuario WHERE NombreUsuario = ? AND PassUsuario = ?;";
+    
+    const query = "SELECT * FROM usuario WHERE NombreUsuario = ? AND pass = ?;";
     db.query(query,[req.body.user,req.body.password],(err,result) =>{
+        console.log("recibido:"+req.body.user);
+        console.log("recibido:"+req.body.password); 
         if(err) return res.send("Error al iniciar sesion")
         if(result.length > 0){
             return res.json({status:"Exitoso"})
@@ -40,7 +48,7 @@ app.post('/api/Login',(req,res)=>{
 
 });
 //TOUPDATE PASSWORD RECOVERY
-app.get('/api/Recovery',(req,res)=>{
+/*app.get('/api/Recovery',(req,res)=>{
     const query = "SELECT usuario FROM usuario WHERE correo = ?";
     db.query(query,[req.body.user,req.body.password],(err,result) =>{
         if(err) return res.send("Error al buscar usuario")
@@ -51,11 +59,11 @@ app.get('/api/Recovery',(req,res)=>{
         }
     })
 });
-
+*/
 //TOUPDATE REGISTRO y CREAR USUARIO
 app.post('/api/Register',(req,res) =>{
-    const query = "INSERT INTO usuario(NombreUsuario,Correo,Pass,Telefono,Tipo,Tutor,Aprendizaje) values (?,?,?,?,?,?,?)";
-    db.query(query,[req.body.user,req.body.email,req.body.password,req.body.phone,req.body.type,req.body.tutor,req.body.learning],(err,result) =>{
+    const query = "INSERT INTO usuario(NombreUsuario,Correo,pass,Telefono,Tipo,Aprendizaje) values (?,?,?,?,?,?)";
+    db.query(query,[req.body.user,req.body.email,req.body.password,req.body.phone,/*req.body.type*/1,/*req.body.learning*/1],(err,result) =>{
         if(err){
             return res.send("Error al crear usuario")
         } 
@@ -95,7 +103,7 @@ app.put('/api/UpdateU',(req,res) =>{
 });
 
 //TOUPDATE REGISTRO y CREAR USUARIO
-app.post('/api/CreateL',(req,res) =>{
+/*app.post('/api/CreateL',(req,res) =>{
     const query = "INSERT INTO Leccion(Titulo,Materia,Tipo,Contenido) values (?,?,?,?)";
     db.query(query,[req.body.title,req.body.subject,req.body.type,req.body.content],(err,result) =>{
         if(err){
@@ -135,4 +143,5 @@ app.put('/api/UpdateL',(req,res) =>{
         else res.send("Leccion Actualizada")
     })
 });
-
+*/
+app.listen(PORT,()=> console.log("Servidor iniciado escuchando en el puerto: ",PORT))
