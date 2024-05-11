@@ -1,6 +1,6 @@
-import Footer from "../organisms/footer";
-import Header from "../organisms/header";
-import Login_form from "../organisms/login_form";
+import Footer from "../organisms/footer/footer";
+import Header from "../organisms/header/header";
+import Login_form from "../organisms/login/login_form";
 import './CSS/login_Form.css'
 
 export default function Login_Form(){

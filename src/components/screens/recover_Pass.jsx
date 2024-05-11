@@ -1,5 +1,5 @@
-import Footer from "../organisms/footer";
-import Header from "../organisms/header";
+import Footer from "../organisms/footer/footer";
+import Header from "../organisms/header/header";
 
 export default function Recover_Pass(){
     return(

@@ -1,5 +1,5 @@
-import './CSS/footer.css'
-import Au_logos from "./au_logos";
+import '../CSS/footer.css'
+import Au_logos from "../header/au_logos";
 import Grouped_Links from "./grouped_Links";
 
 export default function Footer(){

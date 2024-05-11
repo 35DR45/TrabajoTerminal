@@ -1,9 +1,9 @@
-export default function Pass_input({ value, onChange }){
+export default function Email_input({ value, onChange }){
     return(
         <>
-            <input type="password" 
+            <input type="text" 
                 className="login-input" 
-                placeholder="Ingrese su contraseña"  
+                placeholder="Ingrese su correo electrónico" 
                 value={value} 
                 onChange={onChange} />
         </>

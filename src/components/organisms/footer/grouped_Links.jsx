@@ -1,5 +1,5 @@
-import Contact from "../atoms/footer/contact";
-import Privacy_advisory from "../atoms/footer/privacy_advisory";
+import Contact from "../../atoms/footer/contact";
+import Privacy_advisory from "../../atoms/footer/privacy_advisory";
 import Date_Rights from "./date_Rights";
 
 export default function Grouped_Links(){

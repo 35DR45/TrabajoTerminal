@@ -1,5 +1,5 @@
-import Footer from "../organisms/footer";
-import Header from "../organisms/header";
+import Footer from "../organisms/footer/footer";
+import Header from "../organisms/header/header";
 import './CSS/landingPage.css'
 
 export default function LandingPage(){
