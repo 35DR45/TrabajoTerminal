@@ -22,10 +22,6 @@ const db=mysql.createConnection({
     database: "mydb",
 });
 
-
-
-
-
 //TODO Agregar la BD y modificar los campos
 app.get('/',(req,res)=>{
     res.json({status: "INICIO"});
@@ -47,6 +43,7 @@ app.post('/api/Login',(req,res)=>{
     })
 
 });
+
 //TOUPDATE PASSWORD RECOVERY
 /*app.get('/api/Recovery',(req,res)=>{
     const query = "SELECT usuario FROM usuario WHERE correo = ?";
@@ -61,44 +58,96 @@ app.post('/api/Login',(req,res)=>{
 });
 */
 //TOUPDATE REGISTRO y CREAR USUARIO
+
 app.post('/api/Register',(req,res) =>{
+    console.log("Entro registro")
     const query = "INSERT INTO usuario(NombreUsuario,Correo,pass,Telefono,Tipo,Aprendizaje) values (?,?,?,?,?,?)";
-    db.query(query,[req.body.user,req.body.email,req.body.password,req.body.phone,/*req.body.type*/1,/*req.body.learning*/1],(err,result) =>{
+    db.query(query,[req.body.user,req.body.mail,req.body.pass,req.body.phone,/*req.body.type*/1,/*req.body.learning*/1],(err,result) =>{
+        console.log(req.body.user)
+        console.log(req.body.mail)
+        console.log(req.body.pass)
+        console.log(req.body.phone)
         if(err){
-            return res.send("Error al crear usuario")
+            console.log("Usuario no creado :"+err)
+            return res.send({status:"Error"})
         } 
-        else return res.send("Usuario creado")
+        else{
+            console.log("Usuario creado ") 
+            console.log(result) 
+            return res.send({status:"Creado"})
+        } 
         
     })
 });
 
 //TOUPDATE ver usuarios
 app.get('/api/SeeUsers',(req,res) =>{
+    console.log("Entro ver usuarios")
     const query = "SELECT * FROM usuario";
     db.query(query,(err,result) =>{
+        console.log(result)
         if(err){
-            return res.send("Error al enviar usuarios")
+            console.log("Usuarios no enviados")
+            return res.send({status:"No enviados"})
         } 
-        else return res.send("Usuarios enviados")
+        else{
+            console.log("Usuarios enviados:")
+            console.log(result)
+            return res.send(retult)
+        } 
         
     })
 });
 
-//TOUPDATE Eliminar Usuario
+app.get('/api/SeeUser',(req,res) =>{
+    console.log("Entro ver usuario")
+    const query = "SELECT * FROM usuario WHERE Correo = ?";
+    db.query(query,req.body.mail,(err,result) =>{
+        if(err){
+            console.log("Usuario no enviado")
+            return res.send({status:"No enviado"})
+        } 
+        else{
+            console.log("Usuario enviado:")
+            console.log(result)
+            return res.send(result)
+        }
+        
+    })
+});
+
 app.delete('/api/DeleteU',(req,res) =>{
+    console.log("Entro borrar usuario")
     const query = "DELETE FROM usuario WHERE idUsuario = ?";
     db.query(query,req.body.idUser,(err,result) =>{
-        if(err) return res.send("Error al eliminar el usuario")
-        else res.send("Eliminado")
+        if(err){
+            console.log("Error al eliminar el usuario")
+            return res.send({status:"Error"})
+        }
+        else{ 
+            console.log("Usuario Eliminado")
+            console.log(result)
+            res.send({status:"Eliminado"})
+
+        }
     })
 });
 
 //TOUPDATE Actualizar Usuario
 app.put('/api/UpdateU',(req,res) =>{
-    const query = "Update usuario SET NombreUsuario = ?,Correo = ?,Pass = ?,Telefono = ?,Tipo = ?,Tutor = ?,Aprendizaje = ? WHERE NombreUsuario = ?";
-    db.query(query,req.body.name,req.body.email,req.body.password,req.body.phone,req.body.type,req.body.tutor,req.body.learning,req.body.PreviousUser,(err,result) =>{
-        if(err) return res.send("Error al actualizar el usuario")
-        else res.send("Usuario Actualizado")
+    console.log("Entro en actualizar usuario")
+    const query = "UPDATE usuario SET NombreUsuario = ?,Correo = ?,Pass = ?,Telefono = ?,Tipo = ?,Aprendizaje = ? WHERE idUsuario = ?";
+    db.query(query,[req.body.user,req.body.mail,req.body.pass,req.body.phone,/*req.body.type*/1/*,req.body.tutor*/,/*req.body.learning*/1,req.body.idUser],(err,result) =>{
+
+        if(err){
+            console.log(("Error al actualizar el usuario"))
+            return res.send({status:"Error"})
+        } 
+        else{ 
+            console.log("El usuario se ha actualizado")
+            console.log(result)
+            return res.send({status:"Actualizado"})
+        }
     })
 });
 
@@ -113,19 +162,34 @@ app.put('/api/UpdateU',(req,res) =>{
         
     })
 });
-
-//TOUPDATE ver usuarios
-app.get('/api/SeeL',(req,res) =>{
-    const query = "SELECT * FROM Leccion";
-    db.query(query,(err,result) =>{
+*/
+//TOUPDATE ver lecciones INtroduction to Cryphographic
+app.get('/api/SeeLC',(req,res) =>{
+    const query = "SELECT * FROM materia INNER JOIN leccion ON Materia=idMAteria WHERE idMateria=?";
+    db.query(query,req.body.materia,(err,result) =>{
         if(err){
             return res.send("Error al enviar Lecciones")
         } 
-        else return res.send("Lecciones enviadas")
-        
+        else {
+            console.log(result)
+            return res.send(result)
+        }
     })
 });
-
+//TOUPDATE ver lecciones Statistical tools for data analytics
+app.get('/api/SeeLC',(req,res) =>{
+    const query = "SELECT * FROM materia INNER JOIN leccion ON Materia=idMAteria WHERE idMateria=?";
+    db.query(query,req.body.materia,(err,result) =>{
+        if(err){
+            return res.send("Error al enviar Lecciones")
+        } 
+        else {
+            console.log(result)
+            return res.send(result)
+        }
+    })
+});
+/*
 //TOUPDATE Eliminar Usuario
 app.delete('/api/DeleteL',(req,res) =>{
     const query = "DELETE FROM Leccion WHERE idLeccion = ?";
@@ -144,4 +208,5 @@ app.put('/api/UpdateL',(req,res) =>{
     })
 });
 */
+
 app.listen(PORT,()=> console.log("Servidor iniciado escuchando en el puerto: ",PORT))

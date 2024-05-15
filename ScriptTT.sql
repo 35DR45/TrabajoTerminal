@@ -28,8 +28,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Aprendizaje` (
   `Nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idAprendizaje`))
 ENGINE = InnoDB;
-
-
+INSERT INTO Aprendizaje VALUES(1,"VISUAL");
+INSERT INTO Aprendizaje VALUES(2,"KINESTESICO");
+INSERT INTO Aprendizaje VALUES(3,"AUDITIVO");
 -- -----------------------------------------------------
 -- Table `mydb`.`Usuario`
 -- -----------------------------------------------------
@@ -67,7 +68,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Materia` (
   `NombreMateria` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idMateria`))
 ENGINE = InnoDB;
-
+INSERT INTO Materia VALUES(1,"INTRODUCTION TO CRIPTOGRAPHY");
+INSERT INTO Materia VALUES(2,"STATISTICAL TOOLS FOR DATA ANALYTICS");
 
 -- -----------------------------------------------------
 -- Table `mydb`.`Leccion`
@@ -87,7 +89,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Leccion` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
+INSERT INTO Leccion VALUES(1,"PRUEBA 1", 1,1,'{"contenido":"hola prueba"}');
+INSERT INTO Leccion VALUES(2,"PRUEBA 2", 1,1,'{"contenido":"hola prueba 2"}');
+INSERT INTO Leccion VALUES(1,"PRUEBA 2", 2,1,'{"contenido":"hola prueba"}');
 -- -----------------------------------------------------
 -- Table `mydb`.`Progreso`
 -- -----------------------------------------------------
