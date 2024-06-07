@@ -29,6 +29,7 @@
 
 .btn-register-form{
     background-color: #FFFFFF;
+    margin-top: 5px;
     border-radius: 15px;
     font-size: 20px;
     padding: 5px 10px;
@@ -41,9 +42,8 @@
     background-color: #6C6Ac1;
 }
 
-input{
-    border-radius: 15px;
-    padding-left: 5px;
-    height: 35px;
-    border: 0px;
+.verified-user-msg{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }

@@ -30,6 +30,8 @@ export default function Register_form(){
         e.preventDefault();
         if(validations()){
             const hashedPassword = await bcrypt.hash(password, 10); 
+            const hashedPassword1 = await bcrypt.hash(password, 10); 
+            console.log("1: ", hashedPassword, "2: ", hashedPassword1);
             const FormData = {
                 user: username, 
                 pass: hashedPassword,
@@ -48,7 +50,7 @@ export default function Register_form(){
                 });
                 if (response.ok) {
                     // Redirige al usuario a la URL /registrado
-                    navigate("/registrado");
+                    navigate("/login");
                 } else {
                     console.error('Error al registrar usuario');
                 }
@@ -56,7 +58,7 @@ export default function Register_form(){
                 console.error('Error:', error);
             }
         }else
-            console.log("Alertas van aquí");
+            console.log("Alertas de validación van aquí");
         
     };
 

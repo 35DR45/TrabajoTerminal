@@ -5,7 +5,7 @@ import '../CSS/header.css'
 export default function Header(){
     return(
         <div className="header-container">
-            <Link to={"/"}>Header Logo</Link>
+            <Link to={"/"}>TT 2024-B169</Link>
             <Grouped_btns/>
         </div>
     )
