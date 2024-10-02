@@ -29,12 +29,12 @@ export default function Register_form(){
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(validations()){
-            const hashedPassword = await bcrypt.hash(password, 10); 
-            const hashedPassword1 = await bcrypt.hash(password, 10); 
-            console.log("1: ", hashedPassword, "2: ", hashedPassword1);
+            //const hashedPassword = await bcrypt.hash(password, 10); 
+            //const hashedPassword1 = await bcrypt.hash(password, 10); 
+            //console.log("1: ", hashedPassword, "2: ", hashedPassword1);
             const FormData = {
                 user: username, 
-                pass: hashedPassword,
+                pass: password,
                 mail: email,
                 phone: '12345'
             }
@@ -58,6 +58,7 @@ export default function Register_form(){
                 console.error('Error:', error);
             }
         }else
+            
             console.log("Alertas de validación van aquí");
         
     };

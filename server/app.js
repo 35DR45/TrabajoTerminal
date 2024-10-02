@@ -1,14 +1,15 @@
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
-
 const app = express();
+const bcrypt = require('bcrypt');
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 const PORT = process.env.PORT || 3000;
 ////////TODOO
+
 app.use(cors({
     origin: 'http://127.0.0.1:5173',
     methods: ["GET","POST","DELETE","PUT"],
@@ -22,23 +23,39 @@ const db=mysql.createConnection({
     database: "mydb",
 });
 
+db.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+  });
 //TODO Agregar la BD y modificar los campos
 app.get('/',(req,res)=>{
     res.json({status: "INICIO"});
 });
-//LOGIN DE USUARIO
 
+//LOGIN DE USUARIO
 app.post('/api/Login',(req,res)=>{
     
-    const query = "SELECT * FROM usuario WHERE NombreUsuario = ? AND pass = ?;";
-    db.query(query,[req.body.user,req.body.password],(err,result) =>{
-        console.log("recibido:"+req.body.user);
-        console.log("recibido:"+req.body.password); 
+    const query = "SELECT * FROM usuario WHERE NombreUsuario = ?";
+
+    db.query(query,[req.body.user,req.body.pass],async (err,result) =>{
+
+        console.log("recibido usuario:"+req.body.user);
+        console.log("recibido contrasena:"+req.body.pass); 
+
         if(err) return res.send("Error al iniciar sesion")
+
         if(result.length > 0){
-            return res.json({status:"Exitoso"})
+            
+            const user = result[0];
+            const match = await bcrypt.compare(req.body.pass, user.pass);
+            if(match){
+                return res.json({status:"Inicio de Sesión Exitoso"});
+            }else{
+                return res.json({status:"Inicio de Sesión Fallido"});
+            }
+            
         }else{
-            return res.json({status:"Fallido"})
+            return res.json({status:"No se encontro coincidencia"})
         }
     })
 
@@ -57,43 +74,49 @@ app.post('/api/Login',(req,res)=>{
     })
 });
 */
+
 //TOUPDATE REGISTRO y CREAR USUARIO
 
-app.post('/api/Register',(req,res) =>{
+app.post('/api/Register',async (req,res) =>{
     console.log("Entro registro")
     const query = "INSERT INTO usuario(NombreUsuario,Correo,pass,Telefono,Tipo,Aprendizaje) values (?,?,?,?,?,?)";
-    db.query(query,[req.body.user,req.body.mail,req.body.pass,req.body.phone,/*req.body.type*/1,/*req.body.learning*/1],(err,result) =>{
-        console.log(req.body.user)
-        console.log(req.body.mail)
-        console.log(req.body.pass)
-        console.log(req.body.phone)
+
+    const hashedPassword = await bcrypt.hash(req.body.pass, 10);
+
+    db.query(query,[req.body.user,req.body.mail,hashedPassword,req.body.phone,/*req.body.type*/1,/*req.body.learning*/1],(err,result) =>{
+
+        console.log("user: "+req.body.user)
+        console.log("mail: "+req.body.mail)
+        console.log("pass: "+req.body.pass)
+        console.log("hashedpass: "+hashedPassword)
+        console.log("phone: "+req.body.phone)
+
         if(err){
             console.log("Usuario no creado :"+err)
-            return res.send({status:"Error"})
+            return res.send({status:"Error Usuario no creado"})
         } 
         else{
             console.log("Usuario creado ") 
             console.log(result) 
-            return res.send({status:"Creado"})
+            return res.send({status:"Usuario creadoCreado"})
         } 
         
     })
 });
 
-//TOUPDATE ver usuarios
+//Ver usuarios
 app.get('/api/SeeUsers',(req,res) =>{
     console.log("Entro ver usuarios")
     const query = "SELECT * FROM usuario";
     db.query(query,(err,result) =>{
-        console.log(result)
         if(err){
             console.log("Usuarios no enviados")
-            return res.send({status:"No enviados"})
+            return res.send({status:"Usuarios no recibidos"})
         } 
         else{
             console.log("Usuarios enviados:")
             console.log(result)
-            return res.send(retult)
+            return res.send(result)
         } 
         
     })
@@ -118,35 +141,64 @@ app.get('/api/SeeUser',(req,res) =>{
 
 app.delete('/api/DeleteU',(req,res) =>{
     console.log("Entro borrar usuario")
-    const query = "DELETE FROM usuario WHERE idUsuario = ?";
-    db.query(query,req.body.idUser,(err,result) =>{
+    const query = "DELETE FROM usuario WHERE Correo = ?";
+    db.query(query,req.body.mail,(err,result) =>{
         if(err){
             console.log("Error al eliminar el usuario")
-            return res.send({status:"Error"})
+            return res.send({status:"Error al consultar "})
         }
         else{ 
-            console.log("Usuario Eliminado")
-            console.log(result)
-            res.send({status:"Eliminado"})
+            console.log(result.affectedRows)
+            if(result.affectedRows==0){
+                console.log("El usuario no existo por lo tanto no se borro")
+                res.send({status:" Usuario inexistente"})
+            }
+            else if (result.affectedRows==1){
+                console.log("Usuario eliminado correctamente")
+                res.send({status:" Usuario Eliminado Correctamente"})
+            }else{
+                console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
+                res.send({status:" Varios usuarios eliminados? jajaja"})
+            }
 
         }
     })
 });
 
 //TOUPDATE Actualizar Usuario
-app.put('/api/UpdateU',(req,res) =>{
+app.put('/api/UpdateU',async (req,res) =>{
     console.log("Entro en actualizar usuario")
-    const query = "UPDATE usuario SET NombreUsuario = ?,Correo = ?,Pass = ?,Telefono = ?,Tipo = ?,Aprendizaje = ? WHERE idUsuario = ?";
-    db.query(query,[req.body.user,req.body.mail,req.body.pass,req.body.phone,/*req.body.type*/1/*,req.body.tutor*/,/*req.body.learning*/1,req.body.idUser],(err,result) =>{
-
+    const query = "UPDATE usuario SET NombreUsuario = ?,Correo = ?,pass = ?,Telefono = ?,Tipo = ?,Tutor = ?,Aprendizaje = ? WHERE Correo = ?";
+    const hashedPassword = await bcrypt.hash(req.body.newpass, 10);
+    db.query(query,[req.body.newuser,req.body.newmail,hashedPassword,req.body.newphone,req.body.newtype,req.body.newtutor,req.body.newlearning,req.body.mail],(err,result) =>{
+        console.log("newuser: "+req.body.newuser)
+        console.log("mail: "+req.body.mail)
+        console.log("newmail: "+req.body.newmail)
+        console.log("newpass: "+req.body.newpass)
+        console.log("newTutor: "+req.body.newtutor)
+        console.log("newlearning: "+req.body.newlearning)
+        console.log("newType: "+req.body.newtype)
+        console.log("newhashedpass: "+hashedPassword)
+        console.log("newphone: "+req.body.newphone)
         if(err){
             console.log(("Error al actualizar el usuario"))
+            console.log(err)
             return res.send({status:"Error"})
         } 
         else{ 
-            console.log("El usuario se ha actualizado")
-            console.log(result)
-            return res.send({status:"Actualizado"})
+            console.log(result.affectedRows)
+            if(result.affectedRows==0){
+                console.log("El usuario no existo por lo tanto no se modifico")
+                res.send({status:" Usuario inexistente"})
+            }
+            else if (result.affectedRows==1){
+                console.log("Usuario modificado correctamente")
+                res.send({status:" Usuario modificado correctamente"})
+            }else{
+                console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
+                return res.send({status:"Se actualizaron varios usuarios? jajaja"})
+            }
+        
         }
     })
 });
@@ -163,7 +215,9 @@ app.put('/api/UpdateU',(req,res) =>{
     })
 });
 */
+
 //TOUPDATE ver lecciones INtroduction to Cryphographic
+
 app.get('/api/SeeLC',(req,res) =>{
     const query = "SELECT * FROM materia INNER JOIN leccion ON Materia=idMAteria WHERE idMateria=?";
     db.query(query,req.body.materia,(err,result) =>{
@@ -176,6 +230,7 @@ app.get('/api/SeeLC',(req,res) =>{
         }
     })
 });
+
 //TOUPDATE ver lecciones Statistical tools for data analytics
 app.get('/api/SeeLC',(req,res) =>{
     const query = "SELECT * FROM materia INNER JOIN leccion ON Materia=idMAteria WHERE idMateria=?";

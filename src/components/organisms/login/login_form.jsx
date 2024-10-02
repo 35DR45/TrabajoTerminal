@@ -15,13 +15,13 @@ export default function Login_form(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const hashedPassword = await bcrypt.hash(password, 10); 
+        //const hashedPassword = await bcrypt.hash(password, 10); 
         const FormData = {
             user: username, 
-            pass: hashedPassword
+            pass: password
         }
         try{
-            const response = await fetch('api/login',{
+            const response = await fetch('api/Login',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -30,7 +30,9 @@ export default function Login_form(){
             });
             if (response.ok) {
                 // Redirige al usuario a la URL /registrado
-                navigate("/logeado");
+                const data = await response.json();
+                console.log('Respuesta exitosa, Encontro coincidencia?',data);
+                // navigate("/logeado");
             } else {
                 console.error('Usuario no registrado');
             }
