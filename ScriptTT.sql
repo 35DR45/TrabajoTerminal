@@ -89,8 +89,28 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Leccion` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-INSERT INTO Leccion VALUES(1,"PRUEBA 1", 1,1,'{"contenido":"hola prueba"}');
-INSERT INTO Leccion VALUES(2,"PRUEBA 2", 1,1,'{"contenido":"hola prueba 2"}');
+INSERT INTO Leccion VALUES(1,"0. Introduccion a la Estadistica", 1,1,'{"contenido":["La estadística se utiliza para la recolección, presentación, organización y análisis de datos, con la cual se pueden obtener conclusiones que nos permiten tomar decisiones basado en un análisis previo."]}');
+INSERT INTO Leccion VALUES(2,"1. Estadística desctiptiva", 1,1,'{"contenido":["Cuando se examina un grupo a este se le conoce como población o universo mientras que, si se examina un grupo derivado del anterior, a este se le llama muestra."]}');
+INSERT INTO Leccion VALUES(3,"1.1 Medidas de tendencia central para datos agrupados y no agrupados", 1, 1,
+'{"contenido":[
+"El promedio es un valor que tiende a encontrarse en el centro de los conjuntos de datos, al promedio también se le conoce como medidas de tendencia central.", 
+"Las medidas de tendencia central más utilizadas son: la media, mediana, moda.", 
+"MEDIA ARITMETICA",
+"La media aritmética se considera la medida de localización más importante ya que nos proporciona una localización central en una muestra de datos, la forma en la que se representa depende de si son datos de una muestra o una población",
+"ecuacion aqui",
+"MEDIANA"
+"De un conjunto de números ordenados de menor a mayor, se selecciona el valor central o valores centrales en caso de que sea un conjunto de datos par."
+"MODA",
+"La moda es el valor más frecuente de un conjunto de datos, puede no haber y puede que cuando hay no sea única."]}');
+INSERT INTO Leccion VALUES(3,"1.2 Medidas de dispersión para datos agrupados y no agrupados", 1, 1,
+'{"contenido":[
+"Varianza",
+"La variabilidad de un conjunto de datos relacionados o no.",
+"ecuacion aqui",
+"Desviación estándar",
+"Medida útil para conocer la desviación de los datos respecto a la media, en las muestras de datos se suele usar N-1 en lugar de N ya que permite obtener una mejor aproximación de los datos.",
+"ecuacion aqui",
+]}');
 INSERT INTO Leccion VALUES(1,"PRUEBA 2", 2,1,'{"contenido":"hola prueba"}');
 -- -----------------------------------------------------
 -- Table `mydb`.`Progreso`
