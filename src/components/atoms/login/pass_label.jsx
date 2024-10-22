@@ -1,9 +1,13 @@
-export default function Pass_label(){
+const Pass_label = ({
+    text = 'Contraseña'
+}) =>{
     return(
         <>
             <label>
-                Contraseña:
+                {text}
             </label>
         </>
     )
 }
+
+export default Pass_label;

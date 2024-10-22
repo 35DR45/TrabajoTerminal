@@ -6,6 +6,7 @@ import Register_Form from "./components/screens/register_Form";
 import Recover_Pass from "./components/screens/recover_Pass";
 import Tutor from "./components/screens/tutor";
 import Verified_user from "./components/screens/verified_user";
+import Recovery_sent from "./components/screens/recovery_Sent";
 
 const App = () =>{
   return (
@@ -16,6 +17,7 @@ const App = () =>{
         <Route path="/register/verified" element={<Verified_user/>}/>
         <Route path="/login" element={<Login_Form/>}/>
         <Route path="/forgotten" element={<Recover_Pass/>}/>
+        <Route path="/forgotten/sent" element={<Recovery_sent/>}/>
         <Route path="/tutor" element={<Tutor/>}/>
       </Routes>
     </BrowserRouter>

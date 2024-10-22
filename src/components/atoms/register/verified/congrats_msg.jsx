@@ -1,7 +1,9 @@
-export default function Congrats_msg(){
+export default function Congrats_msg({
+    textHead
+}){
     return(
         <h3>
-            ¡Correo verificado!
+            {textHead}
         </h3>
     )
 }

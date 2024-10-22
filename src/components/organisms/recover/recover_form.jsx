@@ -6,8 +6,7 @@ import Btn_Register from "../../atoms/header/btn_Register";
 import Email from "../../molecules/register/email";
 import { useNavigate } from 'react-router-dom';
 
-export default function Register_form(){
-
+export default function Recover_form(){
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -64,12 +63,12 @@ export default function Register_form(){
 
     return(
         <div className="form-container">
-            <Btn_Register/>
+            <Btn_Register text='Recuperar contraseña'/>
             <form className="reg-form-form" onSubmit={handleSubmit}>
                 <UserName onChange={(e) => setUsername(e.target.value)}/>
-                <Pass onChange={(e) => setPassword(e.target.value)}/>
-                <Email onChange={(e) => setEmail(e.target.value)}/>
-                <button type="submit" className="btn-register-form"><Btn_Register/></button>
+                <Pass text="Ingrese nueva contraseña:" onChange={(e) => setPassword(e.target.value)}/>
+                <Pass text="Repita su contraseña: " onChange={(e) => setPassword(e.target.value)}/>
+                <button type="submit" className="btn-register-form"><Btn_Register text='Solicitar enlace'/></button>
             </form>
         </div>
     )

@@ -1,7 +1,9 @@
-export default function Close_window(){
+export default function Close_window({
+    textPar
+}){
     return(
         <p>
-            Puede cerrar esta ventana o directamente
+            {textPar}
         </p>
     )
 }
