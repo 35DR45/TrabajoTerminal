@@ -217,7 +217,7 @@ app.put('/api/UpdateU',async (req,res) =>{
 */
 
 //TOUPDATE ver lecciones INtroduction to Cryphographic
-
+/*
 app.get('/api/SeeLC',(req,res) =>{
     const query = "SELECT * FROM materia INNER JOIN leccion ON Materia=idMAteria WHERE idMateria=?";
     db.query(query,req.body.materia,(err,result) =>{
@@ -230,17 +230,46 @@ app.get('/api/SeeLC',(req,res) =>{
         }
     })
 });
-
-//TOUPDATE ver lecciones Statistical tools for data analytics
+*/
+//Ver tmeario de Materia
 app.get('/api/SeeLC',(req,res) =>{
-    const query = "SELECT * FROM materia INNER JOIN leccion ON Materia=idMAteria WHERE idMateria=?";
+    const query = "select Titulo from leccion where Materia=?";
     db.query(query,req.body.materia,(err,result) =>{
+        console.log("materia: "+req.body.materia)
         if(err){
             return res.send("Error al enviar Lecciones")
         } 
         else {
             console.log(result)
             return res.send(result)
+        }
+    })
+});
+//Recuperar progreso
+app.get('/api/ProgV',(req,res) =>{
+    const query = "select (select (select count(idLeccion) from Progreso where idMateria=? & idUsuario=?) / (select count(idLeccion) from leccion where Materia=?)) * 100";
+    db.query(query,req.body.materia,req.body.usuario,req.body.materia,(err,result) =>{
+        console.log("materia: "+req.body.materia)
+        if(err){
+            return res.send("Error al calcular progreso")
+        } 
+        else {
+            console.log(result)
+            return res.send(result+"%")
+        }
+    })
+});
+//Recuperar puntajes
+app.get('/api/PointV',(req,res) =>{
+    const query = "select IFNULL(Puntaje, 0) as Puntaje,Titulo from Progreso right Join Leccion on idMateria=Materia where idUsuario=? and Materia=? and Tipo=0;";
+    db.query(query,req.body.usuario,req.body.materia,(err,result) =>{
+        console.log("materia: "+req.body.materia)
+        if(err){
+            return res.send("Error al calcular progreso")
+        } 
+        else {
+            console.log(result)
+            return res.send(result+"%")
         }
     })
 });
