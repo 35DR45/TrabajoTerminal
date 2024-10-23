@@ -1,7 +1,11 @@
-export default function Btn_Register(){
+const Btn_Register = ({ 
+    text = "Regístrate" 
+}) => {
     return(
         <>
-            Regístrate
+            { text }
         </>
     )
 }
+
+export default Btn_Register;
