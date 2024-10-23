@@ -1,0 +1,26 @@
+.Course_Container{
+    width: 100%;
+    justify-content: space-around;
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.Card_Course{
+    background-color: #811642;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 20px;
+}
+
+.Tools_container{
+    color: black;
+    width: 100%;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
