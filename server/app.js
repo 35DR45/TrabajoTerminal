@@ -247,8 +247,22 @@ app.get('/api/SeeLC',(req,res) =>{
 });
 //Recuperar progreso
 app.get('/api/ProgV',(req,res) =>{
-    const query1 = "select (select (select count(idLeccion) from Progreso where idMateria=? & idUsuario=?) / (select count(idLeccion) from leccion where Materia=?)) * 100";
+    const query = "select (select (select count(idLeccion) from Progreso where idMateria=? & idUsuario=?) / (select count(idLeccion) from leccion where Materia=?)) * 100";
     db.query(query,req.body.materia,req.body.usuario,req.body.materia,(err,result) =>{
+        console.log("materia: "+req.body.materia)
+        if(err){
+            return res.send("Error al calcular progreso")
+        } 
+        else {
+            console.log(result)
+            return res.send(result+"%")
+        }
+    })
+});
+//Recuperar puntajes
+app.get('/api/PointV',(req,res) =>{
+    const query = "select IFNULL(Puntaje, 0) as Puntaje,Titulo from Progreso right Join Leccion on idMateria=Materia where idUsuario=? and Materia=? and Tipo=0;";
+    db.query(query,req.body.usuario,req.body.materia,(err,result) =>{
         console.log("materia: "+req.body.materia)
         if(err){
             return res.send("Error al calcular progreso")
