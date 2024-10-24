@@ -8,7 +8,7 @@ export default function Tema_Leccion(){
 
     const params = useParams();
 
-    console.log(params);
+    console.log("Redirigirá a ", params.cursoID);
 
     const [temario, setTemario] = useState([]);
 
@@ -29,18 +29,27 @@ export default function Tema_Leccion(){
     
     // const listaTemas = [{Titulo: "Tema1", Subtitulos: ["Subtema1", "Subtema2", "Subtema3"]}, {Titulo: "Tema2", Subtitulos: ["Subtema10", "Subtema20", "Subtema35"]}];
     
+    // <ul>
+    //             {temario.map((seccion, index) => (
+    //                 <div key= {index}>
+    //                     <li ><Tema tituloTema={seccion.Titulo} /></li>
+    //                         <ul>
+    //                             {seccion.Subtitulos.map((Subtitulo, index)=> (
+    //                                 <li  key= {index}> <Leccion tituloLeccion={Subtitulo}/> </li>
+                                
+    //                             ))}
+    //                         </ul>
+    //                 </div>
+    //             ))}
+                
+    //         </ul> 
+
     return(
         <div className="listado_materias">
             <ul>
                 {temario.map((seccion, index) => (
                     <div key= {index}>
                         <li ><Tema tituloTema={seccion.Titulo} /></li>
-                            <ul>
-                                {seccion.Subtitulos.map((Subtitulo, index)=> (
-                                    <li  key= {index}> <Leccion tituloLeccion={Subtitulo}/> </li>
-                                
-                                ))}
-                            </ul>
                     </div>
                 ))}
                 
