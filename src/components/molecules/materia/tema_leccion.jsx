@@ -1,13 +1,14 @@
+import { useParams } from "react-router-dom";
 import Leccion from "../../atoms/materia/leccion";
 import Tema from "../../atoms/materia/tema";
 import "../../organisms/CSS/materia.css"
 import { useEffect, useState } from "react";
 
+export default function Tema_Leccion(){
 
-// Aquí el get de las lecciones
+    const params = useParams();
 
-export default function Tema_Leccion({materiaID}){
-    console.log(materiaID);
+    console.log(params);
 
     const [temario, setTemario] = useState([]);
 
@@ -15,7 +16,7 @@ export default function Tema_Leccion({materiaID}){
       // Función para obtener los datos de la API
         const fetchTemario = async () => {
         try {
-            const response = await fetch("api/Cursos"); // Aquí va la URL de tu API
+            const response = await fetch(`/api/SeeLC/${params.cursoID}`); // Aquí va la URL de tu API
             const data = await response.json();
             setTemario(data); // Asumo que 'data' es un array de materias
         } catch (error) {
@@ -24,19 +25,19 @@ export default function Tema_Leccion({materiaID}){
         };
 
         fetchTemario();
-    }, []); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
+    }, [params.cursoID]); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
     
-    const listaTemas = [{tema: "Tema1", subtemas: ["Subtema1", "Subtema2", "Subtema3"]}, {tema: "Tema2", subtemas: ["Subtema10", "Subtema20", "Subtema35"]}];
+    // const listaTemas = [{Titulo: "Tema1", Subtitulos: ["Subtema1", "Subtema2", "Subtema3"]}, {Titulo: "Tema2", Subtitulos: ["Subtema10", "Subtema20", "Subtema35"]}];
     
     return(
         <div className="listado_materias">
             <ul>
-                {listaTemas.map((seccion, index) => (
+                {temario.map((seccion, index) => (
                     <div key= {index}>
-                        <li ><Tema tituloTema={seccion.tema} /></li>
+                        <li ><Tema tituloTema={seccion.Titulo} /></li>
                             <ul>
-                                {seccion.subtemas.map((nombre, index)=> (
-                                    <li  key= {index}> <Leccion tituloLeccion={nombre}/> </li>
+                                {seccion.Subtitulos.map((Subtitulo, index)=> (
+                                    <li  key= {index}> <Leccion tituloLeccion={Subtitulo}/> </li>
                                 
                                 ))}
                             </ul>

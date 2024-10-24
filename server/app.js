@@ -19,7 +19,8 @@ app.use(cors({
 const db=mysql.createConnection({
     host:"localhost",
     user: "root",
-    password: "1234",
+    password: "PaS$R4z32",
+    // password: "1234",
     database: "mydb",
 });
 
@@ -152,6 +153,7 @@ app.get('/api/SeeUsers',(req,res) =>{
         "Aprendizaje":"El valor de su Tipo de aprendizaje",
         
 */
+// TODO: cambiar los gets para que no pidan el body y pidan params
 app.get('/api/SeeUser',(req,res) =>{
     console.log("Entro ver usuario")
     const query = "SELECT * FROM usuario WHERE Correo = ?";
@@ -281,9 +283,9 @@ app.get('/api/SeeLC',(req,res) =>{
         "materia": 1
     }
 */
-app.get('/api/SeeLC',(req,res) =>{
+app.get('/api/SeeLC/:Materia',(req,res) =>{
     const query = "Select idLeccion,Titulo from leccion where Materia=?";
-    db.query(query,req.body.Materia,(err,result) =>{
+    db.query(query,req.params.Materia,(err,result) =>{
         console.log("materia: "+req.body.Materia)
         if(err){
             return res.send("Error al enviar Lecciones")

@@ -28,7 +28,7 @@ export default function Courses(){
         <> 
             <div className="Course_Container">
             {subjects.map((subject, index) => (
-                <Card key={index} courseName={subject.NombreMateria}/>
+                <Card key={index} courseName={subject.NombreMateria} id={subject.idMateria}/>
             ))}
             </div>
             <div className="Tools_container">
