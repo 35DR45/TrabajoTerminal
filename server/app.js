@@ -283,8 +283,8 @@ app.get('/api/SeeLC',(req,res) =>{
 */
 app.get('/api/SeeLC',(req,res) =>{
     const query = "Select idLeccion,Titulo from leccion where Materia=?";
-    db.query(query,req.body.materia,(err,result) =>{
-        console.log("materia: "+req.body.materia)
+    db.query(query,req.body.Materia,(err,result) =>{
+        console.log("materia: "+req.body.Materia)
         if(err){
             return res.send("Error al enviar Lecciones")
         } 
