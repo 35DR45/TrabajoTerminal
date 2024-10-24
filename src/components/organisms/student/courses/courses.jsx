@@ -11,7 +11,7 @@ export default function Courses(){
       // Función para obtener los datos de la API
         const fetchSubjects = async () => {
         try {
-            const response = await fetch("api/Login"); // Aquí va la URL de tu API
+            const response = await fetch("api/Cursos"); // Aquí va la URL de tu API
             const data = await response.json();
           setSubjects(data); // Asumo que 'data' es un array de materias
         } catch (error) {
@@ -22,13 +22,13 @@ export default function Courses(){
         fetchSubjects();
     }, []); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
 
-    const materias = [{name: "Statistical tools for data mining"}, {name: "Introduction to Cryptography"}, {name: "otro curso random"}]
+    const materias = [{NombreMateria: "Statistical tools for data mining"}, {NombreMateria: "Introduction to Cryptography"}]
 
     return(
         <> 
             <div className="Course_Container">
             {materias.map((subject, index) => (
-                <Card key={index} courseName={subject.name}/>
+                <Card key={index} courseName={subject.NombreMateria}/>
             ))}
             </div>
             <div className="Tools_container">
