@@ -284,6 +284,39 @@ app.get('/api/SeeLC',(req,res) =>{
         }
     })
 });
+//Obtener cantidad de materias registradas
+/*regresa un arreglo de objetos json con los siguientes contenidos{
+        "idMateria":Aqui va el id de Materia,
+        "Nombre de materia": Aqui va el nombre de la materia
+        }
+*/
+app.get('/api/Cursos',(req,res) =>{
+    const query = "Select * from materia";
+    db.query(query,(err,result) =>{
+        if(err){
+            return res.send("Error no se pudo obtener el numero de materias")
+        } 
+        else {
+            console.log(result)
+            return res.send(result)
+        }
+    })
+});
+
+app.get('/api/SeeLC',(req,res) =>{
+    const query = "select Titulo from leccion where Materia=?";
+    db.query(query,req.body.materia,(err,result) =>{
+        console.log("materia: "+req.body.materia)
+        if(err){
+            return res.send("Error al enviar Lecciones")
+        } 
+        else {
+            console.log(result)
+            return res.send(result)
+        }
+    })
+});
+
 //Recuperar progreso
 app.get('/api/ProgV',(req,res) =>{
     const query = "select (select (select count(idLeccion) from Progreso where idMateria=? & idUsuario=?) / (select count(idLeccion) from leccion where Materia=?)) * 100";
