@@ -38,7 +38,7 @@ export default function Register_form(){
         const value = e.target.value;
         setPassword(value);
         if (!regexPass.test(value)) {
-            setPassError("Error: La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.");
+            setPassError("Error: La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un caracter especial.");
         } else {
             setPassError(''); // Limpia el mensaje cuando cumple con los criterios
         }
