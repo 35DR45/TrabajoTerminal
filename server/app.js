@@ -314,7 +314,7 @@ app.get('/api/ContentLC',(req,res) =>{
     const query = "Select * from leccion where idLeccion= ? and Materia = ? and Tipo = ?";
     db.query(query,[req.body.idLeccion,req.body.materia,req.body.Tipo],(err,result) =>{
         console.log("idLeccion: "+req.body.idLeccion)
-        console.log("Materia: "+req.body.Materia)
+        console.log("Materia: "+req.body.materia)
         console.log("Tipo: "+req.body.Tipo)
 
         if(err){
