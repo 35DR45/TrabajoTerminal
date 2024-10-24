@@ -11,8 +11,6 @@ const Student = () => {
                 Cursos
             </h2>
             <Courses />
-            
-
             <Footer />
         </>
     )
