@@ -32,7 +32,11 @@ app.get('/',(req,res)=>{
     res.json({status: "INICIO"});
 });
 
-//LOGIN DE USUARIO
+//LOGIN DE USUARIO 
+/*regresa un json{
+        "status":(Aqui te da el mensaje de lo que ocurrio)
+        }
+*/
 app.post('/api/Login',(req,res)=>{
     
     const query = "SELECT * FROM usuario WHERE NombreUsuario = ?";
@@ -61,7 +65,7 @@ app.post('/api/Login',(req,res)=>{
 
 });
 
-//TOUPDATE PASSWORD RECOVERY
+//TODO PASSWORD RECOVERY
 /*app.get('/api/Recovery',(req,res)=>{
     const query = "SELECT usuario FROM usuario WHERE correo = ?";
     db.query(query,[req.body.user,req.body.password],(err,result) =>{
@@ -75,8 +79,11 @@ app.post('/api/Login',(req,res)=>{
 });
 */
 
-//TOUPDATE REGISTRO y CREAR USUARIO
-
+//REGISTRO O CREAR USUARIO
+/*regresa un json{
+        "status":(Aqui te da el mensaje de lo que ocurrio)
+        }
+*/
 app.post('/api/Register',async (req,res) =>{
     console.log("Entro registro")
     const query = "INSERT INTO usuario(NombreUsuario,Correo,pass,Telefono,Tipo,Aprendizaje) values (?,?,?,?,?,?)";
@@ -98,13 +105,24 @@ app.post('/api/Register',async (req,res) =>{
         else{
             console.log("Usuario creado ") 
             console.log(result) 
-            return res.send({status:"Usuario creadoCreado"})
+            return res.send({status:"Usuario Creado"})
         } 
         
     })
 });
 
 //Ver usuarios
+/*regresa un arreglo con objetos json donde cada objeto json tiene :{
+        "idUsuario":"Su id",
+        "NombreUsuario":"Su nombre de usuario",
+        "Correo":"Su Correo",
+        "pass":"su contraseña hasheada",
+        "Telefono":"Su telefono",
+        "Tipo":"El tipo de usuario",
+        "Tutor":"El tutor que tiene",
+        "Aprendizaje":"El valor de su Tipo de aprendizaje",
+        
+*/
 app.get('/api/SeeUsers',(req,res) =>{
     console.log("Entro ver usuarios")
     const query = "SELECT * FROM usuario";
@@ -122,6 +140,18 @@ app.get('/api/SeeUsers',(req,res) =>{
     })
 });
 
+//ver un unico usuario esta la puedes usar tanto para el crud como para el perfil de usuario para mostrar la informacion del usuario
+/*regresa un objeto json con:{
+        "idUsuario":"Su id",
+        "NombreUsuario":"Su nombre de usuario",
+        "Correo":"Su Correo",
+        "pass":"su contraseña hasheada",
+        "Telefono":"Su telefono",
+        "Tipo":"El tipo de usuario",
+        "Tutor":"El tutor que tiene",
+        "Aprendizaje":"El valor de su Tipo de aprendizaje",
+        
+*/
 app.get('/api/SeeUser',(req,res) =>{
     console.log("Entro ver usuario")
     const query = "SELECT * FROM usuario WHERE Correo = ?";
@@ -139,6 +169,11 @@ app.get('/api/SeeUser',(req,res) =>{
     })
 });
 
+//Eliminar un usuario
+/*regresa un json{
+        "status":(Aqui te da el mensaje de lo que ocurrio)
+        }
+*/
 app.delete('/api/DeleteU',(req,res) =>{
     console.log("Entro borrar usuario")
     const query = "DELETE FROM usuario WHERE Correo = ?";
@@ -165,7 +200,11 @@ app.delete('/api/DeleteU',(req,res) =>{
     })
 });
 
-//TOUPDATE Actualizar Usuario
+//Actualizar Usuario
+/*regresa un json{
+        "status":(Aqui te da el mensaje de lo que ocurrio)
+        }
+*/
 app.put('/api/UpdateU',async (req,res) =>{
     console.log("Entro en actualizar usuario")
     const query = "UPDATE usuario SET NombreUsuario = ?,Correo = ?,pass = ?,Telefono = ?,Tipo = ?,Tutor = ?,Aprendizaje = ? WHERE Correo = ?";
@@ -203,7 +242,7 @@ app.put('/api/UpdateU',async (req,res) =>{
     })
 });
 
-//TOUPDATE REGISTRO y CREAR USUARIO
+//TOUPDATE CRUD DE LECCIONES
 /*app.post('/api/CreateL',(req,res) =>{
     const query = "INSERT INTO Leccion(Titulo,Materia,Tipo,Contenido) values (?,?,?,?)";
     db.query(query,[req.body.title,req.body.subject,req.body.type,req.body.content],(err,result) =>{
