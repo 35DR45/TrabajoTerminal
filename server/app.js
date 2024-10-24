@@ -270,9 +270,19 @@ app.get('/api/SeeLC',(req,res) =>{
     })
 });
 */
-//Ver tmeario de Materia
+
+//Ver temario de Materia
+/*regresa un  arreglo con objetos json con el siguiente contenido{
+        "idLeccion":id de la leccion,
+        "Titulo":Titulo de la leccion
+        }
+    Requiere que le pases el id de la materia ejem:
+    {
+        "materia": 1
+    }
+*/
 app.get('/api/SeeLC',(req,res) =>{
-    const query = "select Titulo from leccion where Materia=?";
+    const query = "select idLeccion,Titulo from leccion where Materia=?";
     db.query(query,req.body.materia,(err,result) =>{
         console.log("materia: "+req.body.materia)
         if(err){
@@ -284,6 +294,7 @@ app.get('/api/SeeLC',(req,res) =>{
         }
     })
 });
+
 //Obtener cantidad de materias registradas
 /*regresa un arreglo de objetos json con los siguientes contenidos{
         "idMateria":Aqui va el id de Materia,
@@ -295,20 +306,6 @@ app.get('/api/Cursos',(req,res) =>{
     db.query(query,(err,result) =>{
         if(err){
             return res.send("Error no se pudo obtener el numero de materias")
-        } 
-        else {
-            console.log(result)
-            return res.send(result)
-        }
-    })
-});
-
-app.get('/api/SeeLC',(req,res) =>{
-    const query = "select Titulo from leccion where Materia=?";
-    db.query(query,req.body.materia,(err,result) =>{
-        console.log("materia: "+req.body.materia)
-        if(err){
-            return res.send("Error al enviar Lecciones")
         } 
         else {
             console.log(result)
@@ -331,6 +328,7 @@ app.get('/api/ProgV',(req,res) =>{
         }
     })
 });
+
 //Recuperar puntajes
 app.get('/api/PointV',(req,res) =>{
     const query = "select IFNULL(Puntaje, 0) as Puntaje,Titulo from Progreso right Join Leccion on idMateria=Materia where idUsuario=? and Materia=? and Tipo=0;";
