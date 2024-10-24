@@ -306,16 +306,17 @@ app.get('/api/SeeLC',(req,res) =>{
     Requiere que le pases el id de la materia ejem:
     {
         "idLeccion": id de la leccion que vas a recuperar,
-        "Materia": id de la materia a la que pertenece la leccion,
+        "materia": id de la materia a la que pertenece la leccion,
         "Tipo": Tipo de  contenido 1 es ejercicio 0 es ejercicios,
     }
 */
 app.get('/api/ContentLC',(req,res) =>{
     const query = "Select * from leccion where idLeccion= ? and Materia = ? and Tipo = ?";
-    db.query(query,req.body.idLeccion,req.body.Materia,req.body.Tipo,(err,result) =>{
+    db.query(query,[req.body.idLeccion,req.body.materia,req.body.Tipo],(err,result) =>{
         console.log("idLeccion: "+req.body.idLeccion)
-        console.log("Materia: "+req.body.Materia)
+        console.log("Materia: "+req.body.materia)
         console.log("Tipo: "+req.body.Tipo)
+
         if(err){
             return res.send("Error al enviar Lecciones")
         } 
