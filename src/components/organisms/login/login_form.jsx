@@ -32,7 +32,7 @@ export default function Login_form(){
                 // Redirige al usuario a la URL /registrado
                 const data = await response.json();
                 console.log('Respuesta exitosa, Encontro coincidencia?',data);
-                // navigate("/logeado");
+                navigate("/student");
             } else {
                 console.error('Usuario no registrado');
             }
