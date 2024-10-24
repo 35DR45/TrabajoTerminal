@@ -19,7 +19,7 @@ app.use(cors({
 const db=mysql.createConnection({
     host:"localhost",
     user: "root",
-    password: "PaS$R4z32",
+    password: "1234",
     database: "mydb",
 });
 
@@ -282,9 +282,40 @@ app.get('/api/SeeLC',(req,res) =>{
     }
 */
 app.get('/api/SeeLC',(req,res) =>{
-    const query = "select idLeccion,Titulo from leccion where Materia=?";
+    const query = "Select idLeccion,Titulo from leccion where Materia=?";
     db.query(query,req.body.materia,(err,result) =>{
         console.log("materia: "+req.body.materia)
+        if(err){
+            return res.send("Error al enviar Lecciones")
+        } 
+        else {
+            console.log(result)
+            return res.send(result)
+        }
+    })
+});
+
+//Ver Contenido de leccion de Materia
+/*regresa un  arreglo con objetos json con el siguiente contenido{
+        idLeccion: 1,
+        Titulo: 'PRUEBA 1',
+        Materia: 1,
+        Tipo: 1,
+        Contenido: { contenido: 'hola prueba' }
+         }
+    Requiere que le pases el id de la materia ejem:
+    {
+        "idLeccion": id de la leccion que vas a recuperar,
+        "Materia": id de la materia a la que pertenece la leccion,
+        "Tipo": Tipo de  contenido 1 es ejercicio 0 es ejercicios,
+    }
+*/
+app.get('/api/ContentLC',(req,res) =>{
+    const query = "Select * from leccion where idLeccion= ? and Materia = ? and Tipo = ?";
+    db.query(query,req.body.idLeccion,req.body.Materia,req.body.Tipo,(err,result) =>{
+        console.log("idLeccion: "+req.body.idLeccion)
+        console.log("Materia: "+req.body.Materia)
+        console.log("Tipo: "+req.body.Tipo)
         if(err){
             return res.send("Error al enviar Lecciones")
         } 
