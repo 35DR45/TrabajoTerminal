@@ -57,7 +57,6 @@ export default function Register_form(){
                 console.error('Error:', error);
             }
         }else
-            
             console.log("Alertas de validación van aquí");
         
     };

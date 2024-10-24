@@ -22,12 +22,12 @@ export default function Courses(){
         fetchSubjects();
     }, []); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
 
-    const materias = [{NombreMateria: "Statistical tools for data mining"}, {NombreMateria: "Introduction to Cryptography"}]
+    // const materias = [{NombreMateria: "Statistical tools for data mining"}, {NombreMateria: "Introduction to Cryptography"}]
 
     return(
         <> 
             <div className="Course_Container">
-            {materias.map((subject, index) => (
+            {subjects.map((subject, index) => (
                 <Card key={index} courseName={subject.NombreMateria}/>
             ))}
             </div>
