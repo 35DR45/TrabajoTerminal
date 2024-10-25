@@ -349,7 +349,33 @@ app.get('/api/Cursos',(req,res) =>{
 });
 
 //Recuperar progreso
-app.get('/api/ProgV',(req,res) =>{
+app.get('/api/ProgPractica',(req,res) =>{
+    const query = "select (select (select count(idLeccion) from Progreso where idMateria=? & idUsuario=? & Tipo=1) / (select count(idLeccion) from leccion where Materia=? & Tipo=1)) * 100";
+    db.query(query,req.body.materia,req.body.usuario,req.body.materia,(err,result) =>{
+        console.log("materia: "+req.body.materia)
+        if(err){
+            return res.send("Error al calcular progreso")
+        } 
+        else {
+            console.log(result)
+            return res.send(result)
+        }
+    })
+});
+app.get('/api/ProgTeoria',(req,res) =>{
+    const query = "select (select (select count(idLeccion) from Progreso where idMateria=? & idUsuario=? & Tipo=0) / (select count(idLeccion) from leccion where Materia=? & Tipo=0)) * 100";
+    db.query(query,req.body.materia,req.body.usuario,req.body.materia,(err,result) =>{
+        console.log("materia: "+req.body.materia)
+        if(err){
+            return res.send("Error al calcular progreso")
+        } 
+        else {
+            console.log(result)
+            return res.send(result)
+        }
+    })
+});
+app.get('/api/ProgTotal',(req,res) =>{
     const query = "select (select (select count(idLeccion) from Progreso where idMateria=? & idUsuario=?) / (select count(idLeccion) from leccion where Materia=?)) * 100";
     db.query(query,req.body.materia,req.body.usuario,req.body.materia,(err,result) =>{
         console.log("materia: "+req.body.materia)
@@ -358,7 +384,7 @@ app.get('/api/ProgV',(req,res) =>{
         } 
         else {
             console.log(result)
-            return res.send(result+"%")
+            return res.send(result)
         }
     })
 });
