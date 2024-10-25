@@ -1,0 +1,16 @@
+
+.Tools_Container{
+    width: 100%;
+    display: flex;
+    flex: row;
+    justify-content: space-evenly;
+    margin: 30px 0px;
+}
+
+.Card_Course{
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
