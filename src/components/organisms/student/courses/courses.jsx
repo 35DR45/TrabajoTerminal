@@ -2,6 +2,7 @@ import Card from "../../../molecules/student/card_courses/card";
 import ToolsImage from "../../../../assets/ToolsImage.png"
 import "../../CSS/courses.css"
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Courses(){
 
@@ -33,10 +34,10 @@ export default function Courses(){
                 <Card key={index} courseName={subject.NombreMateria} id={subject.idMateria}/>
             ))}
             </div>
-            <div className="Tools_container">
+            <Link to={"/tools"} className="Tools_container" >
                 <img src={ToolsImage} alt="Logo de herrramientas"/>
                 <h3>Herramientas</h3>
-            </div>
+            </Link>
         </>
     )
 }
