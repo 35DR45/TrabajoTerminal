@@ -259,9 +259,9 @@ INSERT INTO Leccion VALUES(1200,"1.2 Aritmética en campos primos", 2, 0,
 }');
 INSERT INTO Leccion VALUES(1300,"1.3 Cifradores clásicos", 2, 0,
 '{"contenido":
-"Estos tipos de cifradores son aquellos basados en métodos tradicionales de codificación, estos métodos son la sustitución y la transposición de letras, operaciones que consisten en cambiar el valor de una letra o elemento de un conjunto de información por otro (determinado por alguna operación preestablecida) y en cambiar el orden interno del mensaje original sin cambiar una letra o carácter por otro, respectivamente. Algunos ejemplos de estos cifradores clásicos es el cifrado César y el cifrado Vigenère. Estos tipos de cifradores quizá parezcan simples en la modernidad, pero fueron altamente útiles y siguen siendo relevantes cuando de entender la criptografía se trata."
-"Cesar: Cambia la letra por la que este en n posiciones siguientes, si n=3, A=D"
-"Vigenere: Usa una clave, preferentemente mas corta que el mensaje, la cual suma los valores de sus letras al texto del mensaje para dar el nuevo, por ejemplo mensaje=blanco, clave=casa, Resultado=(B+C)(L+A)(A+S)(N+A)(C+C)(O+A)=EMTÑF"
+"Estos tipos de cifradores son aquellos basados en métodos tradicionales de codificación, estos métodos son la sustitución y la transposición de letras, operaciones que consisten en cambiar el valor de una letra o elemento de un conjunto de información por otro (determinado por alguna operación preestablecida) y en cambiar el orden interno del mensaje original sin cambiar una letra o carácter por otro, respectivamente. Algunos ejemplos de estos cifradores clásicos es el cifrado César y el cifrado Vigenère. Estos tipos de cifradores quizá parezcan simples en la modernidad, pero fueron altamente útiles y siguen siendo relevantes cuando de entender la criptografía se trata.",
+"Cesar: Cambia la letra por la que este en n posiciones siguientes, si n=3, A=D",
+"Vigenere: Usa una clave, preferentemente mas corta que el mensaje, la cual suma los valores de sus letras al texto del mensaje para dar el nuevo, por ejemplo mensaje=blanco, clave=casa, Resultado=(B+C)(L+A)(A+S)(N+A)(C+C)(O+A)=EMTOP"
 }');
 INSERT INTO Leccion VALUES(1400,"1.4 Aritmética en campos binarios", 2, 0,
 '{"contenido":
@@ -298,7 +298,7 @@ INSERT INTO Leccion VALUES(2300,"2.3 Cifradores de flujo", 2, 0,
 }');
 INSERT INTO Leccion VALUES(3000,"3 Integridad", 2, 0,
 '{"contenido":
-"La integridad en la criptografía es la garantía de que la información no ha sido manipulada, es decir, que solo puede ser creada y modificada por quien esté autorizado"
+"Integridad xd"
 }');
 INSERT INTO Leccion VALUES(3100,"3.1 Funciones hash criptográficas", 2, 0,
 '{"contenido":
