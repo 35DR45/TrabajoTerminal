@@ -785,3 +785,311 @@ INSERT INTO Leccion VALUES(3251,"3.2.5E Métodos de Poisson Especial", 1, 1,
         "R_Falsas": ["Dividiendo ( lambda ) entre el número de celdas", "Sumando el número de puntos observados", "Restando el número de celdas de (T)"]
     }
 ]');
+INSERT INTO Leccion VALUES(3301,"3.3E Ejercicios de Proceso de Poisson no homogéneo", 1, 1,
+'[
+    {
+        "Enunciado": "En un proceso de Poisson no homogéneo con tasa ( lambda(t) = 2t ), ¿cuál es la probabilidad de observar exactamente 4 eventos en un intervalo de tiempo de ( t = 3 )?",
+        "R_Correcta": "0.1839",
+        "R_Falsas": ["0.25", "0.102", "0.343"]
+    },
+    {
+        "Enunciado": "Si la tasa del proceso de Poisson no homogéneo es ( lambda(t) = 5 ), ¿cuál es la probabilidad de observar exactamente 2 eventos en ( t = 1 )? Usa la fórmula de la distribución de Poisson.",
+        "R_Correcta": "0.0842",
+        "R_Falsas": ["0.10", "0.067", "0.25"]
+    },
+    {
+        "Enunciado": "Dado un proceso de Poisson no homogéneo con ( lambda(t) = 3t^2 ), ¿cuál es la tasa total acumulada en el intervalo ( t = 0 ) a ( t = 2 )?",
+        "R_Correcta": "8",
+        "R_Falsas": ["6", "12", "10"]
+    },
+    {
+        "Enunciado": "¿Cuál es la principal diferencia entre un proceso de Poisson homogéneo y uno no homogéneo?",
+        "R_Correcta": "La tasa de ocurrencia de eventos no es constante en el tiempo en el caso no homogéneo.",
+        "R_Falsas": ["El número de eventos es siempre mayor en el caso no homogéneo.", "El proceso homogéneo tiene más fluctuaciones.", "La tasa es siempre menor en el proceso no homogéneo."]
+    },
+    {
+        "Enunciado": "Si en un proceso de Poisson no homogéneo la tasa de eventos es ( lambda(t) = 4t ), ¿cuál es la probabilidad de que no ocurra ningún evento en el intervalo de tiempo ( t = 1 ) a ( t = 2 )?",
+        "R_Correcta": "0.0183",
+        "R_Falsas": ["0.5", "0.065", "0.28"]
+    }
+]');
+INSERT INTO Leccion VALUES(3411,"3.4.1E Ejercicios de Estructura probabilística de una cadena de Markov", 1, 1,
+'[
+    {
+        "Enunciado": "En una cadena de Markov con tres estados ( A ), ( B ) y ( C ), la probabilidad de transición de ( A ) a ( B ) es 0.4, de ( A ) a ( C ) es 0.6. ¿Cuál es la probabilidad de que el sistema permanezca en el estado ( A ) en el siguiente paso?",
+        "R_Correcta": "0",
+        "R_Falsas": ["0.5", "0.2", "1"]
+    },
+    {
+        "Enunciado": "En una cadena de Markov, si la probabilidad de estar en el estado ( S_1 ) es 0.7 y de estar en el estado ( S_2 ) es 0.3 en el tiempo ( t ), ¿cuál es la probabilidad total de estar en ( S_1 ) en el tiempo ( t+1 ) si las probabilidades de transición son ( P(S_1 rightarrow S_1) = 0.8 ) y ( P(S_2 rightarrow S_1) = 0.4 )?",
+        "R_Correcta": "0.68",
+        "R_Falsas": ["0.5", "0.72", "0.6"]
+    },
+    {
+        "Enunciado": "Una cadena de Markov tiene dos estados, ( S_1 ) y ( S_2 ), con probabilidades de transición ( P(S_1 rightarrow S_2) = 0.3 ) y ( P(S_2 rightarrow S_1) = 0.7 ). Si el sistema está en ( S_1 ) en ( t = 1 ), ¿cuál es la probabilidad de que esté en ( S_2 ) en ( t = 2 )?",
+        "R_Correcta": "0.21",
+        "R_Falsas": ["0.49", "0.7", "0.9"]
+    },
+    {
+        "Enunciado": "En una cadena de Markov de 4 estados, si en el tiempo ( t ) el sistema está en el estado 3 y la probabilidad de transición ( P(3 rightarrow 4) ) es 0.6, ¿qué significa esta probabilidad en términos del comportamiento del sistema?",
+        "R_Correcta": "Hay un 60% de probabilidad de que el sistema pase al estado 4 en el siguiente paso.",
+        "R_Falsas": ["El sistema siempre pasará al estado 4.", "El sistema nunca volverá al estado 3.", "El sistema tiene un 40% de probabilidad de pasar a otro estado."]
+    },
+    {
+        "Enunciado": "Dada una matriz de transición ( P ) para una cadena de Markov con dos estados, donde ( P = begin{pmatrix} 0.6 & 0.4  0.3 & 0.7 end{pmatrix} ), ¿cuál es la probabilidad de pasar del estado 1 al estado 2 en un paso?",
+        "R_Correcta": "0.4",
+        "R_Falsas": ["0.7", "0.6", "0.3"]
+    }
+]');
+INSERT INTO Leccion VALUES(3421,"3.4.2E Ejercicios de Probabilidad de Transicion", 1, 1,
+'[
+    {
+        "Enunciado": "Dada la siguiente matriz de transición P para un sistema de dos estados: nn P = n( 0.7   0.3 )n( 0.4   0.6 ) nn ¿Cuál es el valor de la probabilidad estacionaria X*_1 (el estado 1)?",
+        "R_Correcta": "X*_1 = 0.3 / (0.3 + 0.4)",
+        "R_Falsas": ["X*_1 = 0.7 / (0.4 + 0.6)", "X*_1 = 0.6 / (0.4 + 0.7)", "X*_1 = 0.4 / (0.3 + 0.7)"]
+    },
+    {
+        "Enunciado": "En un sistema de dos estados, si las probabilidades de transición son p11 = 0.8, p12 = 0.2, p21 = 0.4 y p22 = 0.6, ¿cuál es el valor de X*_2 (probabilidad estacionaria del estado 2)?",
+        "R_Correcta": "X*_2 = 0.4 / (0.4 + 0.2)",
+        "R_Falsas": ["X*_2 = 0.6 / (0.8 + 0.4)", "X*_2 = 0.2 / (0.8 + 0.4)", "X*_2 = 0.2 / (0.6 + 0.4)"]
+    },
+    {
+        "Enunciado": "Si un sistema tiene dos estados, secos y lluviosos, y las probabilidades de transición son p11 = 0.7 y p22 = 0.5, ¿qué valor cumple la ecuación de balance estacionario para X*_1?",
+        "R_Correcta": "X*_1(0.3) + 0.5(1 - X*_1) = X*_1",
+        "R_Falsas": ["X*_1(0.5) + 0.5(1 - X*_1) = X*_1", "X*_1(0.4) + 0.3(1 - X*_1) = X*_1", "X*_1(0.7) + 0.2(1 - X*_1) = X*_1"]
+    },
+    {
+        "Enunciado": "En una cadena de Markov con dos estados (seco y lluvioso), si la probabilidad de que hoy sea lluvioso es 0.4 y la probabilidad de transición de seco a lluvioso es 0.2, ¿cuál es la probabilidad de que mañana sea lluvioso si hoy es seco?",
+        "R_Correcta": "0.2",
+        "R_Falsas": ["0.4", "0.6", "0.8"]
+    },
+    {
+        "Enunciado": "Considerando un sistema con dos estados donde las probabilidades de transición son p11 = 0.6, p12 = 0.4, p21 = 0.5, y p22 = 0.5, ¿cuál es el valor de X*_1, la probabilidad estacionaria del estado 1?",
+        "R_Correcta": "X*_1 = 0.5 / (0.5 + 0.4)",
+        "R_Falsas": ["X*_1 = 0.6 / (0.4 + 0.6)", "X*_1 = 0.4 / (0.5 + 0.6)", "X*_1 = 0.5 / (0.6 + 0.4)"]
+    }
+]');
+INSERT INTO Leccion VALUES(3431,"3.4.3E Ejercicios de Ecuación de Chapman-Kolmogorov", 1, 1,
+'[
+    {
+        "Enunciado": "¿Qué representa la ecuación de Chapman-Kolmogorov en una cadena de Markov?",
+        "R_Correcta": "La relación entre probabilidades de transición de diferentes tiempos.",
+        "R_Falsas": ["La fórmula para calcular probabilidades estacionarias.", "El cálculo de la probabilidad en tiempo continuo.", "Una ecuación que calcula estados iniciales."]
+    },
+    {
+        "Enunciado": "Dada la ecuación de Chapman-Kolmogorov en términos discretos: nn P(t + s) = P(t)P(s), nn ¿qué propiedad de la matriz de transición se está utilizando?",
+        "R_Correcta": "La propiedad de multiplicación de matrices de transición.",
+        "R_Falsas": ["La propiedad de aditividad.", "La propiedad de conmutatividad.", "La propiedad de probabilidad total."]
+    },
+    {
+        "Enunciado": "¿Cómo se interpreta el término P(t+s) en la ecuación de Chapman-Kolmogorov?",
+        "R_Correcta": "Es la probabilidad de transición en el tiempo t+s.",
+        "R_Falsas": ["Es la probabilidad de transición entre dos estados.", "Es la probabilidad de un estado estacionario.", "Es la probabilidad en el tiempo t."]
+    },
+    {
+        "Enunciado": "Para un sistema continuo, la ecuación de Chapman-Kolmogorov toma la forma de una integral. ¿Qué representa el término dentro de la integral?",
+        "R_Correcta": "La densidad de transición entre los estados en tiempos diferentes.",
+        "R_Falsas": ["La suma de las probabilidades de transición.", "La probabilidad de estar en un estado dado.", "La diferencia entre probabilidades en diferentes tiempos."]
+    },
+    {
+        "Enunciado": "¿Cómo se relaciona la ecuación de Chapman-Kolmogorov con la homogeneidad en una cadena de Markov?",
+        "R_Correcta": "Indica que las probabilidades de transición solo dependen de la diferencia entre los tiempos, no del tiempo absoluto.",
+        "R_Falsas": ["Implica que las probabilidades de transición dependen del estado inicial.", "Establece que las probabilidades de transición son constantes a lo largo del tiempo.", "Se refiere a que las probabilidades de transición cambian con el tiempo."]
+    }
+]');
+INSERT INTO Leccion VALUES(3441,"3.4.4E Ejercicios de  Aplicación de cadena de Markov", 1, 1,
+'[
+    {
+        "Enunciado": "Considerando la siguiente matriz de transición para un proceso de Markov que modela días lluviosos y secos: nn P = n( 0.4   0.2 )n( 0.6   0.8 ) nn ¿Cuál es la probabilidad estacionaria para el estado de días secos (X*_1)?",
+        "R_Correcta": "X*_1 = 0.25",
+        "R_Falsas": ["X*_1 = 0.5", "X*_1 = 0.75", "X*_1 = 0.2"]
+    },
+    {
+        "Enunciado": "En el modelo de Markov que representa días lluviosos y secos con la matriz de transición dada, si hoy es un día lluvioso, ¿cuál es la probabilidad de que mañana también sea lluvioso?",
+        "R_Correcta": "0.8",
+        "R_Falsas": ["0.4", "0.6", "0.2"]
+    },
+    {
+        "Enunciado": "Utilizando el proceso de Markov para modelar días lluviosos y secos con la matriz de transición: nn P = n( 0.4   0.2 )n( 0.6   0.8 ) nn ¿Cuál es la probabilidad de que, partiendo de un día seco, al segundo día también sea seco?",
+        "R_Correcta": "0.32",
+        "R_Falsas": ["0.4", "0.25", "0.48"]
+    },
+    {
+        "Enunciado": "Si en una cadena de Markov para días lluviosos y secos se tiene una probabilidad de transición de seco a lluvioso de 0.6, ¿cuál es la probabilidad de que en dos días consecutivos, ambos sean lluviosos?",
+        "R_Correcta": "0.64",
+        "R_Falsas": ["0.8", "0.48", "0.36"]
+    },
+    {
+        "Enunciado": "Dada la matriz de transición para un proceso de Markov de días lluviosos y secos, si hoy es un día seco, ¿cuál es la probabilidad de que en tres días sea lluvioso?",
+        "R_Correcta": "0.488",
+        "R_Falsas": ["0.6", "0.35", "0.25"]
+    }
+]');
+INSERT INTO Leccion VALUES(4111,"4.1.1E Ejercicios de Prueba de patrones uniformes", 1, 1,
+'[
+    {
+        "Enunciado": "En una región geográfica de 1000 km², se desea aplicar una prueba de patrones uniformes para evaluar si los incendios forestales están distribuidos uniformemente. Si se divide el área en 100 celdas de igual tamaño y se registran los incendios en cada celda, ¿qué debe hacerse para evaluar la uniformidad de los eventos?",
+        "R_Correcta": "Calcular la media y la varianza de los incendios por celda y comparar con un patrón uniforme.",
+        "R_Falsas": ["Dividir el área en celdas de tamaño diferente.", "Contar los incendios sin calcular la media y varianza.", "Aplicar la prueba de hipótesis ANOVA."]
+    },
+    {
+        "Enunciado": "Si al realizar una prueba de patrones uniformes en un área se obtiene una varianza significativamente menor que la media, ¿qué conclusión se puede sacar?",
+        "R_Correcta": "Los eventos están distribuidos de manera más regular de lo esperado en un patrón uniforme.",
+        "R_Falsas": ["Los eventos están distribuidos de manera completamente aleatoria.", "Los eventos están distribuidos uniformemente.", "La varianza no tiene relevancia en esta prueba."]
+    },
+    {
+        "Enunciado": "En una prueba de patrones uniformes, ¿qué prueba estadística es más adecuada para verificar la hipótesis de que los eventos están distribuidos de manera uniforme?",
+        "R_Correcta": "La prueba Chi-cuadrada.",
+        "R_Falsas": ["La prueba t de Student.", "La prueba de Kolmogorov-Smirnov.", "La prueba de correlación de Pearson."]
+    },
+    {
+        "Enunciado": "Si se utiliza la prueba de patrones uniformes para analizar la distribución de árboles en un bosque, ¿cuál sería un indicador clave de que los árboles están distribuidos uniformemente?",
+        "R_Correcta": "La varianza del número de árboles por celda es cercana a la media.",
+        "R_Falsas": ["La media es mucho mayor que la varianza.", "La varianza es significativamente mayor que la media.", "La media y varianza no tienen importancia en este contexto."]
+    },
+    {
+        "Enunciado": "Al aplicar la prueba de patrones uniformes en la distribución de estrellas en una porción del cielo, se obtiene una varianza significativamente mayor que la media. ¿Qué implica esto acerca de la distribución de las estrellas?",
+        "R_Correcta": "Las estrellas están agrupadas o presentan una distribución no uniforme.",
+        "R_Falsas": ["Las estrellas están distribuidas uniformemente.", "Las estrellas están distribuidas de forma regular.", "No se puede sacar ninguna conclusión de estos resultados."]
+    }
+]');
+INSERT INTO Leccion VALUES(4121,"4.1.2E Ejercicios de Pruebas de aleatoriedad espacial", 1, 1,
+'[
+    {
+        "Enunciado": "En un análisis de aleatoriedad espacial, ¿cuál de las siguientes pruebas se utiliza para comparar la distribución de eventos con un modelo completamente aleatorio?",
+        "R_Correcta": "Prueba Chi-cuadrada.",
+        "R_Falsas": ["Índice de Morisita.", "KNN (Vecino más cercano).", "Método de Monte Carlo."]
+    },
+    {
+        "Enunciado": "¿Qué mide el índice de Morisita en una prueba de aleatoriedad espacial?",
+        "R_Correcta": "La agregación de eventos en un área determinada.",
+        "R_Falsas": ["La distancia promedio entre puntos.", "La similitud entre una distribución observada y un modelo aleatorio.", "La densidad de eventos en una región específica."]
+    },
+    {
+        "Enunciado": "Si quieres evaluar la distancia entre puntos en función de sus vecinos más cercanos en una prueba de aleatoriedad espacial, ¿qué método utilizarías?",
+        "R_Correcta": "KNN (Vecino más cercano).",
+        "R_Falsas": ["Índice de Morisita.", "Prueba Chi-cuadrada.", "Simulación Monte Carlo."]
+    },
+    {
+        "Enunciado": "¿Cuál es el propósito de la simulación Monte Carlo en pruebas de aleatoriedad espacial?",
+        "R_Correcta": "Simular múltiples distribuciones aleatorias para comparar con la distribución observada.",
+        "R_Falsas": ["Medir la densidad de puntos en un área dada.", "Determinar la distancia entre puntos y sus vecinos más cercanos.", "Comparar la varianza y la media de una distribución."]
+    },
+    {
+        "Enunciado": "En un análisis espacial, si los eventos parecen estar más agrupados que lo que sugiere un patrón aleatorio, ¿cuál sería un posible valor del índice de Morisita?",
+        "R_Correcta": "Mayor que 1.",
+        "R_Falsas": ["Cercano a 0.", "Exactamente 1.", "Menor que 1."]
+    }
+]');
+INSERT INTO Leccion VALUES(4131,"4.1.3E Ejercicios de Patrones agrupados", 1, 1,
+'[
+    {
+        "Enunciado": "En un análisis espacial, ¿qué característica define un patrón agrupado?",
+        "R_Correcta": "Las entidades tienden a agruparse en ciertas áreas, en lugar de distribuirse de manera uniforme.",
+        "R_Falsas": ["Las entidades están distribuidas uniformemente en todo el espacio.", "Las entidades están distribuidas de manera completamente aleatoria.", "Las entidades se reparten equitativamente entre todas las áreas."]
+    },
+    {
+        "Enunciado": "¿Cuál de los siguientes ejemplos es un caso de patrón agrupado?",
+        "R_Correcta": "Distribución de enfermedades en áreas urbanas.",
+        "R_Falsas": ["Reparto aleatorio de árboles en un bosque.", "Distribución uniforme de casas en una zona residencial.", "Distribución de postes de luz a intervalos regulares."]
+    },
+    {
+        "Enunciado": "¿Qué prueba estadística puede utilizarse para determinar si una distribución de entidades sigue un patrón agrupado?",
+        "R_Correcta": "Índice de Morisita.",
+        "R_Falsas": ["Prueba de Kolmogorov-Smirnov.", "ANOVA.", "Prueba de correlación de Pearson."]
+    },
+    {
+        "Enunciado": "En el análisis de un patrón agrupado, ¿qué método sería adecuado para medir la distancia entre las entidades y sus vecinos más cercanos?",
+        "R_Correcta": "K-vecinos más cercanos (KNN).",
+        "R_Falsas": ["Método Monte Carlo.", "Prueba Chi-cuadrada.", "Índice de Morisita."]
+    },
+    {
+        "Enunciado": "Si un análisis muestra que la distribución de negocios en una ciudad tiene una alta varianza en relación con la media, ¿qué tipo de patrón sugiere este resultado?",
+        "R_Correcta": "Patrón agrupado.",
+        "R_Falsas": ["Patrón aleatorio.", "Distribución uniforme.", "Patrón regular."]
+    }
+]');
+INSERT INTO Leccion VALUES(4211,"4.2.1E Ejercicios de Análisis de primer orden", 1, 1,
+'[
+    {
+        "Enunciado": "En un análisis del vecino más cercano de primer orden, ¿cuál es el primer paso a realizar?",
+        "R_Correcta": "Definir el área de estudio.",
+        "R_Falsas": ["Recolectar los datos mediante coordenadas (x, y).", "Calcular la media de las distancias.", "Generar puntos aleatorios en el área."]
+    },
+    {
+        "Enunciado": "Durante un análisis de primer orden, ¿cómo se obtiene la distancia entre los puntos o vecinos más cercanos?",
+        "R_Correcta": "Se calcula la distancia euclidiana entre cada punto y su vecino más cercano.",
+        "R_Falsas": ["Se mide la distancia media entre todos los puntos.", "Se utiliza la distancia de Manhattan.", "Se calcula la distancia máxima entre todos los puntos."]
+    },
+    {
+        "Enunciado": "Después de calcular las distancias entre los puntos y sus vecinos más cercanos, ¿qué se debe hacer en un análisis del vecino más cercano de primer orden?",
+        "R_Correcta": "Calcular la media de las distancias obtenidas.",
+        "R_Falsas": ["Comparar las distancias con una distribución uniforme.", "Realizar una prueba de Chi-cuadrada.", "Determinar la varianza de las distancias."]
+    },
+    {
+        "Enunciado": "En el análisis del vecino más cercano, una vez que se han generado puntos aleatorios y se ha repetido el proceso, ¿qué conclusión se puede sacar si las distancias promedio observadas son significativamente menores que las distancias aleatorias?",
+        "R_Correcta": "Existe un patrón de agrupamiento en la distribución de los puntos.",
+        "R_Falsas": ["Los puntos están distribuidos de manera completamente aleatoria.", "Los puntos están distribuidos uniformemente.", "La varianza es demasiado alta para sacar conclusiones."]
+    },
+    {
+        "Enunciado": "En un análisis del vecino más cercano de primer orden, ¿qué información proporcionan las coordenadas (x, y) recolectadas?",
+        "R_Correcta": "La ubicación espacial precisa de cada punto en el área de estudio.",
+        "R_Falsas": ["La distancia exacta entre cada par de puntos.", "El tamaño del área de estudio.", "La densidad de los puntos en cada región del área de estudio."]
+    }
+]');
+INSERT INTO Leccion VALUES(4221,"4.2.2E Ejercicios de Análisis de segundo orden", 1, 1,
+'[
+    {
+        "Enunciado": "¿Qué mide la función K de Ripley en el análisis de segundo orden?",
+        "R_Correcta": "La densidad de eventos en función de la distancia entre los puntos.",
+        "R_Falsas": ["La distancia euclidiana entre los puntos.", "La densidad total de puntos en el área de estudio.", "La varianza de las distancias entre puntos."]
+    },
+    {
+        "Enunciado": "¿Qué representa la transformación de la función K de Ripley en la función L?",
+        "R_Correcta": "Facilita la interpretación al normalizar la escala de la función K.",
+        "R_Falsas": ["Aumenta la complejidad del cálculo.", "Elimina la influencia de la densidad observada.", "Modifica los resultados obtenidos con la función K."]
+    },
+    {
+        "Enunciado": "En el análisis de segundo orden, si la función L(r) es mayor que lo esperado bajo un modelo aleatorio, ¿qué implica esto?",
+        "R_Correcta": "Los puntos tienden a agruparse.",
+        "R_Falsas": ["Los puntos están distribuidos de manera completamente aleatoria.", "Los puntos tienden a dispersarse.", "No se puede sacar ninguna conclusión."]
+    },
+    {
+        "Enunciado": "¿Qué diferencia principal existe entre el análisis de primer orden y el de segundo orden en cuanto a la distribución de los puntos?",
+        "R_Correcta": "El análisis de segundo orden evalúa las interacciones entre los puntos.",
+        "R_Falsas": ["El análisis de segundo orden solo mide distancias absolutas.", "El análisis de primer orden es más detallado en las interacciones.", "El análisis de primer orden no incluye la densidad de puntos."]
+    },
+    {
+        "Enunciado": "¿Cuál es el propósito del análisis de la distribución de distancias en el análisis de segundo orden?",
+        "R_Correcta": "Determinar patrones de agrupamiento o dispersión entre los puntos.",
+        "R_Falsas": ["Identificar la ubicación precisa de cada punto.", "Calcular la distancia máxima entre los puntos.", "Medir la densidad de puntos en un área específica."]
+    }
+]');
+INSERT INTO Leccion VALUES(4301,"4.3E Ejercicios de Patrones de puntos marcados", 1, 1,
+'[
+    {
+        "Enunciado": "En un análisis de patrones de puntos marcados, ¿qué información se utiliza para describir cada punto?",
+        "R_Correcta": "Las coordenadas (x, y) y los atributos asociados a cada punto.",
+        "R_Falsas": ["Únicamente las coordenadas (x, y).", "La distancia entre los puntos.", "Solo la densidad de puntos en el área."]
+    },
+    {
+        "Enunciado": "En el análisis de patrones de puntos marcados, ¿qué representa un *atributo* de un punto?",
+        "R_Correcta": "Una característica específica asociada al punto, como tipo de evento o valor.",
+        "R_Falsas": ["La distancia entre puntos.", "La ubicación del punto en coordenadas (x, y).", "La densidad de puntos en el área."]
+    },
+    {
+        "Enunciado": "Si en un análisis de patrones de puntos marcados en una ciudad los puntos representan ubicaciones de tiendas, ¿qué sería un ejemplo de un atributo asociado a cada punto?",
+        "R_Correcta": "El tipo de tienda (por ejemplo, supermercado, librería, etc.).",
+        "R_Falsas": ["La coordenada exacta del punto.", "La distancia entre las tiendas.", "El área total de la ciudad."]
+    },
+    {
+        "Enunciado": "En un estudio de distribución de árboles en un bosque, ¿cuál de los siguientes podría ser un atributo asociado a cada punto (árbol) en un análisis de puntos marcados?",
+        "R_Correcta": "El tipo de especie del árbol.",
+        "R_Falsas": ["La distancia al árbol más cercano.", "La altura promedio de los árboles en el área.", "La densidad de árboles en el bosque."]
+    },
+    {
+        "Enunciado": "Cuando se realiza un análisis de patrones de puntos marcados, ¿qué tipo de análisis adicional se puede hacer con los atributos asociados a los puntos?",
+        "R_Correcta": "Evaluar cómo los atributos influyen en la disposición espacial de los puntos.",
+        "R_Falsas": ["Calcular únicamente la media de las distancias entre puntos.", "Determinar la probabilidad de eventos sin considerar atributos.", "Analizar solo las coordenadas espaciales sin incluir atributos."]
+    }
+]');
