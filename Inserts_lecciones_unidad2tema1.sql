@@ -1,4 +1,3 @@
-
 INSERT INTO Leccion VALUES(1000,"1. Fundamentos de criptografía", 2, 0,
 '{"contenido":
 "Tremendo xd"
