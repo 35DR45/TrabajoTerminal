@@ -1,5 +1,5 @@
 USE mydb;
-delete from Leccion where Materia=1 && Tipo=1;
+delete from Leccion where Materia=1 and Tipo=1;
 INSERT INTO Leccion VALUES(1111,"1.1.1E Ejercicios de medidas de tendencia central para datos agrupados y no agrupados", 1, 1,
 '[
     {
