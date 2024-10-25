@@ -449,7 +449,7 @@ INSERT INTO Leccion VALUES(4100,"4.1 Prueba de patrones espaciales: método de r
 '{"contenido":[
 "Pruebas de patrones espaciales: método de recuento de celdas"
 ]}');
-/*INSERT INTO Leccion VALUES(4110,"4.1.1 Prueba de patrones uniformes", 1, 0,
+INSERT INTO Leccion VALUES(4110,"4.1.1 Prueba de patrones uniformes", 1, 0,
 '{"contenido":[
 "Utilizado para evaluar si los eventos se encuentran distribuidos de manera uniforme en un área específica, el procedimiento consiste en:",
 "*Definir el área de estudio",
@@ -482,7 +482,7 @@ INSERT INTO Leccion VALUES(4200,"4.2 Análisis del vecino más cercano", 1, 0,
 '{"contenido":[
 "Técnica estadística para evaluar la distribución espacial que tienen los puntos en un área determinada."
 ]}');
-/*INSERT INTO Leccion VALUES(4210,"4.2.1 Análisis de primer orden", 1, 0,
+INSERT INTO Leccion VALUES(4210,"4.2.1 Análisis de primer orden", 1, 0,
 '{"contenido":[
 "*Defines el área de estudio",
 "*Recolectas los datos mediante coordenadas (x,y)",
@@ -503,6 +503,5 @@ INSERT INTO Leccion VALUES(4220,"4.2.2 Análisis de segundo orden", 1, 0,
 INSERT INTO Leccion VALUES(4300,"4.3 Patrones de puntos marcados ", 1, 0,
 '{"contenido":[
 "Disposición de puntos en un área determinada, se analizan características especificas de cada punto como su localización , sus atributos y sus eventos asociados , los datos suelen ser coordenadas (x,y) y atributos asociados a cada punto."
-
 ]}');
 
