@@ -1,0 +1,15 @@
+.subject_name{
+    font-size: x-large;
+    font-weight: bold;
+    color: black;
+}
+
+.btn-back{
+    border: solid;
+    margin-top: 5px;
+    border-radius: 15px;
+    font-size: 20px;
+    padding: 5px 10px;
+    text-decoration: none;
+    width: max-content;
+}

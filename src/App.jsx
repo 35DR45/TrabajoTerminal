@@ -9,6 +9,8 @@ import Verified_user from "./components/screens/verified_user";
 import Recovery_sent from "./components/screens/recovery_Sent";
 import Student from "./components/screens/student";
 import Contenido_Curso from "./components/screens/contenido_Curso";
+import Profile from "./components/screens/profile";
+import Progress from "./components/screens/progress";
 
 const App = () =>{
   return (
@@ -23,6 +25,8 @@ const App = () =>{
         <Route path="/tutor" element={<Tutor/>}/>
         <Route path="/admin" element={<Tutor/>}/>
         <Route path="/student" element={<Student/>}/>
+        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/profile/progress" element={<Progress/>}/>
         <Route path="/curso/:cursoID" element={<Contenido_Curso/>}/>
 
       </Routes>

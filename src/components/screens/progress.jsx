@@ -1,9 +1,12 @@
-import Card from "../../../molecules/student/card_courses/card";
-import ToolsImage from "../../../../assets/ToolsImage.png"
-import "../../CSS/courses.css"
+import Footer from "../organisms/footer/footer";
+import Header from "../organisms/header/header";
 import { useEffect, useState } from "react";
+import "./CSS/progress.css"
+import { Link } from "react-router-dom";
+import Progress_Card from "../organisms/progress/progress_card";
+import Profile_Button from "../atoms/perfil/profile_button";
 
-export default function Courses(){
+export default function Progress(){
 
     const [subjects, setSubjects] = useState([]);
 
@@ -25,18 +28,21 @@ export default function Courses(){
     // const materias = [{NombreMateria: "Statistical tools for data mining"}, {NombreMateria: "Introduction to Cryptography"}]
 
     console.log(subjects);
-
+    
     return(
         <> 
+            <Header/>
+            <h2 className="Courses_Section">Tu progreso</h2>
             <div className="Course_Container">
             {subjects.map((subject, index) => (
-                <Card key={index} courseName={subject.NombreMateria} id={subject.idMateria}/>
+                <div key={index}>
+                    <p className="subject_name">{subject.NombreMateria}</p>
+                    <Progress_Card />
+                </div>
             ))}
             </div>
-            <div className="Tools_container">
-                <img src={ToolsImage} alt="Logo de herrramientas"/>
-                <h3>Herramientas</h3>
-            </div>
+            <Link to={"/profile"} ><button type="button" className="btn-back"><Profile_Button text={"Volver"}/></button></Link>
+            <Footer/>
         </>
     )
 }

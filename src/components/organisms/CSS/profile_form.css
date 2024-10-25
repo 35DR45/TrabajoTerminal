@@ -1,0 +1,22 @@
+.profile_form{
+    background-color: #811642;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
+    border-radius: 20px;
+    padding: 25px;
+    gap: 25px;
+}
+
+.profile_entry{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 80%;
+}
+
+.profile_label{
+    font-size: larger;
+}

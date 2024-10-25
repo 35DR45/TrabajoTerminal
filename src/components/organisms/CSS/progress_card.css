@@ -1,0 +1,10 @@
+.Progress_Container{
+    background-color: #811642;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.progress_text{
+    font-weight: 400;
+    font-size: larger;
+}
