@@ -24,10 +24,16 @@ export default function Grouped_btns(){
                     <Link to={"/login"} className="btn-header"><Btn_Login/></Link>
                 </>
             );
+        }else if(location.pathname === "/profile"){
+            return (
+                <>
+                    <Link to={"/student"} className="btn-header">Cursos</Link>
+                </>
+            );
         }else {
             return (
                 <>
-                    TT 2024-B169
+                    <Link to={"/profile"} className="btn-header">Perfil</Link>
                 </>
             );
         }

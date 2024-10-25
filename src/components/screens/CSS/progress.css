@@ -9,7 +9,16 @@
     margin-top: 5px;
     border-radius: 15px;
     font-size: 20px;
-    padding: 5px 10px;
+    padding: 10px 20px;
     text-decoration: none;
     width: max-content;
+    font-size: x-large;
+    font-weight: 900;
+}
+
+.back_container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
 }
