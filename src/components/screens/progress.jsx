@@ -41,7 +41,9 @@ export default function Progress(){
                 </div>
             ))}
             </div>
-            <Link to={"/profile"} ><button type="button" className="btn-back"><Profile_Button text={"Volver"}/></button></Link>
+            <div className="back_container">
+                <Link to={"/profile"} ><button type="button" className="btn-back"><Profile_Button text={"Volver"}/></button></Link>
+            </div>
             <Footer/>
         </>
     )

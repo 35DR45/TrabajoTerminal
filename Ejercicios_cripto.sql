@@ -1,5 +1,5 @@
 USE mydb;
-delete from Leccion where Materia=2 && Tipo=1;
+delete from Leccion where Materia=2 and Tipo=1;
 INSERT INTO Leccion VALUES(1201,"1.2E Ejercicios de aritmética en campos primos", 2, 1,
 '[
     {
