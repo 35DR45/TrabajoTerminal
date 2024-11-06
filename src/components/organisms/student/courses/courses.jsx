@@ -1,8 +1,8 @@
-import Card from "../../../molecules/student/card_courses/card";
 import ToolsImage from "../../../../assets/ToolsImage.png"
 import "../../CSS/courses.css"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Card_Courses from "../../../molecules/student/card_courses/card_Courses";
 
 export default function Courses(){
 
@@ -31,7 +31,7 @@ export default function Courses(){
         <> 
             <div className="Course_Container">
             {subjects.map((subject, index) => (
-                <Card key={index} courseName={subject.NombreMateria} id={subject.idMateria}/>
+                <Card_Courses key={index} courseName={subject.NombreMateria} id={subject.idMateria}/>
             ))}
             </div>
             <Link to={"/tools"} className="Tools_container" >

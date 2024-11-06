@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import Leccion from "../../atoms/materia/leccion";
+// import Leccion from "../../atoms/materia/leccion";
 import Tema from "../../atoms/materia/tema";
 import "../../organisms/CSS/materia.css"
 import { useEffect, useState } from "react";
@@ -13,12 +13,12 @@ export default function Tema_Leccion(){
     const [temario, setTemario] = useState([]);
 
     useEffect(() => {
-      // Función para obtener los datos de la API
+        // Función para obtener los datos de la API
         const fetchTemario = async () => {
         try {
-            const response = await fetch(`/api/SeeLC/${params.cursoID}`); // Aquí va la URL de tu API
+            const response = await fetch(`/api/SeeLC/${params.cursoID}`); 
             const data = await response.json();
-            setTemario(data); // Asumo que 'data' es un array de materias
+            setTemario(data); 
         } catch (error) {
             console.error("Error fetching the temario:", error);
         }
