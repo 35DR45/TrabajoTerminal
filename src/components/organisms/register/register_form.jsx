@@ -47,7 +47,7 @@ export default function Register_form(){
     // Validar email en cada cambio
     const handleEmailChange = (e) => {
         const value = e.target.value;
-        setPassword(value);
+        setEmail(value);
         if (!regexEmail.test(value)) {
             setEmailError("Error: Su email debe cumplir con el formato adecuado: ejemplo@algo.com");
         } else {
