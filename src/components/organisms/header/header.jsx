@@ -6,13 +6,13 @@ export default function Header(){
 
     const renderLogo = () =>{
 
-        if (location.pathname === "/student"){
+        if (location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register"){
             return (
-                <Link to={"/"} className="btn-header">Cerrar sesión</Link>
+                <Link to={"/"}>TT 2024-B169</Link>
             );
         }else{
             return (
-                <Link to={"/"}>TT 2024-B169</Link>
+                <Link to={"/"} className="btn-header">Cerrar sesión</Link>
             );
         }
         

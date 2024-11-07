@@ -5,10 +5,12 @@ import Forgotten from "../../molecules/login/forgotten";
 import Pass from "../../molecules/login/pass";
 import UserName from "../../molecules/login/userName";
 import '../CSS/login_form.css'
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from '../../../UserContext';
 
 export default function Login_form(){
 
+    const { setUser } = useContext(UserContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -32,6 +34,7 @@ export default function Login_form(){
                 // Redirige al usuario a la URL /registrado
                 const data = await response.json();
                 console.log('Respuesta exitosa, Encontro coincidencia?',data);
+                setUser(username)
                 navigate("/student");
             } else {
                 console.error('Usuario no registrado');
