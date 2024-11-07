@@ -23,6 +23,8 @@ export default function Login_form(){
             pass: password
         }
         try{
+            console.log(JSON.stringify(FormData));
+            
             const response = await fetch('api/Login',{
                 method: 'POST',
                 headers: {
@@ -33,7 +35,7 @@ export default function Login_form(){
             if (response.ok) {
                 // Redirige al usuario a la URL /registrado
                 const data = await response.json();
-                console.log('Respuesta exitosa, Encontro coincidencia?',data);
+                // console.log('Respuesta exitosa, Encontro coincidencia?',data);
                 setUser(username)
                 navigate("/student");
             } else {

@@ -11,7 +11,6 @@ const Student = () => {
             <h2 className="Courses_Section">
                 Cursos
             </h2>
-            
             <Courses />
             <Footer />
         </>

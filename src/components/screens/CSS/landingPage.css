@@ -7,6 +7,19 @@
 .lp-text{
     color: #474747;
     margin: 0px;
-    padding: 0px 30px 0px 30px;
+    padding: 0px 100px 0px 100px;
     text-align: justify;
+}
+
+.ft-text{
+    margin: 0px;
+    padding: 0px 10px 0px 10px;
+    text-align: justify;
+}
+
+.ft-title{
+    font-size: xx-large;
+    margin: 0px;
+    padding: 0px 10px 20px 10px;
+    text-align: right;
 }

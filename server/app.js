@@ -49,10 +49,13 @@ app.post('/api/Login',(req,res)=>{
 
         if(err) return res.send("Error al iniciar sesion")
 
-        if(result.length > 0){
-            
+        if(result.length >= 0){
             const user = result[0];
-            const match = await bcrypt.compare(req.body.pass, user.pass);
+            console.log(result);
+            const contraseñaEnviada = req.body.pass;
+            const contraseñaAlmacenada =  user.pass;
+            const match = await bcrypt.compare(contraseñaEnviada,contraseñaAlmacenada);
+            console.log(match);
             if(match){
                 return res.json({status:"Inicio de Sesión Exitoso"});
             }else{
