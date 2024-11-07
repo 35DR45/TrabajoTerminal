@@ -19,8 +19,8 @@ app.use(cors({
 const db=mysql.createConnection({
     host:"localhost",
     user: "root",
-    password: "PaS$R4z32",
-    // password: "1234",
+    //password: "PaS$R4z32",
+    password: "1234",
     database: "mydb",
 });
 
@@ -384,6 +384,20 @@ app.get('/api/ProgTotal',(req,res) =>{
         console.log("materia: "+req.body.materia)
         if(err){
             return res.send("Error al calcular progreso")
+        } 
+        else {
+            console.log(result)
+            return res.send(result)
+        }
+    })
+});
+//Emparejar
+app.get('/api/Pair',(req,res) =>{
+    const query = "select NombreUsuario, Telefono from Usuario where idUsuario IN (select idUsuario from Progreso where rendimiento=2 AND Leccion_Tipo=1 AND (idLeccion,idMateria) IN (select idLeccion,idMateria from progreso where rendimiento=0 and idUsuario=?));";
+    db.query(query,req.body.id,(err,result) =>{
+        console.log("id: "+req.body.id)
+        if(err){
+            return res.send("Error al buscar tutor")
         } 
         else {
             console.log(result)
