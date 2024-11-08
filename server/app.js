@@ -39,29 +39,41 @@ app.get('/',(req,res)=>{
         }
 */
 app.post('/api/Login',(req,res)=>{
+    const {user,pass} =req.body;
     
+    if(user == "" || pass == ""){
+        console.log("Vacios");
+        return res.status(400).json({status:"Usuario o Contraseña vacios"})
+    }    
+
     const query = "SELECT * FROM usuario WHERE NombreUsuario = ?";
 
-    db.query(query,[req.body.user,req.body.pass],async (err,result) =>{
+    db.query(query,[user,pass],async (err,result) =>{
 
-        console.log("recibido usuario:"+req.body.user);
-        console.log("recibido contrasena:"+req.body.pass); 
+        console.log("recibido usuario:"+ user);
+        console.log("recibido contrasena:"+ pass); 
 
         if(err) return res.send("Error al iniciar sesion")
 
         if(result.length >= 0){
-            const user = result[0];
-            console.log(result);
-            const contraseñaEnviada = req.body.pass;
-            const contraseñaAlmacenada =  user.pass;
-            const match = await bcrypt.compare(contraseñaEnviada,contraseñaAlmacenada);
-            console.log(match);
-            if(match){
-                return res.json({status:"Inicio de Sesión Exitoso"});
+            if(result[0] == undefined){
+                console.log("No encontro datos asi que es undefined")
+                return res.status(400).json({error:"Usuario o Contraseña no definidos"})
+
             }else{
-                return res.json({status:"Inicio de Sesión Fallido"});
-            }
-            
+                const user_res = result[0];
+                console.log(result);
+                const contraseñaAlmacenada =  user_res.pass;
+                const match = await bcrypt.compare(pass,contraseñaAlmacenada);
+                console.log(match);
+                if(match){
+                    console.log("Inicio de Sesión Exitoso")
+                    return res.json({status:"Inicio de Sesión Exitoso"});
+                }else{
+                    console.log("Inicio de Sesión Fallido")
+                    return res.json({status:"Inicio de Sesión Fallido"});
+                }
+        }
         }else{
             return res.json({status:"No se encontro coincidencia"})
         }
@@ -90,17 +102,23 @@ app.post('/api/Login',(req,res)=>{
 */
 app.post('/api/Register',async (req,res) =>{
     console.log("Entro registro")
+    const { user , mail , pass , phone } = req.body
+
     const query = "INSERT INTO usuario(NombreUsuario,Correo,pass,Telefono,Tipo,Aprendizaje) values (?,?,?,?,?,?)";
+    if( user == '' || mail == '' || pass == ''){
+            console.log(" Registro Vacios");
+            return res.status(400).json({status:"Usuario o Contraseña vacios"})
+    }
 
-    const hashedPassword = await bcrypt.hash(req.body.pass, 10);
+    const hashedPassword = await bcrypt.hash(pass, 10);
 
-    db.query(query,[req.body.user,req.body.mail,hashedPassword,req.body.phone,/*req.body.type*/1,/*req.body.learning*/1],(err,result) =>{
+    db.query(query,[user,mail,hashedPassword,phone,/*req.body.type*/1,/*req.body.learning*/1],(err,result) =>{
 
-        console.log("user: "+req.body.user)
-        console.log("mail: "+req.body.mail)
-        console.log("pass: "+req.body.pass)
+        console.log("user: "+user)
+        console.log("mail: "+mail)
+        console.log("pass: "+pass)
         console.log("hashedpass: "+hashedPassword)
-        console.log("phone: "+req.body.phone)
+        console.log("phone: "+ phone)
 
         if(err){
             console.log("Usuario no creado :"+err)
@@ -287,9 +305,10 @@ app.get('/api/SeeLC',(req,res) =>{
     }
 */
 app.get('/api/SeeLC/:Materia',(req,res) =>{
+    const {Materia} = req.params
     const query = "Select idLeccion,Titulo from leccion where Materia=?";
-    db.query(query,req.params.Materia,(err,result) =>{
-        console.log("materia: "+ req.params.Materia)
+    db.query(query,Materia,(err,result) =>{
+        console.log("materia: "+ Materia)
         if(err){
             return res.send("Error al enviar Lecciones")
         } 
@@ -392,7 +411,7 @@ app.get('/api/ProgTotal',(req,res) =>{
     })
 });
 //Emparejar
-app.get('/api/Pair',(req,res) =>{
+app.get('/api/Pair',(req,res) => {
     const query = "select NombreUsuario, Telefono from Usuario where idUsuario IN (select idUsuario from Progreso where rendimiento=2 AND Leccion_Tipo=1 AND (idLeccion,idMateria) IN (select idLeccion,idMateria from progreso where rendimiento=0 and idUsuario=?));";
     db.query(query,req.body.id,(err,result) =>{
         console.log("id: "+req.body.id)
@@ -406,6 +425,10 @@ app.get('/api/Pair',(req,res) =>{
     })
 });
 
+app.get('/api/Rendimiento',(req,res) =>{
+    
+
+})
 //Recuperar puntajes
 app.get('/api/PointV',(req,res) =>{
     const query = "select IFNULL(Puntaje, 0) as Puntaje,Titulo from Progreso right Join Leccion on idMateria=Materia where idUsuario=? and Materia=? and Tipo=0;";
