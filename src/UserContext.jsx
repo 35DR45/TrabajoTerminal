@@ -1,11 +1,21 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
-// Crea el contexto
 export const UserContext = createContext();
 
 // Define el proveedor del contexto
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null); // Guarda aquí el nombre de usuario o cualquier dato relevante
+    const [user, setUser] = useState(() => {
+        return sessionStorage.getItem('user') || null;
+    });
+
+    useEffect(() => {
+        if (user){
+            sessionStorage.setItem('user', user);
+        }else{
+            sessionStorage.removeItem('user');
+        }
+
+    }, [user])
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
