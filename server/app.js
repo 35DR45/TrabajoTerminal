@@ -5,13 +5,29 @@ const app = express();
 const bcrypt = require('bcrypt');
 //const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
-const { spawn } = require('child_process');
+const {exec, spawn } = require('child_process');
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 const PORT = process.env.PORT || 3000;
 
-// Cargar el modelo de TensorFlow.js al iniciar el servidor
+//////////// Lista de bibliotecas de Python que deseas instalar para correr el script d epython
+/*const pythonPackages = ['tensorflow', 'numpy'];
+
+exec(`pip install ${pythonPackages.join(' ')}`, (error, stdout, stderr) => {
+    if (error) {
+        console.error(`Error al instalar las bibliotecas de Python: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.error(`Error: ${stderr}`);
+        return;
+    }
+    console.log(`Bibliotecas instaladas correctamente:\n${stdout}`);
+});*/
+
+
+
 /*async function loadModel() {
     // Construye la ruta completa con el prefijo `file://`
         const modelPath = `file://${path.resolve(__dirname, 'CNNB169', 'model.json')}`;
@@ -471,9 +487,12 @@ app.get('/api/ProgTotal',(req,res) =>{
 });
 //Emparejar
 app.get('/api/Pair',(req,res) => {
+    const{idUsuario}= req.body
+
     const query = "select NombreUsuario, Telefono from Usuario where idUsuario IN (select idUsuario from Progreso where rendimiento=2 AND Leccion_Tipo=1 AND (idLeccion,idMateria) IN (select idLeccion,idMateria from progreso where rendimiento=0 and idUsuario=?));";
-    db.query(query,req.body.id,(err,result) =>{
-        console.log("id: "+req.body.id)
+    
+    db.query(query,idUsuario,(err,result) =>{
+        console.log("id: "+idUsuario)
         if(err){
             return res.send("Error al buscar tutor")
         } 
@@ -531,6 +550,14 @@ function minMaxNormalize(value, min, max) {
 
 })*/
 
+/*Requiere de:{
+    "inputData":[Puntaje,
+                Respuesta a pregunta Facil(0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente),
+                estilodeAprendizaje(numero: 1 Visual,2 Auditivo, 3 Kinestesico),
+                Respuesta a pregunta Dificil(0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente),
+                si se estudio recientemente(si se leeyo la parte teorica 1 sino 0),
+                Pregunta dificil 2 (0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente)]}
+*/ 
 app.post('/api/Predpy', async (req,res) =>{
     const { inputData } = req.body; 
     const pred = inputData.map((value, index) => {
@@ -548,8 +575,6 @@ app.post('/api/Predpy', async (req,res) =>{
         result =JSON.parse(result)
         console.log(result)
     });
-
-
     // Cuando el proceso termina, envía el resultado al cliente
     pythonProcess.on('close', (code) => {
         if (code === 0) {
