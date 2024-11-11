@@ -487,12 +487,9 @@ app.get('/api/ProgTotal',(req,res) =>{
 });
 //Emparejar
 app.get('/api/Pair',(req,res) => {
-    const{idUsuario}= req.body
-
-    const query = "select NombreUsuario, Telefono from Usuario where idUsuario IN (select idUsuario from Progreso where rendimiento=2 AND Leccion_Tipo=1 AND (idLeccion,idMateria) IN (select idLeccion,idMateria from progreso where rendimiento=0 and idUsuario=?));";
-    
-    db.query(query,idUsuario,(err,result) =>{
-        console.log("id: "+idUsuario)
+    const query = "select NombreUsuario, Telefono from Usuario where Tutorado is not null and idUsuario IN (select idUsuario from Progreso where (rendimiento=1 OR rendimiento=2) AND Leccion_Tipo=1 AND (idLeccion,idMateria) IN (select idLeccion,idMateria from progreso where rendimiento=0 and idUsuario=?));";
+    db.query(query,req.body.id,(err,result) =>{
+        console.log("id: "+req.body.id)
         if(err){
             return res.send("Error al buscar tutor")
         } 
