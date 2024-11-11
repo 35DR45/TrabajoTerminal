@@ -23,14 +23,14 @@ const App = () =>{
         <Route path="/login" element={<Login_Form/>}/>
         <Route path="/forgotten" element={<Recover_Pass/>}/>
         <Route path="/forgotten/sent" element={<Recovery_sent/>}/>
-        <Route path="/tutor" element={<Tutor/>}/>
         <Route path="/admin" element={<Tutor/>}/>
+        {/* TODO: admin screen */}
         <Route path="/student" element={<Student/>}/>
-        <Route path="/profile" element={<Profile/>}/>
-        <Route path="/tools" element={<Tools/>}/>
-        <Route path="/profile/progress" element={<Progress/>}/>
         <Route path="/curso/:cursoID" element={<Contenido_Curso/>}/>
-
+        <Route path="/tools" element={<Tools/>}/>
+        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/profile/progress" element={<Progress/>}/>
+        <Route path="/tutor" element={<Tutor/>}/>
       </Routes>
     </BrowserRouter>
   )

@@ -7,10 +7,6 @@ import { UserContext } from "../../../UserContext";
 
 export default function Profile_Form(){
     const { user } = useContext(UserContext);
-    console.log(user);
-    console.log(user);
-
-    
 
     return(
         <form className="profile_form">

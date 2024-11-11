@@ -16,7 +16,7 @@ export default function Progress(){
         try {
             const response = await fetch("/api/Cursos"); // Aquí va la URL de tu API
             const data = await response.json();
-            setSubjects(data); // Asumo que 'data' es un array de materias
+            setSubjects(data); 
         } catch (error) {
             console.error("Error fetching the subjects:", error);
         }
@@ -27,8 +27,6 @@ export default function Progress(){
 
     // const materias = [{NombreMateria: "Statistical tools for data mining"}, {NombreMateria: "Introduction to Cryptography"}]
 
-    console.log(subjects);
-    
     return(
         <> 
             <Header/>

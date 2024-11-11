@@ -23,8 +23,6 @@ export default function Login_form(){
             pass: password
         }
         try{
-            console.log(JSON.stringify(FormData));
-            
             const response = await fetch('api/Login',{
                 method: 'POST',
                 headers: {
