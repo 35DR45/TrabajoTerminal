@@ -3,9 +3,13 @@ import { useContext } from "react";
 import { UserContext } from "../../UserContext";
 
 const ProtectedRoute = ({ children }) => {
-    const { loggedUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
-    return loggedUser ? children : <Navigate to="/login" replace />;
+    if(!user){
+        return <Navigate to="/login" replace />;
+    }else{
+        return children;
+    }
 };
 
 export default ProtectedRoute;

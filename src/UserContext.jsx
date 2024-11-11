@@ -9,13 +9,12 @@ export const UserProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        if (user){
+        if (user) {
             sessionStorage.setItem('user', user);
-        }else{
+        } else {
             sessionStorage.removeItem('user');
         }
-
-    }, [user])
+    }, [user]);
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
