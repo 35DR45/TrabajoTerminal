@@ -3,12 +3,71 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const app = express();
 const bcrypt = require('bcrypt');
-
+//const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
+const path = require('path');
+const { spawn } = require('child_process');
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 const PORT = process.env.PORT || 3000;
-////////TODOO
+
+// Cargar el modelo de TensorFlow.js al iniciar el servidor
+/*async function loadModel() {
+    // Construye la ruta completa con el prefijo `file://`
+        const modelPath = `file://${path.resolve(__dirname, 'CNNB169', 'model.json')}`;
+        // Crear un nuevo modelo con L2 aplicado en las capas deseadas
+        const model = await tf.loadLayersModel(modelPath)
+        //console.log("Estructura del modelo cargado:");
+        //model.layers.forEach((layer, index) => {
+        //console.log(`Capa ${index}: ${layer.name}, pesos esperados: ${layer.weights.length}`);
+    //});
+
+        const modelWithL2 = tf.sequential();
+     // Copiar la arquitectura y agregar L2
+     modelWithL2.add(tf.layers.dense({
+        units: 20,
+        activation: 'relu',
+        inputShape: [6],
+        kernelRegularizer: tf.regularizers.l2({ l2: 0.01 })
+    }));
+    modelWithL2.add(tf.layers.dropout({ rate: 0.2 }));
+
+    modelWithL2.add(tf.layers.dense({
+        units: 10,
+        activation: 'relu',
+        kernelRegularizer: tf.regularizers.l2({ l2: 0.01 })
+    }));
+    modelWithL2.add(tf.layers.dropout({ rate: 0.2 }));
+
+    modelWithL2.add(tf.layers.dense({
+        units: 3,
+        activation: 'softmax'
+    }));
+
+      // Copiar solo pesos en capas que tienen parámetros
+      for (let i = 0; i < modelWithL2.layers.length; i++) {
+        const originalLayer = model.layers[i];
+        const newLayer = modelWithL2.layers[i];
+
+        // Solo copiar pesos si ambos tienen parámetros entrenables
+        if (originalLayer.weights.length > 0 && newLayer.weights.length > 0) {
+            newLayer.setWeights(originalLayer.getWeights());
+            //console.log(`Pesos copiados en la capa ${newLayer.name}`);
+        } else {
+            //console.log(`No se copian pesos en la capa ${newLayer.name} porque no tiene parámetros.`);
+        }
+    }
+    // Compilar el nuevo modelo con regularización L2
+    modelWithL2.compile({
+        optimizer: 'adam',
+        loss: 'categoricalCrossentropy',
+        metrics: ['accuracy']
+    });
+
+    console.log("Modelo cargado y modificado con regularización L2.");
+    return modelWithL2;
+}
+*/
 
 app.use(cors({
     origin: 'http://127.0.0.1:5173',
@@ -425,10 +484,111 @@ app.get('/api/Pair',(req,res) => {
     })
 });
 
-app.get('/api/Rendimiento',(req,res) =>{
-    
+// Normalización Min-Max
+function minMaxNormalize(value, min, max) {
+    return (value - min) / (max - min);
+}
 
-})
+/*app.post('/api/Pred', async (req,res) =>{
+    const model = await loadModel()
+    const{input} = req.body;
+    if(!model){
+        return res.status(500).send('Modelo no cargado')
+    }
+    if (!Array.isArray(input)) {
+        return res.status(400).send('input debe ser un array');
+    }
+    
+     const data = input.map((value, index) => {
+        if (index === 0) return minMaxNormalize(value, 0, 5); // Normalización de 0 a 1
+        if (index === 2) return minMaxNormalize(value, 1, 3); // Asumiendo valores entre 0 y 100 para estos índices
+        return value; // Sin normalizar para otros índices
+    });
+    
+    try {
+        // Convertir los datos de entrada a un tensor
+        const inputTensor = tf.tensor2d([data], [1, data.length]);
+        const prediction = model.predict(inputTensor, { training: true });
+        const predictionArray = prediction.dataSync();
+        console.log(predictionArray)
+        // Enviar el resultado promedio de la predicción como respuesta
+        // Obtener el índice del valor más alto
+        const maxIndex = predictionArray.indexOf(Math.max(...predictionArray));
+        console.log('Clase predicha:', maxIndex);
+        var prediccion;
+        if(maxIndex===0){
+            prediccion="Apoyo"
+        }else if(maxIndex===1){
+            prediccion="Avanzado"
+        }else{
+            prediccion="Normal"
+        }
+        res.json({ prediction: prediccion });
+    } catch (error) {
+        console.error('Error al hacer la predicción:', error);
+        res.status(500).send('Error al hacer la predicción');
+    }
+
+})*/
+
+app.post('/api/Predpy', async (req,res) =>{
+    const { inputData } = req.body; 
+    const pred = inputData.map((value, index) => {
+        if (index === 0) return minMaxNormalize(value, 0, 5); // Normalización de 0 a 1
+        if (index === 2) return minMaxNormalize(value, 1, 3); // Asumiendo valores entre 0 y 100 para estos índices
+        return value; // Sin normalizar para otros índices
+    });
+    const pythonProcess = spawn('python', ['CNNB169/NN.py', JSON.stringify(pred)]);
+
+    let result = '';
+
+    // Recoge la salida del script de Python
+    pythonProcess.stdout.on('data', (data) => {
+        result += data.toString();
+        result =JSON.parse(result)
+        console.log(result)
+    });
+
+
+    // Cuando el proceso termina, envía el resultado al cliente
+    pythonProcess.on('close', (code) => {
+        if (code === 0) {
+            if (!res.headersSent) {
+                const prediction =result // Convertimos la salida a JSON
+            
+                // Acceder al array de predicciones
+                const predictions = prediction.prediction[0]; // Asegurándonos de que esté en el formato correcto
+    
+                // Encontrar el valor más grande y su índice
+                const maxPrediction = Math.max(...predictions);
+                const maxIndex = predictions.indexOf(maxPrediction);
+    
+                console.log("Valor más alto:", maxPrediction);
+                console.log("Índice del valor más alto:", maxIndex);
+                let prediccion;
+                if(maxIndex===0){
+                    prediccion="Apoyo"
+                }else if(maxIndex===1){
+                    prediccion="Avanzado"
+                }else{
+                    prediccion="Normal"
+                }
+            
+                // Enviar la respuesta con el valor más alto y su índice
+                res.json({
+                    maxPrediction,
+                    maxIndex,
+                    prediccion
+                });
+            }
+        } else {
+            if (!res.headersSent) {
+                res.status(500).send('El script de Python falló');
+            }
+        }
+    });
+});
+
 //Recuperar puntajes
 app.get('/api/PointV',(req,res) =>{
     const query = "select IFNULL(Puntaje, 0) as Puntaje,Titulo from Progreso right Join Leccion on idMateria=Materia where idUsuario=? and Materia=? and Tipo=0;";
