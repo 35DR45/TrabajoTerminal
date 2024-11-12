@@ -1,16 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import bcrypt from 'bcryptjs';
 import Btn_Login from "../../atoms/header/btn_Login";
 import Forgotten from "../../molecules/login/forgotten";
 import Pass from "../../molecules/login/pass";
 import UserName from "../../molecules/login/userName";
 import '../CSS/login_form.css'
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from '../../../UserContext';
 
 export default function Login_form(){
 
-    const { setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -23,8 +22,6 @@ export default function Login_form(){
             pass: password
         }
         try{
-            console.log(JSON.stringify(FormData));
-            
             const response = await fetch('api/Login',{
                 method: 'POST',
                 headers: {
@@ -35,9 +32,7 @@ export default function Login_form(){
             if (response.ok) {
                 // Redirige al usuario a la URL /registrado
                 const data = await response.json();
-                // console.log('Respuesta exitosa, Encontro coincidencia?',data);
                 setUser(username)
-                navigate("/student");
             } else {
                 console.error('Usuario no registrado');
             }
@@ -45,6 +40,12 @@ export default function Login_form(){
             console.log('Error: ', error);
         }
     };
+
+    useEffect(() => {
+        if (user) {
+            navigate("/student");
+        }
+    }, [user, navigate]);
 
     return(
         <form className="form-container" onSubmit={handleSubmit}>

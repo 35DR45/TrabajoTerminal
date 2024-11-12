@@ -1,5 +1,6 @@
 import Footer from "../organisms/footer/footer";
 import Header from "../organisms/header/header";
+import TTTeam from '../../assets/EquipoTT.jpeg'
 import './CSS/landingPage.css'
 
 export default function LandingPage(){
@@ -13,6 +14,8 @@ export default function LandingPage(){
             <p className="lp-text">
                 De esta manera, la aplicación se convierte en una herramienta estratégica para cubrir las brechas de conocimiento, fomentar el aprendizaje colaborativo y aprovechar al máximo los recursos de conocimiento compartido dentro de la comunidad estudiantil. Además, proporciona a los estudiantes un espacio de intercambio académico efectivo, promoviendo la construcción de una red de apoyo sólida entre pares. Con esta aplicación, los estudiantes de ESCOM podrán mejorar su comprensión en temas de alta especialización y fortalecer su desarrollo académico en áreas de creciente importancia profesional.
             </p>
+            <h1 className="lp-text">Te presentamos al equipo detrás de este proyecto</h1>
+            <div className="img-container"><img src={TTTeam} alt="Equipo de trabajo del TT 2024-B169" className="landing-img"/></div>
             <Footer/>
         </div>
     )

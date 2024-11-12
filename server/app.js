@@ -3,6 +3,8 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const app = express();
 const bcrypt = require('bcrypt');
+const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api').default;
+const waApi = WolframAlphaAPI('7Q4QUQ-HXLVH34LJR');
 //const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
 const {exec, spawn } = require('child_process');
@@ -94,8 +96,8 @@ app.use(cors({
 const db=mysql.createConnection({
     host:"localhost",
     user: "root",
-    //password: "PaS$R4z32",
-    password: "1234",
+    password: "PaS$R4z32",
+    // password: "1234",
     database: "mydb",
 });
 
@@ -644,5 +646,11 @@ app.put('/api/UpdateL',(req,res) =>{
     })
 });
 */
+
+//Test Wolfram API
+app.get('/api/Wolftam',(req,res) => {
+    waApi.getFull(req.body.operation).then(console.log).catch(console.error);
+});
+
 
 app.listen(PORT,()=> console.log("Servidor iniciado escuchando en el puerto: ",PORT))
