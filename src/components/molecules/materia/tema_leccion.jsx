@@ -8,8 +8,6 @@ export default function Tema_Leccion(){
 
     const params = useParams();
 
-    console.log("Redirigirá a ", params.cursoID);
-
     const [temario, setTemario] = useState([]);
 
     useEffect(() => {
