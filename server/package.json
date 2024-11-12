@@ -8,7 +8,6 @@
     "express": "^4.21.0",
     "mysql2": "^3.11.3",
     "nodemailer": "^6.9.13",
-    "nodemon": "^3.1.7",
-    "wolfram-alpha-api": "^0.2.1"
+    "nodemon": "^3.1.7"
   }
 }
