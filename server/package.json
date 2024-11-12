@@ -1,12 +1,14 @@
 {
   "dependencies": {
     "@tensorflow/tfjs-node": "^4.22.0",
+    "@wolfram-alpha/wolfram-alpha-api": "^23.1004.144821-RELEASE",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.21.0",
     "mysql2": "^3.11.3",
     "nodemailer": "^6.9.13",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "wolfram-alpha-api": "^0.2.1"
   }
 }
