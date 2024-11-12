@@ -3,8 +3,9 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const app = express();
 const bcrypt = require('bcrypt');
+const { APPID } = require('./apifile.js');
 const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
-const waApi = WolframAlphaAPI('7Q4QUQ-HXLVH34LJR');
+const waApi = WolframAlphaAPI(APPID);
 //const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
 const {exec, spawn } = require('child_process');
@@ -655,9 +656,10 @@ app.get('/api/Wolfram',(req,res) => {
           const subpodContent = pod.subpods.map(subpod =>
             `  <img src="${subpod.img.src}" alt="${subpod.img.alt}">`
           ).join('\n');
-          return res.send(`<h2>${pod.title}</h2>\n${subpodContent}`)
+          return `<h2>${pod.title}</h2>\n${subpodContent}`
         }).join('\n');
         console.log(output);
+        res.send(output);
       }).catch(console.error);
 });
 
