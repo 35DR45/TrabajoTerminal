@@ -28,7 +28,7 @@ export default function Tools(){
     //     fetchHerramientas();
     // }, [params.cursoID]); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
 
-    const materias = [{NombreMateria: "Calculadora Cesar", id: "asd"}, {NombreMateria: "Calculadora Tendencias Centrales", id:"fds"}]
+    const materias = [{NombreMateria: "Calculadora Cesar"}, {NombreMateria: "Calculadora Tendencias Centrales"}, {NombreMateria: "Calculadora General"}, {NombreMateria: "Calculadora Algebra modular"},{NombreMateria: "Calculadora Vigenere"}]
 
     console.log(materias);
     
