@@ -25,31 +25,38 @@ export default function Tema_Leccion(){
         fetchTemario();
     }, [params.cursoID]); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
     
-    // const listaTemas = [{Titulo: "Tema1", Subtitulos: ["Subtema1", "Subtema2", "Subtema3"]}, {Titulo: "Tema2", Subtitulos: ["Subtema10", "Subtema20", "Subtema35"]}];
+    console.log(temario);
     
-    // <ul>
-    //             {temario.map((seccion, index) => (
-    //                 <div key= {index}>
-    //                     <li ><Tema tituloTema={seccion.Titulo} /></li>
-    //                         <ul>
-    //                             {seccion.Subtitulos.map((Subtitulo, index)=> (
-    //                                 <li  key= {index}> <Leccion tituloLeccion={Subtitulo}/> </li>
-                                
-    //                             ))}
-    //                         </ul>
-    //                 </div>
-    //             ))}
-                
-    //         </ul> 
 
     return(
         <div className="listado_materias">
             <ul>
-                {temario.map((seccion, index) => (
-                    <div key= {index}>
-                        <li ><Tema tituloTema={seccion.Titulo} /></li>
+            {temario.map((elemento, index) => {
+                let Element;
+                
+                // Determina el tipo de ID y asigna el estilo adecuado
+                if (elemento.idLeccion % 1000 === 0) {
+                    // Capítulo - estilo h2
+                    Element = 'ul';
+                } else if (elemento.idLeccion % 100 === 0) {
+                    // Tema - estilo h3
+                    Element = 'ul';
+                } else if (elemento.idLeccion % 10 === 0) {
+                    // Sección - estilo p
+                    Element = 'li';
+                } else {
+                    // Sub-sección o cualquier otro caso, se puede definir un estilo por defecto aquí
+                    Element = 'span'; 
+                }
+
+                return (
+                    <div key={index}>
+                        <li>
+                            <Element><Tema tituloTema={elemento.Titulo} /></Element>
+                        </li>
                     </div>
-                ))}
+                );
+            })}
                 
             </ul> 
         </div>
