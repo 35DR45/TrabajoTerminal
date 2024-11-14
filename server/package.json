@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@tensorflow/tfjs-node": "^4.22.0",
+    "@wolfram-alpha/wolfram-alpha-api": "^23.1004.144821-RELEASE",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
