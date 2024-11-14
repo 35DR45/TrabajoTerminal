@@ -8,3 +8,11 @@
     font-size: larger;
     font-weight: bold;
 }
+
+.btn-header2{
+    width: 100%;
+    color: #242424;
+    background-color: #FFFFFF;
+    border: 5px solid #9D1B51;
+    font-size: large;
+}

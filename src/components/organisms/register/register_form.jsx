@@ -64,7 +64,6 @@ export default function Register_form(){
                 mail: email,
                 phone: '12345'
             }
-            console.log(FormData);
             try {
                 // Envía los datos del formulario al backend
                 const response = await fetch('/api/Register', {
