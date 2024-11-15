@@ -1,17 +1,30 @@
+import { useState, useContext, useEffect } from "react";
 import Footer from "../organisms/footer/footer";
 import Header from "../organisms/header/header";
 
 
 export default function Contenido_Tool1(){
+    const [Plaintext, setPlaintext] = useState('');
+    const [dsiplacement, setdisplacement] = useState('');
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //const hashedPassword = await bcrypt.hash(password, 10); 
         const FormData = {
-            text: text, 
-            displ: dsipl
+            Ptext: Plaintext, 
+            displ: dsiplacement
         }
-        console.log(text)
-        console.log(displ)
+        console.log(JSON.stringify(FormData));
+        try{
+            const response = await fetch('/api/Cesar',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(FormData)
+            });
+            console.log(response);
+        }catch(error){
+            console.log('Error: ', error);
+        }
     };
     return(
         <>
@@ -20,10 +33,13 @@ export default function Contenido_Tool1(){
             <div style={{ display: 'flex', justifyContent: 'center'}}>
                 <form className="form-container" onSubmit={handleSubmit}>
                     <label className="login-label"> Texto a cifrar: </label>
-                    <input type="text" className="login-input" placeholder="Texto a cifrar por desplazamiento"value={value} onChange={onChange}/>
-                    <label className="login-label"> Cantidad a desplazar: </label><input type="number" className="login-input" placeholder="Posciciones a desplazar"value={value} onChange={onChange}/>
-                    <button type="submit" className="btn-register-form"><Btn_Login/></button>
+                    <input type="text" className="login-input" placeholder="Texto a cifrar por desplazamiento" onChange={(e) => setPlaintext(e.target.value)}/>
+                    <label className="login-label"> Cantidad a desplazar: </label><input type="number" className="login-input" placeholder="Posciciones a desplazar" onChange={(e) => setdisplacement(e.target.value)}/>
+                    <button type="submit" className="btn-register-form">EJECUTAR</button>
                 </form>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center'}} id="result">
+
             </div>
             <Footer/>
         </>
