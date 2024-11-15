@@ -21,7 +21,8 @@ export default function Contenido_Tool1(){
                 },
                 body: JSON.stringify(FormData)
             });
-            console.log(response);
+            const data=await response.json();
+            console.log(data.result);
         }catch(error){
             console.log('Error: ', error);
         }

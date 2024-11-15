@@ -3,9 +3,9 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const app = express();
 const bcrypt = require('bcrypt');
-// const { APPID } = require('./apifile.js');
-// const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
-// const waApi = WolframAlphaAPI(APPID);
+const { APPID } = require('./apifile.js');
+const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
+const waApi = WolframAlphaAPI(APPID);
 //const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
 const {exec, spawn } = require('child_process');
@@ -668,13 +668,14 @@ app.post('/api/Cesar',(req,res) => {
     console.log(Ptext + ", " + displ)
     result = Ptext.split('').map(char => {
         let code = char.charCodeAt(0);
+        console.log(code);
         // Si es una letra mayúscula (A-Z)
         if (code >= 65 && code <= 90) {
-            return String.fromCharCode(((code - 65 + displ) % 26) + 65);
+            return String.fromCharCode(((code - 65 + parseInt(displ)) % 26) + 65);
         }     
         // Si es una letra minúscula (a-z)
         if (code >= 97 && code <= 122) {
-            return String.fromCharCode(((code - 97 + displ) % 26) + 97);
+            return String.fromCharCode(((code - 97 + parseInt(ddispl)) % 26) + 97);
         }
         // Si no es una letra, dejar el carácter tal como está
         return char;
