@@ -27,7 +27,7 @@ export default function Tools_Catalog(){
     //     fetchHerramientas();
     // }, [params.cursoID]); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
 
-    const materias = [{NombreMateria: "Calculadora Cesar"}, {NombreMateria: "Calculadora Tendencias Centrales"}, {NombreMateria: "Calculadora General"}, {NombreMateria: "Calculadora Algebra modular"},{NombreMateria: "Calculadora Vigenere"}]
+    const materias = [{NombreMateria: "Calculadora Cesar", id: "1"}, {NombreMateria: "Calculadora Tendencias Centrales", id: "2"}, {NombreMateria: "Calculadora General", id: "3"}, {NombreMateria: "Calculadora Algebra modular", id: "4"},{NombreMateria: "Calculadora Vigenere", id: "5"}]
 
     console.log(materias);
 
@@ -35,7 +35,7 @@ export default function Tools_Catalog(){
         <> 
             <div className="Tools_Container">
                     {materias.map((materia, indice) => (
-                        <Tool_Card key={indice} toolName={materia.NombreMateria}/>
+                        <Tool_Card key={indice} toolName={materia.NombreMateria} id={materia.id} />
                     ))}
             </div>
         </>

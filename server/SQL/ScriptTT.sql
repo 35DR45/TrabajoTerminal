@@ -15,8 +15,7 @@ DROP SCHEMA IF EXISTS `mydb` ;
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-;
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
 -- -----------------------------------------------------
@@ -29,9 +28,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Aprendizaje` (
   `Nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idAprendizaje`))
 ENGINE = InnoDB;
+
 INSERT INTO Aprendizaje VALUES(1,"VISUAL");
 INSERT INTO Aprendizaje VALUES(2,"KINESTESICO");
 INSERT INTO Aprendizaje VALUES(3,"AUDITIVO");
+
 -- -----------------------------------------------------
 -- Table `mydb`.`Usuario`
 -- -----------------------------------------------------
@@ -41,11 +42,13 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Usuario` (
   `idUsuario` INT NOT NULL auto_increment,
   `NombreUsuario` VARCHAR(45) NOT NULL,
   `Correo` VARCHAR(45) NOT NULL,
-  `pass` VARCHAR(120) NOT NULL,
+  `pass` VARCHAR(45) NOT NULL,
   `Telefono` VARCHAR(10) NULL,
   `Tipo` INT(2) NOT NULL DEFAULT 0,
   `Tutor` INT NULL,
+  `Tutorado` INT NULL,
   `Aprendizaje` INT NOT NULL,
+  `Reputacion` INT NOT NULL default 1000,
   PRIMARY KEY (`idUsuario`),
   CONSTRAINT `fk_Usuario_Usuario1`
     FOREIGN KEY (`Tutor`)
@@ -69,8 +72,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Materia` (
   `NombreMateria` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idMateria`))
 ENGINE = InnoDB;
+
 INSERT INTO Materia VALUES(1,"STATISTICAL TOOLS FOR DATA ANALYTICS");
 INSERT INTO Materia VALUES(2,"INTRODUCTION TO CRIPTOGRAPHY");
+
+
 
 -- -----------------------------------------------------
 -- Table `mydb`.`Leccion`
@@ -81,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Leccion` (
   `idLeccion` INT NOT NULL,
   `Titulo` VARCHAR(100) NOT NULL,
   `Materia` INT NOT NULL,
-  `Tipo` BOOL NOT NULL,
+  `Tipo` TINYINT NOT NULL,
   `Contenido` JSON NOT NULL,
   PRIMARY KEY (`idLeccion`, `Materia`, `Tipo`),
   CONSTRAINT `fk_Leccion_Materia`
@@ -100,9 +106,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Progreso` (
   `idUsuario` INT NOT NULL,
   `idLeccion` INT NOT NULL,
   `idMateria` INT NOT NULL,
-  `Leccion_Tipo` TINYINT NOT NULL,
+  `Leccion_Tipo` TINYINT NOT NULL, -- 0 Teorico, 1 Ejercicico
   `Completado` TINYINT NOT NULL DEFAULT 0,
-  `Puntaje` INT NULL DEFAULT 0,
+  `Puntaje` INT NULL,
+  `Rendimiento` INT(2), -- 0 Requiere apoyo, 1 NO requiere apoyo, 2 Puede dar apoyo
   PRIMARY KEY (`idUsuario`, `idLeccion`, `idMateria`, `Leccion_Tipo`),
   CONSTRAINT `fk_Progreso_Usuario1`
     FOREIGN KEY (`idUsuario`)
