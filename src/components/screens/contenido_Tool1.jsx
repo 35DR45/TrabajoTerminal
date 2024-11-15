@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 import Footer from "../organisms/footer/footer";
 import Header from "../organisms/header/header";
 
@@ -25,7 +25,7 @@ export default function Contenido_Tool1(){
             console.log(data.result);
             alert("Texto cifrado: "+data.result);
             const container = document.getElementById('result');
-            result.innerHTML = data.result;
+            container.innerHTML = data.result;
         }catch(error){
             console.log('Error: ', error);
         }
