@@ -1,6 +1,5 @@
 import { Link, useParams } from "react-router-dom";
 // import Leccion from "../../atoms/materia/leccion";
-import Tema from "../../atoms/materia/tema";
 import "../../organisms/CSS/materia.css"
 import { useEffect, useState } from "react";
 
@@ -9,6 +8,9 @@ export default function Tema_Leccion(){
     const params = useParams();
 
     const [temario, setTemario] = useState([]);
+
+    console.log(params);
+    
 
     useEffect(() => {
         // Función para obtener los datos de la API
@@ -85,14 +87,14 @@ export default function Tema_Leccion(){
                                         <ul>
                                             {tema.secciones.map((seccion) => (
                                                 <li key={seccion.idLeccion}>
-                                                    <Link className="textoTemario" to={`/leccion/${params.cursoID}/${seccion.idLeccion}/${0}`}>
+                                                    <Link className="textoTemario" to={`/leccion/${seccion.idLeccion}/${params.cursoID}/${0}`}>
                                                         <p>{seccion.Titulo}</p>
                                                     </Link>
                                                     {seccion.subsecciones.length > 0 && (
                                                         <ul>
                                                             {seccion.subsecciones.map((subseccion) => (
                                                                 <li key={subseccion.idLeccion}>
-                                                                    <Link  className="textoTemario" to={`/ejercicio/${params.cursoID}/${seccion.idLeccion}/${1}`}>
+                                                                    <Link  className="textoTemario" to={`/ejercicio/${subseccion.idLeccion}/${params.cursoID}/${1}`}>
                                                                         <span>{subseccion.Titulo}</span>
                                                                     </Link>
                                                                 </li>

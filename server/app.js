@@ -3,9 +3,9 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const app = express();
 const bcrypt = require('bcrypt');
-const { APPID } = require('./apifile.js');
-const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
-const waApi = WolframAlphaAPI(APPID);
+// const { APPID } = require('./apifile.js');
+// const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
+// const waApi = WolframAlphaAPI(APPID);
 //const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
 const {exec, spawn } = require('child_process');
@@ -97,8 +97,8 @@ app.use(cors({
 const db=mysql.createConnection({
     host:"localhost",
     user: "root",
-    // password: "PaS$R4z32",
-    password: "1234",
+    password: "PaS$R4z32",
+    // password: "1234",
     database: "mydb",
 });
 
