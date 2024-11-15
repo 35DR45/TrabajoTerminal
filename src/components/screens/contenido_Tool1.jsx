@@ -23,6 +23,9 @@ export default function Contenido_Tool1(){
             });
             const data=await response.json();
             console.log(data.result);
+            alert("Texto cifrado: "+data.result);
+            const container = document.getElementById('result');
+            result.innerHTML = data.result;
         }catch(error){
             console.log('Error: ', error);
         }
@@ -39,7 +42,10 @@ export default function Contenido_Tool1(){
                     <button type="submit" className="btn-register-form">EJECUTAR</button>
                 </form>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center'}} id="result">
+            <div style={{ display: 'flex', justifyContent: 'center'}} className="Courses_Section" id="na">
+                Resultado:
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center'}} className="Courses_Section" id="result">
 
             </div>
             <Footer/>
