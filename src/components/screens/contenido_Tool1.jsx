@@ -6,22 +6,30 @@ import Header from "../organisms/header/header";
 export default function Contenido_Tool1(){
     const [Plaintext, setPlaintext] = useState('');
     const [dsiplacement, setdisplacement] = useState('');
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const FormData = {
             Ptext: Plaintext, 
             displ: dsiplacement
         }
+
         console.log(JSON.stringify(FormData));
+
         try{
+
             const response = await fetch('/api/Cesar',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                
                 body: JSON.stringify(FormData)
             });
-            console.log(response);
+            const data = await response.json();
+            console.log(data)
         }catch(error){
             console.log('Error: ', error);
         }

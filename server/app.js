@@ -489,25 +489,140 @@ app.get('/api/ProgTotal',(req,res) =>{
         }
     })
 });
-//Emparejar
-app.get('/api/Pair',(req,res) => {
+
+//ops
+app.get('/api/Pair/:User',(req,res) => {
+    const { User } =req.params
+    console.log("Entro "+ User)
+    //Primero recuperamos los datos del usuario actual del sistema
+    const querygetUser = "SELECT idUsuario,Aprendizaje FROM usuario WHERE NombreUsuario = ?"
+    //Despues asignamos otro Tutor
+    //Esta asigna un tutor considerando un rendimiento de Normal
+    const queryemparejar2 = "SELECT u.idUsuario,u.NombreUsuario,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND u.Aprendizaje = ? AND p.rendimiento = 1 AND p.Leccion_Tipo = 1 AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 0 AND idUsuario = ?);";
+    //Esta asigna un tutor considerando un rendimiento de Apoyo
+    const queryemparejar1 = "SELECT u.idUsuario,u.NombreUsuario,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND u.Aprendizaje = ? AND (p.rendimiento = 1 OR p.rendimiento = 2) AND p.Leccion_Tipo = 1 AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 2 AND idUsuario = ?);";
+    //Posteriormente de asignar el tutor actualizamos los datos del tutor y el usuario
+    const queryUpuser = "UPDATE usuario SET Tutor = ? WHERE idUsuario = ?  ";
+    const queryUptutor = "UPDATE usuario SET Tutorado = ? WHERE idUsuario = ?  ";
     
-    const query = "select NombreUsuario, Telefono from Usuario where Tutorado is not null and idUsuario IN (select idUsuario from Progreso where (rendimiento=1 OR rendimiento=2) AND Leccion_Tipo=1 AND (idLeccion,idMateria) IN (select idLeccion,idMateria from progreso where rendimiento=0 and idUsuario=?));";
-    db.query(query,req.body.id,(err,result) =>{
-        console.log("id: "+req.body.id)
+    db.query(query,User,(err,result) =>{
+
         if(err){
-            return res.send("Error al buscar tutor")
+            console.log("Error en la primera consulta no se encontro usuario")
+            return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
         } 
-        else {
+        if(result.length > 0){
+            const idUser =result[0].idUsuario
+            db.query(query2,idUser,(err,result) =>{
+                if(err){
+                    console.log("Error en la primera consulta no se encontro usuario")
+                    return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
+                }else{
+
+                }  
+            })
             console.log(result)
             return res.send(result)
         }
     })
 });
-//Cargar tutor
-app.get('/api/getTutor/:User',(req,res) =>{
-    const{ User } = req.params
+
+//Emparejar por primera vez
+app.get('/api/Pair/:User/:Rendimiento/:idLeccion',(req,res) => {
+    const { User,Rendimiento,idLeccion } =req.params
     console.log("Entro "+ User)
+    //Primero recuperamos los datos del usuario actual del sistema
+    const querygetUser = "SELECT idUsuario,Aprendizaje,Tutor FROM usuario WHERE NombreUsuario = ?"
+    //Asignamos un tutor
+    //Esta asigna un tutor considerando un rendimiento de Apoyo
+    const queryemparejar1 = "SELECT u.idUsuario,u.NombreUsuario,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ? AND p.rendimiento = 1 AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 0 AND idUsuario = ? AND idLeccion = ?);";
+    //Esta asigna un tutor considerando un rendimiento de Normal
+    const queryemparejar2 = "SELECT u.idUsuario,u.NombreUsuario,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ? AND (p.rendimiento = 1 OR p.rendimiento = 2) AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 2 AND idUsuario = ? AND idLeccion = ?);";
+   
+    //Posteriormente de asignar el tutor actualizamos los datos del tutor y el usuario
+    const queryUpuser = "UPDATE usuario SET Tutor = ? WHERE idUsuario = ?  ";
+    const queryUptutor = "UPDATE usuario SET Tutorado = ? WHERE idUsuario = ?  ";
+    
+    db.query(querygetUser,User,(err,result) =>{
+
+        if(err){
+            console.log("Error en la primera consulta no se encontro usuario")
+            return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
+        } 
+        
+        if(result.length > 0){
+            const idUser =result[0].idUsuario
+            const Aprendizaje = result[0].Aprendizaje
+            const Tutor = result[0].Tutor
+            console.log(idUser)
+            console.log(Aprendizaje)
+            console.log(Tutor)
+            let random_index 
+            let random_item = [] 
+            if(Tutor != null) return res.json({"status":"Ya tiene un tutor asignado"})
+            if (Rendimiento == 0){
+                console.log("Entro a rend 0")
+                db.query(queryemparejar1,[idUser,Aprendizaje,idLeccion,idUser,idLeccion],(err,result) =>{
+                    if(err){
+                        console.log("Error en la segunda consulta no se encontro usuario")
+                        return res.status(500).json({ error: "Error en la segunda consulta no se encontro usuario" });
+                    }if(result.length> 0){
+                    
+                        tam=result.length
+                        random_index=Math.floor(Math.random()*tam)
+                        random_item =result[random_index]
+                        console.log(random_item)
+                        return res.json(random_item)
+                    }else{
+                        return res.status(500).json({ error: "Error en la segunda consulta no se encontro tutor" });
+                    }  
+                    
+                })
+
+            }else if (Rendimiento == 2){
+                db.query(queryemparejar2,[idUser,Aprendizaje,idLeccion,idUser,idLeccion],(err,result) =>{
+                    if(err){
+                        console.log("Error en la segunda consulta no se encontro usuario")
+                        return res.status(500).json({ error: "Error en la segunda consulta no se encontro usuario" });
+                    }if(result.length> 0){
+                        tam=result.length
+                        random_index=Math.floor(Math.random()*tam)
+                        random_item =result[random_index]
+                        console.log(random_item)
+                        return res.json(random_item)
+                    } else{
+                        return res.status(500).json({ error: "Error en la segunda consulta no se encontro tutor" });
+                    }  
+                })
+            }
+        }
+    })
+});
+//Asignar el tutor
+app.get('/api/Pair/:idUser/:idTutor',(req,res) =>{
+    const {idUser,idTutor} = req.params;
+    //Posteriormente de asignar el tutor actualizamos los datos del tutor y el usuario
+    const queryUpuser = "UPDATE usuario SET Tutor = ? WHERE idUsuario = ?  ";
+    const queryUptutor = "UPDATE usuario SET Tutorado = ? WHERE idUsuario = ?  ";
+    db.query(queryUpuser,[idTutor,idUser],(err,result) =>{
+        if(err){
+            console.log("Error ")
+            return res.status(500).json({ error: "Error en la primera consulta de update usuario" });
+        }else{
+            db.query(queryUptutor,[idUser,idTutor],(err,result) =>{
+
+                if(err){
+                    console.log("Error en la primera consulta no se encontro usuario")
+                    return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
+                } else return res.json({"status": "Emparejamiento exitoso"})
+            })
+        } 
+    })
+});
+//Cargar tutor
+app.get('/api/verTutor/:User',(req,res) =>{
+    const{ User } = req.params
+    //console.log("Entro "+ User)
     const query = "SELECT Tutor FROM usuario WHERE NombreUsuario = ?"
 
     const query2="SELECT Telefono,NombreUsuario FROM usuario WHERE idUsuario= ?"
@@ -519,14 +634,13 @@ app.get('/api/getTutor/:User',(req,res) =>{
         } 
         if(result.length > 0){
             const tutorId =result[0].Tutor
-            console.log("Obtenido : " + tutorId)
+            //console.log("Obtenido : " + tutorId)
             db.query(query2,tutorId,(err,result) =>{
                 if(err){
-                    console.log("Error en la segunda consulta no se encontro  tutor")
+                    //console.log("Error en la segunda consulta no se encontro  tutor")
                     return res.status(500).json({ error: "Error en la segunda consulta no se encontro  tutor" });
                 }else{
-                    console.log("Entro 2")
-                    console.log("Obtenido : " + result[0].NombreUsuario + " "+result[0].Telefono)
+                    //console.log("Obtenido : " + result[0].NombreUsuario + " "+result[0].Telefono)
                     return res.json({
                         "Nombre":result[0].NombreUsuario,
                         "Telefono":result[0].Telefono
@@ -538,6 +652,7 @@ app.get('/api/getTutor/:User',(req,res) =>{
         }
     })
 })
+
 // Normalización Min-Max
 function minMaxNormalize(value, min, max) {
     return (value - min) / (max - min);

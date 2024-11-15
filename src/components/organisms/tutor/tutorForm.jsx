@@ -9,12 +9,12 @@ const TutorForm = () =>{
         tutor: '',
         phone: ''
     });
-    
+
     useEffect(() => {
         // Función para obtener los datos de la API
         const fetchTutor = async () => {
         try {
-            const response = await fetch(`/api/getTutor/${user}`); 
+            const response = await fetch(`/api/verTutor/${user}`); 
             const data = await response.json();
             console.log(data)
             setTutorData({
@@ -22,7 +22,7 @@ const TutorForm = () =>{
                 phone: data.Telefono
             });
         } catch (error) {
-            console.error("Error fetching the temario:", error);
+            console.error("Error fetching tutor:", error);
         }
         };
 
@@ -31,23 +31,12 @@ const TutorForm = () =>{
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //const hashedPassword = await bcrypt.hash(password, 10); 
-        const FormData = {
-            user: username, 
-            pass: password
-        }
+        console.log("HOLAAAAA")
         try{
-            const response = await fetch('api/Pair',{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(FormData)
-            });
+            const response = await fetch(`api/Pair/${user}`);
             if (response.ok) {
                 // Redirige al usuario a la URL /registrado
                 const data = await response.json();
-                setUser(username)
             } else {
                 console.error('Usuario no registrado');
             }
@@ -60,7 +49,7 @@ const TutorForm = () =>{
         <form className="profile_form">
             <Profile_Entry labelText={"Nombre de tu tutor: "} value={tutorData.tutor} type={"text"}/>
             <Profile_Entry labelText={"Contacto de tu tutor: "} value={tutorData.phone} type={"text"}/>
-            <button type="submit" className="btn-register-form" onSubmit={handleSubmit}><Profile_Button text={"Muéstrame otro tutor"}/></button>
+           {/* <button type="button" className="btn-register-form" onClick={handleSubmit} ><Profile_Button text={"Muéstrame otro tutor"}/></button>*/}
         </form>
     )
 }
