@@ -14,7 +14,7 @@ export default function Tema_Leccion(){
         // Función para obtener los datos de la API
         const fetchTemario = async () => {
         try {
-            const response = await fetch(`/api/SeeLC/${params.cursoID}`); 
+            const response = await fetch(`/api/ContentLC/${params.id}/${params.idLeccion}/${params.tipo}`); 
             const data = await response.json();
             setTemario(data); 
         } catch (error) {
@@ -23,7 +23,7 @@ export default function Tema_Leccion(){
         };
 
         fetchTemario();
-    }, [params.cursoID]); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
+    }, [params.id, params.idLeccion, params.tipo]); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
     
     console.log(temario);
 
@@ -85,14 +85,14 @@ export default function Tema_Leccion(){
                                         <ul>
                                             {tema.secciones.map((seccion) => (
                                                 <li key={seccion.idLeccion}>
-                                                    <Link className="textoTemario" to={`/leccion/${params.cursoID}/${seccion.idLeccion}/${0}`}>
+                                                    <Link className="textoTemario" to={`/leccion/${seccion.idLeccion}`}>
                                                         <p>{seccion.Titulo}</p>
                                                     </Link>
                                                     {seccion.subsecciones.length > 0 && (
                                                         <ul>
                                                             {seccion.subsecciones.map((subseccion) => (
                                                                 <li key={subseccion.idLeccion}>
-                                                                    <Link  className="textoTemario" to={`/ejercicio/${params.cursoID}/${seccion.idLeccion}/${1}`}>
+                                                                    <Link  className="textoTemario" to={`/ejercicio/${subseccion.idLeccion}`}>
                                                                         <span>{subseccion.Titulo}</span>
                                                                     </Link>
                                                                 </li>

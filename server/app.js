@@ -412,14 +412,24 @@ app.get('/api/SeeLC/:Materia',(req,res) =>{
         "Tipo": Tipo de  contenido 1 es ejercicio 0 es ejercicios,
     }
 */
-app.get('/api/ContentLC',(req,res) =>{
+app.get('/api/ContentLC/:IdLeccion/:Materia/:Tipo',(req,res) =>{
+    console.log(req.params);
+    const {IdLeccion, Materia, Tipo} = req.params
+    console.log(IdLeccion);
+    console.log(Materia);
+    console.log(Tipo);
+    console.log("Hola");
+    
+    
     const query = "Select * from leccion where idLeccion= ? and Materia = ? and Tipo = ?";
-    db.query(query,[req.body.idLeccion,req.body.materia,req.body.Tipo],(err,result) =>{
-        console.log("idLeccion: "+req.body.idLeccion)
-        console.log("Materia: "+req.body.materia)
-        console.log("Tipo: "+req.body.Tipo)
+    db.query(query, [IdLeccion, Materia, Tipo],(err,result) =>{
+        console.log("idLeccion: "+ IdLeccion)
+        console.log("Materia: "+ Materia)
+        console.log("Tipo: "+ Tipo)
 
         if(err){
+            console.log(err);
+            
             return res.send("Error al enviar Lecciones")
         } 
         else {

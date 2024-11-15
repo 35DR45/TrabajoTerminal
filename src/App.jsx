@@ -36,6 +36,11 @@ const App = () =>{
             <Contenido_Curso/>
           </ProtectedRoute>
         }/>
+        <Route path="/leccion/:idLeccion" element={
+          <ProtectedRoute>
+            <Contenido_Curso/>
+          </ProtectedRoute>
+        }/>
         <Route path="/tools" element={
           <ProtectedRoute>
             <Tools/>
