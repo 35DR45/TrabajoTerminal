@@ -28,16 +28,11 @@ export default function Contenido_Tool1(){
                 
                 body: JSON.stringify(FormData)
             });
-<<<<<<< HEAD
-            const data = await response.json();
-            console.log(data)
-=======
             const data=await response.json();
             console.log(data.result);
             alert("Texto cifrado: "+data.result);
             const container = document.getElementById('result');
             container.innerHTML = data.result;
->>>>>>> 06210f8e60f663bbfb25a041acb6ff29806b5665
         }catch(error){
             console.log('Error: ', error);
         }
