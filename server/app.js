@@ -97,8 +97,8 @@ app.use(cors({
 const db=mysql.createConnection({
     host:"localhost",
     user: "root",
-    password: "PaS$R4z32",
-    // password: "1234",
+    // password: "PaS$R4z32",
+    password: "1234",
     database: "mydb",
 });
 
@@ -462,6 +462,7 @@ app.get('/api/ProgPractica',(req,res) =>{
         }
     })
 });
+
 app.get('/api/ProgTeoria',(req,res) =>{
     const query = "select (select (select count(idLeccion) from Progreso where idMateria=? & idUsuario=? & Tipo=0) / (select count(idLeccion) from leccion where Materia=? & Tipo=0)) * 100";
     db.query(query,req.body.materia,req.body.usuario,req.body.materia,(err,result) =>{
@@ -490,6 +491,7 @@ app.get('/api/ProgTotal',(req,res) =>{
 });
 //Emparejar
 app.get('/api/Pair',(req,res) => {
+    
     const query = "select NombreUsuario, Telefono from Usuario where Tutorado is not null and idUsuario IN (select idUsuario from Progreso where (rendimiento=1 OR rendimiento=2) AND Leccion_Tipo=1 AND (idLeccion,idMateria) IN (select idLeccion,idMateria from progreso where rendimiento=0 and idUsuario=?));";
     db.query(query,req.body.id,(err,result) =>{
         console.log("id: "+req.body.id)
@@ -502,7 +504,40 @@ app.get('/api/Pair',(req,res) => {
         }
     })
 });
+//Cargar tutor
+app.get('/api/getTutor/:User',(req,res) =>{
+    const{ User } = req.params
+    console.log("Entro "+ User)
+    const query = "SELECT Tutor FROM usuario WHERE NombreUsuario = ?"
 
+    const query2="SELECT Telefono,NombreUsuario FROM usuario WHERE idUsuario= ?"
+
+    db.query(query,User,(err,result) =>{
+        if(err){
+            console.log("Error en la primera consulta no se encontro usuario")
+            return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
+        } 
+        if(result.length > 0){
+            const tutorId =result[0].Tutor
+            console.log("Obtenido : " + tutorId)
+            db.query(query2,tutorId,(err,result) =>{
+                if(err){
+                    console.log("Error en la segunda consulta no se encontro  tutor")
+                    return res.status(500).json({ error: "Error en la segunda consulta no se encontro  tutor" });
+                }else{
+                    console.log("Entro 2")
+                    console.log("Obtenido : " + result[0].NombreUsuario + " "+result[0].Telefono)
+                    return res.json({
+                        "Nombre":result[0].NombreUsuario,
+                        "Telefono":result[0].Telefono
+                    }) 
+                } 
+
+            })
+
+        }
+    })
+})
 // Normalización Min-Max
 function minMaxNormalize(value, min, max) {
     return (value - min) / (max - min);
