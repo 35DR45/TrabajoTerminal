@@ -97,8 +97,8 @@ app.use(cors({
 const db=mysql.createConnection({
     host:"localhost",
     user: "root",
-    password: "PaS$R4z32",
-    // password: "1234",
+    //password: "PaS$R4z32",
+    password: "1234",
     database: "mydb",
 });
 
@@ -661,6 +661,26 @@ app.get('/api/Wolfram',(req,res) => {
         console.log(output);
         res.send(output);
       }).catch(console.error);
+});
+
+app.post('/api/Cesar',(req,res) => {
+    const {Ptext,displ} =req.body;
+    console.log(Ptext + ", " + displ)
+    result = Ptext.split('').map(char => {
+        let code = char.charCodeAt(0);
+        // Si es una letra mayúscula (A-Z)
+        if (code >= 65 && code <= 90) {
+            return String.fromCharCode(((code - 65 + displ) % 26) + 65);
+        }     
+        // Si es una letra minúscula (a-z)
+        if (code >= 97 && code <= 122) {
+            return String.fromCharCode(((code - 97 + displ) % 26) + 97);
+        }
+        // Si no es una letra, dejar el carácter tal como está
+        return char;
+    }).join('');
+    console.log(result);
+    res.json({"result": result});
 });
 
 
