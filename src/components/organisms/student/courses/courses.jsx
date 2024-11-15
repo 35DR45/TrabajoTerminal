@@ -25,7 +25,7 @@ export default function Courses(){
 
     // const materias = [{NombreMateria: "Statistical tools for data mining"}, {NombreMateria: "Introduction to Cryptography"}]
 
-    // console.log(subjects);
+    console.log(subjects);
 
     return(
         <> 

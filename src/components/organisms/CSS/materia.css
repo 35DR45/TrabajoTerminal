@@ -5,3 +5,20 @@
 ul{
     list-style-type: none;
 }
+
+.listado_contenido_tema{
+    background-color: rgb(2, 68, 68);
+    padding: 20px;
+    margin: 50px 0px;
+    font-size: large;
+}
+
+.Titulo_Leccion{
+    text-align: center;
+    color: black;
+}
+
+.Enunciado_Ejercicio{
+    font-size: larger;
+    font-weight: 600;
+}

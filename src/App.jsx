@@ -18,6 +18,8 @@ import Profile from "./components/screens/profile";
 import Progress from "./components/screens/progress";
 import Tools from "./components/screens/tools";
 import ProtectedRoute from "./components/screens/ProtectedRoute";
+import Contenido_Leccion from "./components/screens/contenido_Leccion";
+import Contenido_Ejercicio from "./components/screens/Contenido_Ejercicio";
 
 const App = () =>{
   return (
@@ -41,9 +43,14 @@ const App = () =>{
             <Contenido_Curso/>
           </ProtectedRoute>
         }/>
-        <Route path="/leccion/:idLeccion" element={
+        <Route path="/leccion/:idLeccion/:cursoID/:tipo" element={
           <ProtectedRoute>
-            <Contenido_Curso/>
+            <Contenido_Leccion/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/ejercicio/:idLeccion/:cursoID/:tipo" element={
+          <ProtectedRoute>
+            <Contenido_Ejercicio/>
           </ProtectedRoute>
         }/>
         <Route path="/tools" element={
