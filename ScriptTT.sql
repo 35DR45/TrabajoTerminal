@@ -72,11 +72,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Materia` (
   `NombreMateria` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idMateria`))
 ENGINE = InnoDB;
-
 INSERT INTO Materia VALUES(1,"STATISTICAL TOOLS FOR DATA ANALYTICS");
 INSERT INTO Materia VALUES(2,"INTRODUCTION TO CRIPTOGRAPHY");
-
-
 
 -- -----------------------------------------------------
 -- Table `mydb`.`Leccion`

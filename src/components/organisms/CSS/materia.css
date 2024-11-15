@@ -1,3 +1,7 @@
 .listado_materias{
     background-color: rgb(2, 68, 68);
 }
+
+ul{
+    list-style-type: none;
+}

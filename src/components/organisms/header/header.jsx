@@ -1,8 +1,20 @@
 import Grouped_btns from '../../molecules/header/grouped_btns'
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import '../CSS/header.css'
+import { useContext } from 'react';
+import { UserContext } from '../../../UserContext';
 
 export default function Header(){
+    const { setUser } = useContext(UserContext);
+
+    const handleLogout = () => {
+        // Eliminar el usuario del contexto
+        setUser(null);
+        // Limpiar sessionStorage
+        sessionStorage.removeItem('user');
+        // Redirigir a la página principal
+        Navigate("/");
+    };
 
     const renderLogo = () =>{
 
@@ -12,7 +24,7 @@ export default function Header(){
             );
         }else{
             return (
-                <Link to={"/"} className="btn-header">Cerrar sesión</Link>
+                <Link to={"/"} className="btn-header" onClick={handleLogout}>Cerrar sesión</Link>
             );
         }
         
