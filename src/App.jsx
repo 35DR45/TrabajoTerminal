@@ -9,6 +9,11 @@ import Verified_user from "./components/screens/verified_user";
 import Recovery_sent from "./components/screens/recovery_Sent";
 import Student from "./components/screens/student";
 import Contenido_Curso from "./components/screens/contenido_Curso";
+import Contenido_Tool1 from "./components/screens/contenido_Tool1";
+import Contenido_Tool2 from "./components/screens/contenido_Tool2";
+import Contenido_Tool3 from "./components/screens/contenido_Tool3";
+import Contenido_Tool4 from "./components/screens/contenido_Tool4";
+import Contenido_Tool5 from "./components/screens/contenido_Tool5";
 import Profile from "./components/screens/profile";
 import Progress from "./components/screens/progress";
 import Tools from "./components/screens/tools";
@@ -44,6 +49,31 @@ const App = () =>{
         <Route path="/tools" element={
           <ProtectedRoute>
             <Tools/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/tools/1" element={
+          <ProtectedRoute>
+            <Contenido_Tool1/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/tools/2" element={
+          <ProtectedRoute>
+            <Contenido_Tool2/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/tools/3" element={
+          <ProtectedRoute>
+            <Contenido_Tool3/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/tools/4" element={
+          <ProtectedRoute>
+            <Contenido_Tool4/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/tools/5" element={
+          <ProtectedRoute>
+            <Contenido_Tool5/>
           </ProtectedRoute>
         }/>
         <Route path="/profile" element={
