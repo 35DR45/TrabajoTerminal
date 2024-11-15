@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 import Footer from "../organisms/footer/footer";
 import Header from "../organisms/header/header";
 
@@ -28,8 +28,16 @@ export default function Contenido_Tool1(){
                 
                 body: JSON.stringify(FormData)
             });
+<<<<<<< HEAD
             const data = await response.json();
             console.log(data)
+=======
+            const data=await response.json();
+            console.log(data.result);
+            alert("Texto cifrado: "+data.result);
+            const container = document.getElementById('result');
+            container.innerHTML = data.result;
+>>>>>>> 06210f8e60f663bbfb25a041acb6ff29806b5665
         }catch(error){
             console.log('Error: ', error);
         }
@@ -46,7 +54,10 @@ export default function Contenido_Tool1(){
                     <button type="submit" className="btn-register-form">EJECUTAR</button>
                 </form>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center'}} id="result">
+            <div style={{ display: 'flex', justifyContent: 'center'}} className="Courses_Section" id="na">
+                Resultado:
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center'}} className="Courses_Section" id="result">
 
             </div>
             <Footer/>

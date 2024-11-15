@@ -3,9 +3,9 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const app = express();
 const bcrypt = require('bcrypt');
-// const { APPID } = require('./apifile.js');
-// const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
-// const waApi = WolframAlphaAPI(APPID);
+const { APPID } = require('./apifile.js');
+const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
+const waApi = WolframAlphaAPI(APPID);
 //const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
 const {exec, spawn } = require('child_process');
@@ -799,17 +799,25 @@ app.put('/api/UpdateL',(req,res) =>{
 */
 
 //Test Wolfram API
-app.get('/api/Wolfram',(req,res) => {
-    waApi.getFull(req.body.op).then((queryresult) => {
+app.post('/api/Wolfram',(req,res) => {
+    const {op} =req.body;
+    console.log(op);
+    let  imagesrc= "";
+    let alttext="";
+    waApi.getFull(op).then((queryresult) => {
         const pods = queryresult.pods;
-        const output = pods.map((pod) => {
-          const subpodContent = pod.subpods.map(subpod =>
-            `  <img src="${subpod.img.src}" alt="${subpod.img.alt}">`
-          ).join('\n');
-          return `<h2>${pod.title}</h2>\n${subpodContent}`
-        }).join('\n');
-        console.log(output);
-        res.send(output);
+        console.log(pods);
+        pods.forEach((pod)=>{
+            if(pod.title=="Result"||pod.title=="Exact result"){
+                //console.log(pod);
+                //console.log(pod.subpods[0]);
+                imagesrc = pod.subpods[0].img.src;
+                alttext = pod.subpods[0].img.alt;
+            }
+        });
+        console.log(imagesrc);
+        console.log(alttext);
+        res.json({"imagesrc": imagesrc, "alttext": alttext});
       }).catch(console.error);
 });
 
@@ -818,13 +826,44 @@ app.post('/api/Cesar',(req,res) => {
     console.log(Ptext + ", " + displ)
     result = Ptext.split('').map(char => {
         let code = char.charCodeAt(0);
+        console.log(code);
         // Si es una letra mayúscula (A-Z)
         if (code >= 65 && code <= 90) {
-            return String.fromCharCode(((code - 65 + displ) % 26) + 65);
+            return String.fromCharCode(((code - 65 + parseInt(displ)) % 26) + 65);
         }     
         // Si es una letra minúscula (a-z)
         if (code >= 97 && code <= 122) {
-            return String.fromCharCode(((code - 97 + displ) % 26) + 97);
+            return String.fromCharCode(((code - 97 + parseInt(ddispl)) % 26) + 97);
+        }
+        // Si no es una letra, dejar el carácter tal como está
+        return char;
+    }).join('');
+    console.log(result);
+    res.json({"result": result});
+});
+
+app.post('/api/Vigenere',(req,res) => {
+    const {Ptext,key} =req.body;
+    console.log(Ptext + ", " + key)
+    let keyIndex = 0;
+    let keyLength = key.length;
+    result = Ptext.split('').map(char => {
+        let code = char.charCodeAt(0);
+        // Determinar desplazamiento actual basado en el carácter de la clave
+        let keyChar = key[keyIndex % keyLength].toLowerCase();
+        let shift = keyChar.charCodeAt(0) - 96;
+        // Si es una letra mayúscula (A-Z)
+        if (code >= 65 && code <= 90) {
+
+            let newChar = String.fromCharCode(((code - 65 + shift) % 26) + 65);
+            keyIndex++; // Avanza en la clave solo si se cifra una letra
+            return newChar;
+        }
+        // Si es una letra minúscula (a-z)
+        if (code >= 97 && code <= 122) {
+            let newChar = String.fromCharCode(((code - 97 + shift) % 26) + 97);
+            keyIndex++; // Avanza en la clave solo si se cifra una letra
+            return newChar;
         }
         // Si no es una letra, dejar el carácter tal como está
         return char;
