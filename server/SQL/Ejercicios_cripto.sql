@@ -3,20 +3,20 @@ delete from Leccion where Materia=2 and Tipo=1;
 INSERT INTO Leccion VALUES(1201,"1.2E Ejercicios de aritmética en campos primos", 2, 1,
 '[
     {
-        "Enunciado": "Realiza las siguientes multiplicaciones en el campo \\( \\mathbb{Z}/5\\mathbb{Z} \\) (campo de cinco elementos, con \\{0,1,2,3,4\\}): \\( 4 \\times 4 = ? \\)",
+        "Enunciado": "Realiza las siguientes multiplicaciones en el campo ( mathbb{Z}/5mathbb{Z} ) (campo de cinco elementos, con {0,1,2,3,4}): ( 4 times 4 = ? )",
         "R_Correcta": "1",
         "R_Falsas": ["16", "3", "0"],
         "R_Truco": "4"
     },
     {
         "Enunciado": "¿Qué conjunto representa un campo primo?",
-        "R_Correcta": "\\{0,1,2,3,4,5\\} con operaciones módulo 6",
+        "R_Correcta": "{0,1,2,3,4,5} con operaciones módulo 6",
         "R_Falsas": [
-            "\\{0,1,2\\} con operaciones módulo 3",
-            "\\{0,1,2,3\\} con operaciones módulo 4",
-            "\\{0,1,2,3,4\\} con operaciones módulo 10"
+            "{0,1,2} con operaciones módulo 3",
+            "{0,1,2,3} con operaciones módulo 4",
+            "{0,1,2,3,4} con operaciones módulo 10"
         ],
-        "R_Truco": "\\{0,1,2,3,4\\} con operaciones módulo 10"
+        "R_Truco": "{0,1,2,3,4} con operaciones módulo 10"
     },
     {
         "Enunciado": "¿Cuál es el número de elementos de un campo primo?",
@@ -25,7 +25,7 @@ INSERT INTO Leccion VALUES(1201,"1.2E Ejercicios de aritmética en campos primos
         "R_Truco": "10"
     },
     {
-        "Enunciado": "Encuentra el inverso multiplicativo de 6 en el campo \\( \\mathbb{Z}/7\\mathbb{Z} \\). (El inverso multiplicativo de un número \\( x \\) es el número \\( y \\) tal que \\( x \\cdot y \\equiv 1 \\mod{7} \\))",
+        "Enunciado": "Encuentra el inverso multiplicativo de 6 en el campo ( mathbb{Z}/7mathbb{Z} ). (El inverso multiplicativo de un número ( x ) es el número ( y ) tal que ( x cdot y equiv 1 mod{7} ))",
         "R_Correcta": "6",
         "R_Falsas": ["1", "5", "2"],
         "R_Truco": "4"
@@ -79,25 +79,25 @@ INSERT INTO Leccion VALUES(1401,"1.4E Ejercicios de Aritmetica en campos binario
         "R_Truco": "3"
     },
     {
-        "Enunciado": "¿Cuál es el resultado de la suma binaria \\( 1101 + 1011 \\) en el campo \\( GF(2) \\)?",
+        "Enunciado": "¿Cuál es el resultado de la suma binaria ( 1101 + 1011 ) en el campo ( GF(2) )?",
         "R_Correcta": "0110",
         "R_Falsas": ["11000", "11110", "1010"],
         "R_Truco": "0010"
     },
     {
-        "Enunciado": "¿Cuál es el resultado de la multiplicación binaria \\( 110 \\times 101 \\) en el campo \\( GF(2) \\)?",
+        "Enunciado": "¿Cuál es el resultado de la multiplicación binaria ( 110 times 101 ) en el campo ( GF(2) )?",
         "R_Correcta": "100",
         "R_Falsas": ["111", "000", "110"],
         "R_Truco": "101"
     },
     {
-        "Enunciado": "Si se realiza la operación \\( 1011 + 1100 \\) en el campo \\( GF(2) \\), ¿cuál es el resultado?",
+        "Enunciado": "Si se realiza la operación ( 1011 + 1100 ) en el campo ( GF(2) ), ¿cuál es el resultado?",
         "R_Correcta": "0111",
         "R_Falsas": ["1111", "0101", "1001"],
         "R_Truco": "1011"
     },
     {
-        "Enunciado": "¿Cuál es el resultado de la multiplicación \\( 111 \\times 011 \\) en el campo \\( GF(2) \\)?",
+        "Enunciado": "¿Cuál es el resultado de la multiplicación ( 111 times 011 ) en el campo ( GF(2) )?",
         "R_Correcta": "011",
         "R_Falsas": ["111", "010", "100"],
         "R_Truco": "001"
@@ -252,7 +252,7 @@ INSERT INTO Leccion VALUES(3101,"3.1E Ejercicios de Funciones Hash Criptográfic
         "R_Truco": "160 bits"
     },
     {
-        "Enunciado": "Si tenemos una función con \\( n \\) salidas y entradas mucho más grandes que \\( n \\)-bits. Sabemos que realizando un ataque de cumpleaños tenemos una probabilidad de \\( 1/2 \\) de encontrar una colisión en \\( 2^{(n/2)} \\) pasos. ¿Cuál es el número esperado de repeticiones para encontrar una colisión?",
+        "Enunciado": "Si tenemos una función con ( n ) salidas y entradas mucho más grandes que ( n )-bits. Sabemos que realizando un ataque de cumpleaños tenemos una probabilidad de ( 1/2 ) de encontrar una colisión en ( 2^{(n/2)} ) pasos. ¿Cuál es el número esperado de repeticiones para encontrar una colisión?",
         "R_Correcta": "2",
         "R_Falsas": [
             "1",
@@ -318,17 +318,17 @@ INSERT INTO Leccion VALUES(3201,"3.2E Ejercicios de Codigos de autenticacion de 
 INSERT INTO Leccion VALUES(4201,"4.2E Ejercicios de Algoritmo de intercambio de claves Diffie-Hellman", 2, 1,
 '[
     {
-        "Enunciado": "En el intercambio de claves Diffie-Hellman, si Alice elige un valor secreto \\( a \\) y Bob elige un valor secreto \\( b \\), ¿cómo se calcula la clave compartida?",
-        "R_Correcta": "\\( g^{ab} \\mod p \\)",
+        "Enunciado": "En el intercambio de claves Diffie-Hellman, si Alice elige un valor secreto ( a ) y Bob elige un valor secreto ( b ), ¿cómo se calcula la clave compartida?",
+        "R_Correcta": "( g^{ab} mod p )",
         "R_Falsas": [
-            "\\( (g^a)^b \\)",
-            "\\( pb^{ab} \\)",
-            "\\( g^{a+b} \\mod p \\)"
+            "( (g^a)^b )",
+            "( pb^{ab} )",
+            "( g^{a+b} mod p )"
         ],
-        "R_Truco": "\\( g^{a} + g^{b} \\)"
+        "R_Truco": "( g^{a} + g^{b} )"
     },
     {
-        "Enunciado": "Supongamos que Alice y Bob han acordado usar el número primo \\( p = 23 \\) y la base \\( g = 5 \\). Alice elige un valor secreto \\( a = 6 \\). ¿Cuál es el valor que Alice envía a Bob?",
+        "Enunciado": "Supongamos que Alice y Bob han acordado usar el número primo ( p = 23 ) y la base ( g = 5 ). Alice elige un valor secreto ( a = 6 ). ¿Cuál es el valor que Alice envía a Bob?",
         "R_Correcta": "8",
         "R_Falsas": [
             "15",
@@ -339,7 +339,7 @@ INSERT INTO Leccion VALUES(4201,"4.2E Ejercicios de Algoritmo de intercambio de 
     },
     {
         "Enunciado": "¿Cuál de los siguientes es un parámetro público en el protocolo Diffie-Hellman?",
-        "R_Correcta": "Un número primo grande \\( p \\) y una base \\( g \\)",
+        "R_Correcta": "Un número primo grande ( p ) y una base ( g )",
         "R_Falsas": [
             "El hash del mensaje.",
             "El texto plano del mensaje.",
@@ -358,7 +358,7 @@ INSERT INTO Leccion VALUES(4201,"4.2E Ejercicios de Algoritmo de intercambio de 
         "R_Truco": "Garantiza la autenticidad de los participantes"
     },
     {
-        "Enunciado": "Dado \\( p = 31 \\) y \\( g = 11 \\), Alice elige \\( a = 7 \\) y envía su valor \\( g^a \\mod p \\) a Bob. ¿Qué valor recibe Bob?",
+        "Enunciado": "Dado ( p = 31 ) y ( g = 11 ), Alice elige ( a = 7 ) y envía su valor ( g^a mod p ) a Bob. ¿Qué valor recibe Bob?",
         "R_Correcta": "23",
         "R_Falsas": [
             "15",

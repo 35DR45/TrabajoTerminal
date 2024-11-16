@@ -1286,14 +1286,14 @@ INSERT INTO Leccion VALUES(3221,"3.2.2E Ejercicios de Distribución del tiempo i
 INSERT INTO Leccion VALUES(3231,"3.2.3E Ejercicios de Distribución uniforme y el proceso de Poisson", 1, 1,
 '[
     {
-        "Enunciado": "¿Cuál es la función de densidad para una variable aleatoria con distribución uniforme entre \\( \\theta_1 \\) y \\( \\theta_2 \\)?",
-        "R_Correcta": "Es \\( f(y) = \\frac{1}{\\theta_2 - \\theta_1} \\) para \\( \\theta_1 \\leq y \\leq \\theta_2 \\).",
+        "Enunciado": "¿Cuál es la función de densidad para una variable aleatoria con distribución uniforme entre ( theta_1 ) y ( theta_2 )?",
+        "R_Correcta": "Es ( f(y) = frac{1}{theta_2 - theta_1} ) para ( theta_1 leq y leq theta_2 ).",
         "R_Falsas": [
-            "Es \\( f(y) = \\theta_1 - \\theta_2 \\).",
-            "Es \\( f(y) = \\frac{y}{\\theta_1 - \\theta_2} \\).",
-            "Es \\( f(y) = \\frac{1}{\\theta_2 + \\theta_1} \\)."
+            "Es ( f(y) = theta_1 - theta_2 ).",
+            "Es ( f(y) = frac{y}{theta_1 - theta_2} ).",
+            "Es ( f(y) = frac{1}{theta_2 + theta_1} )."
         ],
-        "R_Truco": "Es \\( f(y) = \\frac{y}{\\theta_2 - \\theta_1} \\) para \\( \\theta_1 \\leq y \\leq \\theta_2 \\)"
+        "R_Truco": "Es ( f(y) = frac{y}{theta_2 - theta_1} ) para ( theta_1 leq y leq theta_2 )"
     },
     {
         "Enunciado": "¿Cuál es la característica principal de una distribución uniforme?",
@@ -1306,17 +1306,17 @@ INSERT INTO Leccion VALUES(3231,"3.2.3E Ejercicios de Distribución uniforme y e
         "R_Truco": "La probabilidad es mayor en los valores cercanos al centro del intervalo"
     },
     {
-        "Enunciado": "Si \\( \\theta_1 = 0 \\) y \\( \\theta_2 = 10 \\), ¿cuál es el valor de la función de densidad \\( f(y) \\)?",
-        "R_Correcta": "Es \\( f(y) = 0.1 \\) para \\( 0 \\leq y \\leq 10 \\).",
+        "Enunciado": "Si ( theta_1 = 0 ) y ( theta_2 = 10 ), ¿cuál es el valor de la función de densidad ( f(y) )?",
+        "R_Correcta": "Es ( f(y) = 0.1 ) para ( 0 leq y leq 10 ).",
         "R_Falsas": [
-            "Es \\( f(y) = 0.01 \\) para \\( 0 \\leq y \\leq 10 \\).",
-            "Es \\( f(y) = 10 \\) para \\( 0 \\leq y \\leq 10 \\).",
-            "Es \\( f(y) = 1 \\) para \\( 0 \\leq y \\leq 10 \\)."
+            "Es ( f(y) = 0.01 ) para ( 0 leq y leq 10 ).",
+            "Es ( f(y) = 10 ) para ( 0 leq y leq 10 ).",
+            "Es ( f(y) = 1 ) para ( 0 leq y leq 10 )."
         ],
-        "R_Truco": "Es \\( f(y) = 0.05 \\) para \\( 0 \\leq y \\leq 10 \\)"
+        "R_Truco": "Es ( f(y) = 0.05 ) para ( 0 leq y leq 10 )"
     },
     {
-        "Enunciado": "¿Qué sucede con la función de densidad fuera del intervalo \\( \\theta_1 \\leq y \\leq \\theta_2 \\)?",
+        "Enunciado": "¿Qué sucede con la función de densidad fuera del intervalo ( theta_1 leq y leq theta_2 )?",
         "R_Correcta": "La función de densidad es cero fuera del intervalo.",
         "R_Falsas": [
             "La función de densidad sigue siendo constante.",
@@ -1326,14 +1326,14 @@ INSERT INTO Leccion VALUES(3231,"3.2.3E Ejercicios de Distribución uniforme y e
         "R_Truco": "La función de densidad toma el valor mínimo del intervalo"
     },
     {
-        "Enunciado": "¿Cuál es la probabilidad de que una variable aleatoria uniforme tome un valor específico dentro del intervalo \\( \\theta_1 \\leq y \\leq \\theta_2 \\)?",
+        "Enunciado": "¿Cuál es la probabilidad de que una variable aleatoria uniforme tome un valor específico dentro del intervalo ( theta_1 leq y leq theta_2 )?",
         "R_Correcta": "Es cero, ya que la probabilidad puntual en una distribución continua es cero.",
         "R_Falsas": [
-            "Es \\( \\frac{1}{\\theta_2 - \\theta_1} \\).",
-            "Es \\( \\frac{1}{2} \\).",
-            "Es \\( \\frac{1}{\\theta_2 + \\theta_1} \\)."
+            "Es ( frac{1}{theta_2 - theta_1} ).",
+            "Es ( frac{1}{2} ).",
+            "Es ( frac{1}{theta_2 + theta_1} )."
         ],
-        "R_Truco": "Es \\( \\frac{1}{\\theta_2 - \\theta_1} \\) para valores específicos"
+        "R_Truco": "Es ( frac{1}{theta_2 - theta_1} ) para valores específicos"
     }
 ]');
 INSERT INTO Leccion VALUES(3241,"3.2.4E Ejercicios de Métodos para simular el proceso de Poisson", 1, 1,
@@ -1392,56 +1392,56 @@ INSERT INTO Leccion VALUES(3241,"3.2.4E Ejercicios de Métodos para simular el p
 INSERT INTO Leccion VALUES(3251,"3.2.5E Ejercicios de Métodos de Poisson Especial", 1, 1,
 '[
     {
-        "Enunciado": "Un dominio tiene un área total \\( A = 100 \\) unidades cuadradas y se divide en \\( T = 10 \\) celdas. Si se observan \\( m = 50 \\) puntos en total, ¿cuál es la densidad promedio \\( \\lambda \\) de puntos por celda?",
+        "Enunciado": "Un dominio tiene un área total ( A = 100 ) unidades cuadradas y se divide en ( T = 10 ) celdas. Si se observan ( m = 50 ) puntos en total, ¿cuál es la densidad promedio ( lambda ) de puntos por celda?",
         "R_Correcta": "5",
         "R_Falsas": ["10", "0.5", "50"],
         "R_Truco": "100, ya que el total de puntos observados es 50"
     },
     {
-        "Enunciado": "Utilizando la densidad promedio \\( \\lambda = 4 \\), ¿cuál es la probabilidad de que una celda contenga exactamente 3 puntos, según la distribución de Poisson?",
+        "Enunciado": "Utilizando la densidad promedio ( lambda = 4 ), ¿cuál es la probabilidad de que una celda contenga exactamente 3 puntos, según la distribución de Poisson?",
         "R_Correcta": "0.195",
         "R_Falsas": ["0.165", "0.25", "0.10"],
         "R_Truco": "0.20, ya que está cerca de la densidad promedio"
     },
     {
-        "Enunciado": "Si se observa que \\( r = 2 \\) celdas contienen exactamente 3 puntos, ¿cuál es el valor esperado de celdas con 3 puntos \\( e_r \\) en \\( T = 20 \\) celdas con tasa \\( P(r = 3) = 0.15 \\)?",
+        "Enunciado": "Si se observa que ( r = 2 ) celdas contienen exactamente 3 puntos, ¿cuál es el valor esperado de celdas con 3 puntos ( e_r ) en ( T = 20 ) celdas con tasa ( P(r = 3) = 0.15 )?",
         "R_Correcta": "3",
         "R_Falsas": ["2", "5", "0.15"],
         "R_Truco": "1, asumiendo la probabilidad de 0.15 sin multiplicar por T"
     },
     {
-        "Enunciado": "En una muestra de \\( T = 15 \\) celdas, ¿cuál es la varianza de la muestra si el promedio \\( m/T = 2.5 \\) y la suma de los cuadrados de los errores es 1.5?",
+        "Enunciado": "En una muestra de ( T = 15 ) celdas, ¿cuál es la varianza de la muestra si el promedio ( m/T = 2.5 ) y la suma de los cuadrados de los errores es 1.5?",
         "R_Correcta": "0.107",
         "R_Falsas": ["0.15", "0.5", "1.0"],
         "R_Truco": "0.2, asumiendo que la varianza es igual a la densidad promedio"
     },
     {
-        "Enunciado": "Si \\( \\lambda \\) es la densidad promedio de puntos por celda y el área de una celda es \\( A/T = 10 \\), ¿cuál es la tasa de Poisson para una celda?",
-        "R_Correcta": "Multiplicando \\( \\lambda \\) por el área de la celda",
+        "Enunciado": "Si ( lambda ) es la densidad promedio de puntos por celda y el área de una celda es ( A/T = 10 ), ¿cuál es la tasa de Poisson para una celda?",
+        "R_Correcta": "Multiplicando ( lambda ) por el área de la celda",
         "R_Falsas": [
-            "Dividiendo \\( \\lambda \\) entre el número de celdas",
+            "Dividiendo ( lambda ) entre el número de celdas",
             "Sumando el número de puntos observados",
-            "Restando el número de celdas de \\( T \\)"
+            "Restando el número de celdas de ( T )"
         ],
-        "R_Truco": "Dividiendo el área de la celda por \\( \\lambda \\)"
+        "R_Truco": "Dividiendo el área de la celda por ( lambda )"
     }
 ]');
 INSERT INTO Leccion VALUES(3301,"3.3E Ejercicios de Proceso de Poisson no homogéneo", 1, 1,
 '[
     {
-        "Enunciado": "En un proceso de Poisson no homogéneo con tasa \\( \\lambda(t) = 2t \\), ¿cuál es la probabilidad de observar exactamente 4 eventos en un intervalo de tiempo de \\( t = 3 \\)?",
+        "Enunciado": "En un proceso de Poisson no homogéneo con tasa ( lambda(t) = 2t ), ¿cuál es la probabilidad de observar exactamente 4 eventos en un intervalo de tiempo de ( t = 3 )?",
         "R_Correcta": "0.1839",
         "R_Falsas": ["0.25", "0.102", "0.343"],
         "R_Truco": "0.2, asumiendo una tasa constante"
     },
     {
-        "Enunciado": "Si la tasa del proceso de Poisson no homogéneo es \\( \\lambda(t) = 5 \\), ¿cuál es la probabilidad de observar exactamente 2 eventos en \\( t = 1 \\)? Usa la fórmula de la distribución de Poisson.",
+        "Enunciado": "Si la tasa del proceso de Poisson no homogéneo es ( lambda(t) = 5 ), ¿cuál es la probabilidad de observar exactamente 2 eventos en ( t = 1 )? Usa la fórmula de la distribución de Poisson.",
         "R_Correcta": "0.0842",
         "R_Falsas": ["0.10", "0.067", "0.25"],
         "R_Truco": "0.1, aproximando la tasa a 1"
     },
     {
-        "Enunciado": "Dado un proceso de Poisson no homogéneo con \\( \\lambda(t) = 3t^2 \\), ¿cuál es la tasa total acumulada en el intervalo \\( t = 0 \\) a \\( t = 2 \\)?",
+        "Enunciado": "Dado un proceso de Poisson no homogéneo con ( lambda(t) = 3t^2 ), ¿cuál es la tasa total acumulada en el intervalo ( t = 0 ) a ( t = 2 )?",
         "R_Correcta": "8",
         "R_Falsas": ["6", "12", "10"],
         "R_Truco": "6, calculando sin integrar correctamente"
@@ -1457,7 +1457,7 @@ INSERT INTO Leccion VALUES(3301,"3.3E Ejercicios de Proceso de Poisson no homog�
         "R_Truco": "La tasa es siempre mayor en el caso homogéneo"
     },
     {
-        "Enunciado": "Si en un proceso de Poisson no homogéneo la tasa de eventos es \\( \\lambda(t) = 4t \\), ¿cuál es la probabilidad de que no ocurra ningún evento en el intervalo de tiempo \\( t = 1 \\) a \\( t = 2 \\)?",
+        "Enunciado": "Si en un proceso de Poisson no homogéneo la tasa de eventos es ( lambda(t) = 4t ), ¿cuál es la probabilidad de que no ocurra ningún evento en el intervalo de tiempo ( t = 1 ) a ( t = 2 )?",
         "R_Correcta": "0.0183",
         "R_Falsas": ["0.5", "0.065", "0.28"],
         "R_Truco": "0.05, asumiendo una tasa constante de 4"
@@ -1466,25 +1466,25 @@ INSERT INTO Leccion VALUES(3301,"3.3E Ejercicios de Proceso de Poisson no homog�
 INSERT INTO Leccion VALUES(3411,"3.4.1E Ejercicios de Estructura probabilística de una cadena de Markov", 1, 1,
 '[
     {
-        "Enunciado": "En una cadena de Markov con tres estados \\( A \\), \\( B \\) y \\( C \\), la probabilidad de transición de \\( A \\) a \\( B \\) es 0.4, de \\( A \\) a \\( C \\) es 0.6. ¿Cuál es la probabilidad de que el sistema permanezca en el estado \\( A \\) en el siguiente paso?",
+        "Enunciado": "En una cadena de Markov con tres estados ( A ), ( B ) y ( C ), la probabilidad de transición de ( A ) a ( B ) es 0.4, de ( A ) a ( C ) es 0.6. ¿Cuál es la probabilidad de que el sistema permanezca en el estado ( A ) en el siguiente paso?",
         "R_Correcta": "0",
         "R_Falsas": ["0.5", "0.2", "1"],
         "R_Truco": "0.4, considerando incorrectamente una permanencia posible"
     },
     {
-        "Enunciado": "En una cadena de Markov, si la probabilidad de estar en el estado \\( S_1 \\) es 0.7 y de estar en el estado \\( S_2 \\) es 0.3 en el tiempo \\( t \\), ¿cuál es la probabilidad total de estar en \\( S_1 \\) en el tiempo \\( t+1 \\) si las probabilidades de transición son \\( P(S_1 \\rightarrow S_1) = 0.8 \\) y \\( P(S_2 \\rightarrow S_1) = 0.4 \\)?",
+        "Enunciado": "En una cadena de Markov, si la probabilidad de estar en el estado ( S_1 ) es 0.7 y de estar en el estado ( S_2 ) es 0.3 en el tiempo ( t ), ¿cuál es la probabilidad total de estar en ( S_1 ) en el tiempo ( t+1 ) si las probabilidades de transición son ( P(S_1 rightarrow S_1) = 0.8 ) y ( P(S_2 rightarrow S_1) = 0.4 )?",
         "R_Correcta": "0.68",
         "R_Falsas": ["0.5", "0.72", "0.6"],
         "R_Truco": "0.7, sin considerar correctamente las probabilidades de transición"
     },
     {
-        "Enunciado": "Una cadena de Markov tiene dos estados, \\( S_1 \\) y \\( S_2 \\), con probabilidades de transición \\( P(S_1 \\rightarrow S_2) = 0.3 \\) y \\( P(S_2 \\rightarrow S_1) = 0.7 \\). Si el sistema está en \\( S_1 \\) en \\( t = 1 \\), ¿cuál es la probabilidad de que esté en \\( S_2 \\) en \\( t = 2 \\)?",
+        "Enunciado": "Una cadena de Markov tiene dos estados, ( S_1 ) y ( S_2 ), con probabilidades de transición ( P(S_1 rightarrow S_2) = 0.3 ) y ( P(S_2 rightarrow S_1) = 0.7 ). Si el sistema está en ( S_1 ) en ( t = 1 ), ¿cuál es la probabilidad de que esté en ( S_2 ) en ( t = 2 )?",
         "R_Correcta": "0.21",
         "R_Falsas": ["0.49", "0.7", "0.9"],
         "R_Truco": "0.3, confundiendo la probabilidad de transición en un solo paso"
     },
     {
-        "Enunciado": "En una cadena de Markov de 4 estados, si en el tiempo \\( t \\) el sistema está en el estado 3 y la probabilidad de transición \\( P(3 \\rightarrow 4) \\) es 0.6, ¿qué significa esta probabilidad en términos del comportamiento del sistema?",
+        "Enunciado": "En una cadena de Markov de 4 estados, si en el tiempo ( t ) el sistema está en el estado 3 y la probabilidad de transición ( P(3 rightarrow 4) ) es 0.6, ¿qué significa esta probabilidad en términos del comportamiento del sistema?",
         "R_Correcta": "Hay un 60% de probabilidad de que el sistema pase al estado 4 en el siguiente paso.",
         "R_Falsas": [
             "El sistema siempre pasará al estado 4.",
@@ -1494,7 +1494,7 @@ INSERT INTO Leccion VALUES(3411,"3.4.1E Ejercicios de Estructura probabilística
         "R_Truco": "El sistema tiene un 60% de probabilidad de permanecer en el estado 3"
     },
     {
-        "Enunciado": "Dada una matriz de transición \\( P \\) para una cadena de Markov con dos estados, donde \\( P = \\begin{pmatrix} 0.6 & 0.4 \\\\ 0.3 & 0.7 \\end{pmatrix} \\), ¿cuál es la probabilidad de pasar del estado 1 al estado 2 en un paso?",
+        "Enunciado": "Dada una matriz de transición ( P ) para una cadena de Markov con dos estados, donde ( P = begin{pmatrix} 0.6 & 0.4  0.3 & 0.7 end{pmatrix} ), ¿cuál es la probabilidad de pasar del estado 1 al estado 2 en un paso?",
         "R_Correcta": "0.4",
         "R_Falsas": ["0.7", "0.6", "0.3"],
         "R_Truco": "0.6, interpretando incorrectamente la permanencia en el estado 1 como la transición"
@@ -1503,34 +1503,34 @@ INSERT INTO Leccion VALUES(3411,"3.4.1E Ejercicios de Estructura probabilística
 INSERT INTO Leccion VALUES(3421,"3.4.2E Ejercicios de Probabilidad de Transicion", 1, 1,
 '[
     {
-        "Enunciado": "Dada la siguiente matriz de transición \\( P \\) para un sistema de dos estados: \n\n\\( P = \\begin{pmatrix} 0.7 & 0.3 \\\\ 0.4 & 0.6 \\end{pmatrix} \\)\n\n¿Cuál es el valor de la probabilidad estacionaria \\( X^*_1 \\) (el estado 1)?",
-        "R_Correcta": "\\( X^*_1 = \\frac{0.3}{0.3 + 0.4} \\)",
+        "Enunciado": "Dada la siguiente matriz de transición ( P ) para un sistema de dos estados: nn( P = begin{pmatrix} 0.7 & 0.3  0.4 & 0.6 end{pmatrix} )nn¿Cuál es el valor de la probabilidad estacionaria ( X^*_1 ) (el estado 1)?",
+        "R_Correcta": "( X^*_1 = frac{0.3}{0.3 + 0.4} )",
         "R_Falsas": [
-            "\\( X^*_1 = \\frac{0.7}{0.4 + 0.6} \\)",
-            "\\( X^*_1 = \\frac{0.6}{0.4 + 0.7} \\)",
-            "\\( X^*_1 = \\frac{0.4}{0.3 + 0.7} \\)"
+            "( X^*_1 = frac{0.7}{0.4 + 0.6} )",
+            "( X^*_1 = frac{0.6}{0.4 + 0.7} )",
+            "( X^*_1 = frac{0.4}{0.3 + 0.7} )"
         ],
-        "R_Truco": "\\( X^*_1 = \\frac{0.4}{0.7 + 0.3} \\)"
+        "R_Truco": "( X^*_1 = frac{0.4}{0.7 + 0.3} )"
     },
     {
-        "Enunciado": "En un sistema de dos estados, si las probabilidades de transición son \\( p_{11} = 0.8 \\), \\( p_{12} = 0.2 \\), \\( p_{21} = 0.4 \\) y \\( p_{22} = 0.6 \\), ¿cuál es el valor de \\( X^*_2 \\) (probabilidad estacionaria del estado 2)?",
-        "R_Correcta": "\\( X^*_2 = \\frac{0.4}{0.4 + 0.2} \\)",
+        "Enunciado": "En un sistema de dos estados, si las probabilidades de transición son ( p_{11} = 0.8 ), ( p_{12} = 0.2 ), ( p_{21} = 0.4 ) y ( p_{22} = 0.6 ), ¿cuál es el valor de ( X^*_2 ) (probabilidad estacionaria del estado 2)?",
+        "R_Correcta": "( X^*_2 = frac{0.4}{0.4 + 0.2} )",
         "R_Falsas": [
-            "\\( X^*_2 = \\frac{0.6}{0.8 + 0.4} \\)",
-            "\\( X^*_2 = \\frac{0.2}{0.8 + 0.4} \\)",
-            "\\( X^*_2 = \\frac{0.2}{0.6 + 0.4} \\)"
+            "( X^*_2 = frac{0.6}{0.8 + 0.4} )",
+            "( X^*_2 = frac{0.2}{0.8 + 0.4} )",
+            "( X^*_2 = frac{0.2}{0.6 + 0.4} )"
         ],
-        "R_Truco": "\\( X^*_2 = \\frac{0.4}{0.8 + 0.2} \\)"
+        "R_Truco": "( X^*_2 = frac{0.4}{0.8 + 0.2} )"
     },
     {
-        "Enunciado": "Si un sistema tiene dos estados, secos y lluviosos, y las probabilidades de transición son \\( p_{11} = 0.7 \\) y \\( p_{22} = 0.5 \\), ¿qué valor cumple la ecuación de balance estacionario para \\( X^*_1 \\)?",
-        "R_Correcta": "\\( X^*_1(0.3) + 0.5(1 - X^*_1) = X^*_1 \\)",
+        "Enunciado": "Si un sistema tiene dos estados, secos y lluviosos, y las probabilidades de transición son ( p_{11} = 0.7 ) y ( p_{22} = 0.5 ), ¿qué valor cumple la ecuación de balance estacionario para ( X^*_1 )?",
+        "R_Correcta": "( X^*_1(0.3) + 0.5(1 - X^*_1) = X^*_1 )",
         "R_Falsas": [
-            "\\( X^*_1(0.5) + 0.5(1 - X^*_1) = X^*_1 \\)",
-            "\\( X^*_1(0.4) + 0.3(1 - X^*_1) = X^*_1 \\)",
-            "\\( X^*_1(0.7) + 0.2(1 - X^*_1) = X^*_1 \\)"
+            "( X^*_1(0.5) + 0.5(1 - X^*_1) = X^*_1 )",
+            "( X^*_1(0.4) + 0.3(1 - X^*_1) = X^*_1 )",
+            "( X^*_1(0.7) + 0.2(1 - X^*_1) = X^*_1 )"
         ],
-        "R_Truco": "\\( X^*_1(0.3) + 0.7(1 - X^*_1) = X^*_1 \\)"
+        "R_Truco": "( X^*_1(0.3) + 0.7(1 - X^*_1) = X^*_1 )"
     },
     {
         "Enunciado": "En una cadena de Markov con dos estados (seco y lluvioso), si la probabilidad de que hoy sea lluvioso es 0.4 y la probabilidad de transición de seco a lluvioso es 0.2, ¿cuál es la probabilidad de que mañana sea lluvioso si hoy es seco?",
@@ -1539,14 +1539,14 @@ INSERT INTO Leccion VALUES(3421,"3.4.2E Ejercicios de Probabilidad de Transicion
         "R_Truco": "0.5, asumiendo una probabilidad de transición constante"
     },
     {
-        "Enunciado": "Considerando un sistema con dos estados donde las probabilidades de transición son \\( p_{11} = 0.6 \\), \\( p_{12} = 0.4 \\), \\( p_{21} = 0.5 \\), y \\( p_{22} = 0.5 \\), ¿cuál es el valor de \\( X^*_1 \\), la probabilidad estacionaria del estado 1?",
-        "R_Correcta": "\\( X^*_1 = \\frac{0.5}{0.5 + 0.4} \\)",
+        "Enunciado": "Considerando un sistema con dos estados donde las probabilidades de transición son ( p_{11} = 0.6 ), ( p_{12} = 0.4 ), ( p_{21} = 0.5 ), y ( p_{22} = 0.5 ), ¿cuál es el valor de ( X^*_1 ), la probabilidad estacionaria del estado 1?",
+        "R_Correcta": "( X^*_1 = frac{0.5}{0.5 + 0.4} )",
         "R_Falsas": [
-            "\\( X^*_1 = \\frac{0.6}{0.4 + 0.6} \\)",
-            "\\( X^*_1 = \\frac{0.4}{0.5 + 0.6} \\)",
-            "\\( X^*_1 = \\frac{0.5}{0.6 + 0.4} \\)"
+            "( X^*_1 = frac{0.6}{0.4 + 0.6} )",
+            "( X^*_1 = frac{0.4}{0.5 + 0.6} )",
+            "( X^*_1 = frac{0.5}{0.6 + 0.4} )"
         ],
-        "R_Truco": "\\( X^*_1 = \\frac{0.4}{0.5 + 0.5} \\)"
+        "R_Truco": "( X^*_1 = frac{0.4}{0.5 + 0.5} )"
     }
 ]');
 INSERT INTO Leccion VALUES(3431,"3.4.3E Ejercicios de Ecuación de Chapman-Kolmogorov", 1, 1,
@@ -1562,7 +1562,7 @@ INSERT INTO Leccion VALUES(3431,"3.4.3E Ejercicios de Ecuación de Chapman-Kolmo
         "R_Truco": "La fórmula para calcular directamente las probabilidades estacionarias"
     },
     {
-        "Enunciado": "Dada la ecuación de Chapman-Kolmogorov en términos discretos: \\( P(t + s) = P(t)P(s) \\), ¿qué propiedad de la matriz de transición se está utilizando?",
+        "Enunciado": "Dada la ecuación de Chapman-Kolmogorov en términos discretos: ( P(t + s) = P(t)P(s) ), ¿qué propiedad de la matriz de transición se está utilizando?",
         "R_Correcta": "La propiedad de multiplicación de matrices de transición.",
         "R_Falsas": [
             "La propiedad de aditividad.",
@@ -1572,14 +1572,14 @@ INSERT INTO Leccion VALUES(3431,"3.4.3E Ejercicios de Ecuación de Chapman-Kolmo
         "R_Truco": "La propiedad de aditividad de las probabilidades"
     },
     {
-        "Enunciado": "¿Cómo se interpreta el término \\( P(t+s) \\) en la ecuación de Chapman-Kolmogorov?",
-        "R_Correcta": "Es la probabilidad de transición en el tiempo \\( t+s \\).",
+        "Enunciado": "¿Cómo se interpreta el término ( P(t+s) ) en la ecuación de Chapman-Kolmogorov?",
+        "R_Correcta": "Es la probabilidad de transición en el tiempo ( t+s ).",
         "R_Falsas": [
             "Es la probabilidad de transición entre dos estados.",
             "Es la probabilidad de un estado estacionario.",
-            "Es la probabilidad en el tiempo \\( t \\)."
+            "Es la probabilidad en el tiempo ( t )."
         ],
-        "R_Truco": "Es la probabilidad de un estado estacionario en el tiempo \\( t+s \\)"
+        "R_Truco": "Es la probabilidad de un estado estacionario en el tiempo ( t+s )"
     },
     {
         "Enunciado": "Para un sistema continuo, la ecuación de Chapman-Kolmogorov toma la forma de una integral. ¿Qué representa el término dentro de la integral?",
@@ -1605,10 +1605,10 @@ INSERT INTO Leccion VALUES(3431,"3.4.3E Ejercicios de Ecuación de Chapman-Kolmo
 INSERT INTO Leccion VALUES(3441,"3.4.4E Ejercicios de  Aplicación de cadena de Markov", 1, 1,
 '[
     {
-        "Enunciado": "Considerando la siguiente matriz de transición para un proceso de Markov que modela días lluviosos y secos: \n\n\\( P = \\begin{pmatrix} 0.4 & 0.2 \\\\ 0.6 & 0.8 \\end{pmatrix} \\)\n\n¿Cuál es la probabilidad estacionaria para el estado de días secos \\( X^*_1 \\)?",
-        "R_Correcta": "\\( X^*_1 = 0.25 \\)",
-        "R_Falsas": ["\\( X^*_1 = 0.5 \\)", "\\( X^*_1 = 0.75 \\)", "\\( X^*_1 = 0.2 \\)"],
-        "R_Truco": "\\( X^*_1 = 0.4 \\), asumiendo una permanencia en el mismo estado"
+        "Enunciado": "Considerando la siguiente matriz de transición para un proceso de Markov que modela días lluviosos y secos: nn( P = begin{pmatrix} 0.4 & 0.2  0.6 & 0.8 end{pmatrix} )nn¿Cuál es la probabilidad estacionaria para el estado de días secos ( X^*_1 )?",
+        "R_Correcta": "( X^*_1 = 0.25 )",
+        "R_Falsas": ["( X^*_1 = 0.5 )", "( X^*_1 = 0.75 )", "( X^*_1 = 0.2 )"],
+        "R_Truco": "( X^*_1 = 0.4 ), asumiendo una permanencia en el mismo estado"
     },
     {
         "Enunciado": "En el modelo de Markov que representa días lluviosos y secos con la matriz de transición dada, si hoy es un día lluvioso, ¿cuál es la probabilidad de que mañana también sea lluvioso?",
@@ -1617,7 +1617,7 @@ INSERT INTO Leccion VALUES(3441,"3.4.4E Ejercicios de  Aplicación de cadena de 
         "R_Truco": "0.6, considerando una transición errónea entre estados"
     },
     {
-        "Enunciado": "Utilizando el proceso de Markov para modelar días lluviosos y secos con la matriz de transición: \n\n\\( P = \\begin{pmatrix} 0.4 & 0.2 \\\\ 0.6 & 0.8 \\end{pmatrix} \\)\n\n¿Cuál es la probabilidad de que, partiendo de un día seco, al segundo día también sea seco?",
+        "Enunciado": "Utilizando el proceso de Markov para modelar días lluviosos y secos con la matriz de transición: nn( P = begin{pmatrix} 0.4 & 0.2  0.6 & 0.8 end{pmatrix} )nn¿Cuál es la probabilidad de que, partiendo de un día seco, al segundo día también sea seco?",
         "R_Correcta": "0.32",
         "R_Falsas": ["0.4", "0.25", "0.48"],
         "R_Truco": "0.4, confundiendo un solo paso con dos pasos"
@@ -1788,11 +1788,11 @@ INSERT INTO Leccion VALUES(4211,"4.2.1E Ejercicios de Análisis de primer orden"
         "Enunciado": "En un análisis del vecino más cercano de primer orden, ¿cuál es el primer paso a realizar?",
         "R_Correcta": "Definir el área de estudio.",
         "R_Falsas": [
-            "Recolectar los datos mediante coordenadas \\((x, y)\\).",
+            "Recolectar los datos mediante coordenadas ((x, y)).",
             "Calcular la media de las distancias.",
             "Generar puntos aleatorios en el área."
         ],
-        "R_Truco": "Recolectar los datos mediante coordenadas \\((x, y)\\)"
+        "R_Truco": "Recolectar los datos mediante coordenadas ((x, y))"
     },
     {
         "Enunciado": "Durante un análisis de primer orden, ¿cómo se obtiene la distancia entre los puntos o vecinos más cercanos?",
@@ -1825,7 +1825,7 @@ INSERT INTO Leccion VALUES(4211,"4.2.1E Ejercicios de Análisis de primer orden"
         "R_Truco": "Los puntos están distribuidos de manera completamente aleatoria"
     },
     {
-        "Enunciado": "En un análisis del vecino más cercano de primer orden, ¿qué información proporcionan las coordenadas \\((x, y)\\) recolectadas?",
+        "Enunciado": "En un análisis del vecino más cercano de primer orden, ¿qué información proporcionan las coordenadas ((x, y)) recolectadas?",
         "R_Correcta": "La ubicación espacial precisa de cada punto en el área de estudio.",
         "R_Falsas": [
             "La distancia exacta entre cada par de puntos.",
@@ -1838,7 +1838,7 @@ INSERT INTO Leccion VALUES(4211,"4.2.1E Ejercicios de Análisis de primer orden"
 INSERT INTO Leccion VALUES(4221,"4.2.2E Ejercicios de Análisis de segundo orden", 1, 1,
 '[
     {
-        "Enunciado": "¿Qué mide la función \\( K \\) de Ripley en el análisis de segundo orden?",
+        "Enunciado": "¿Qué mide la función ( K ) de Ripley en el análisis de segundo orden?",
         "R_Correcta": "La densidad de eventos en función de la distancia entre los puntos.",
         "R_Falsas": [
             "La distancia euclidiana entre los puntos.",
@@ -1848,17 +1848,17 @@ INSERT INTO Leccion VALUES(4221,"4.2.2E Ejercicios de Análisis de segundo orden
         "R_Truco": "La densidad total de puntos en el área de estudio"
     },
     {
-        "Enunciado": "¿Qué representa la transformación de la función \\( K \\) de Ripley en la función \\( L \\)?",
-        "R_Correcta": "Facilita la interpretación al normalizar la escala de la función \\( K \\).",
+        "Enunciado": "¿Qué representa la transformación de la función ( K ) de Ripley en la función ( L )?",
+        "R_Correcta": "Facilita la interpretación al normalizar la escala de la función ( K ).",
         "R_Falsas": [
             "Aumenta la complejidad del cálculo.",
             "Elimina la influencia de la densidad observada.",
-            "Modifica los resultados obtenidos con la función \\( K \\)."
+            "Modifica los resultados obtenidos con la función ( K )."
         ],
         "R_Truco": "Elimina la influencia de la densidad observada"
     },
     {
-        "Enunciado": "En el análisis de segundo orden, si la función \\( L(r) \\) es mayor que lo esperado bajo un modelo aleatorio, ¿qué implica esto?",
+        "Enunciado": "En el análisis de segundo orden, si la función ( L(r) ) es mayor que lo esperado bajo un modelo aleatorio, ¿qué implica esto?",
         "R_Correcta": "Los puntos tienden a agruparse.",
         "R_Falsas": [
             "Los puntos están distribuidos de manera completamente aleatoria.",
@@ -1892,23 +1892,23 @@ INSERT INTO Leccion VALUES(4301,"4.3E Ejercicios de Patrones de puntos marcados"
 '[
     {
         "Enunciado": "En un análisis de patrones de puntos marcados, ¿qué información se utiliza para describir cada punto?",
-        "R_Correcta": "Las coordenadas \\((x, y)\\) y los atributos asociados a cada punto.",
+        "R_Correcta": "Las coordenadas ((x, y)) y los atributos asociados a cada punto.",
         "R_Falsas": [
-            "Únicamente las coordenadas \\((x, y)\\).",
+            "Únicamente las coordenadas ((x, y)).",
             "La distancia entre los puntos.",
             "Solo la densidad de puntos en el área."
         ],
-        "R_Truco": "Únicamente las coordenadas \\((x, y)\\)"
+        "R_Truco": "Únicamente las coordenadas ((x, y))"
     },
     {
         "Enunciado": "En el análisis de patrones de puntos marcados, ¿qué representa un *atributo* de un punto?",
         "R_Correcta": "Una característica específica asociada al punto, como tipo de evento o valor.",
         "R_Falsas": [
             "La distancia entre puntos.",
-            "La ubicación del punto en coordenadas \\((x, y)\\).",
+            "La ubicación del punto en coordenadas ((x, y)).",
             "La densidad de puntos en el área."
         ],
-        "R_Truco": "La ubicación del punto en coordenadas \\((x, y)\\)"
+        "R_Truco": "La ubicación del punto en coordenadas ((x, y))"
     },
     {
         "Enunciado": "Si en un análisis de patrones de puntos marcados en una ciudad los puntos representan ubicaciones de tiendas, ¿qué sería un ejemplo de un atributo asociado a cada punto?",
