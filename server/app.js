@@ -3,9 +3,9 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const app = express();
 const bcrypt = require('bcrypt');
-const { APPID } = require('./apifile.js');
-const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
-const waApi = WolframAlphaAPI(APPID);
+//const { APPID } = require('./apifile.js');
+//const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
+//const waApi = WolframAlphaAPI(APPID);
 //const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
 const {exec, spawn } = require('child_process');
@@ -668,6 +668,43 @@ function minMaxNormalize(value, min, max) {
     return (value - min) / (max - min);
 }
 
+app.post('/api/Result',(req,res)=>{
+    const {idLeccion,R1,R2,R3,R4,R5} =req.body;
+    const answers={R1,R2,R3,R4,R5}
+    let score = 0
+    const results ={}
+    const query = "SELECT Contenido FROM leccion WHERE idLeccion = ?";
+
+    db.query(query,[idLeccion],async (err,result) =>{
+        if(err) return res.send("Error obteniendo los datos")
+        if(result.length >= 0){
+            data = result[0]
+            console.log( "PREGUNTAS OBTENIDAS :\n")
+            console.log(data)
+                data.Contenido.forEach((elemento,index) =>{
+                    pos=index+1;
+                    //console.log(answers[`R${pos}`])
+                    if (answers[`R${pos}`]==elemento.R_Correcta){
+                            score= score + 1;
+                            results[index]=1
+                    }else if (answers[`R${pos}`]==elemento.R_Truco){
+                        results[index]=0.5
+                    }else{
+                        results[index]=0
+                    }
+                })
+           // console.log(answers)
+            console.log(score)
+            console.log(results)
+            const resultado={
+                "Puntuación":score,
+                "Respuestas":results
+            }
+           return res.json(resultado)   
+        }
+    })
+
+});
 /*app.post('/api/Pred', async (req,res) =>{
     const model = await loadModel()
     const{input} = req.body;

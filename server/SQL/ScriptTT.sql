@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Usuario` (
   `idUsuario` INT NOT NULL auto_increment,
   `NombreUsuario` VARCHAR(45) NOT NULL,
   `Correo` VARCHAR(45) NOT NULL,
-  `pass` VARCHAR(45) NOT NULL,
+  `pass` VARCHAR(100) NOT NULL,
   `Telefono` VARCHAR(10) NULL,
   `Tipo` INT(2) NOT NULL DEFAULT 0,
   `Tutor` INT NULL,
