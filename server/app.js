@@ -501,7 +501,7 @@ app.get('/api/ProgTotal',(req,res) =>{
 });
 
 //ops
-app.get('/api/Pair/:User',(req,res) => {
+/*app.get('/api/Pair/:User',(req,res) => {
     const { User } =req.params
     console.log("Entro "+ User)
     //Primero recuperamos los datos del usuario actual del sistema
@@ -535,7 +535,7 @@ app.get('/api/Pair/:User',(req,res) => {
             return res.send(result)
         }
     })
-});
+});*/
 
 //Emparejar por primera vez
 app.get('/api/Pair/:User/:Rendimiento/:idLeccion',(req,res) => {
@@ -664,9 +664,6 @@ app.get('/api/verTutor/:User',(req,res) =>{
 })
 
 // Normalización Min-Max
-function minMaxNormalize(value, min, max) {
-    return (value - min) / (max - min);
-}
 
 app.post('/api/Result',(req,res)=>{
     const {idLeccion,R1,R2,R3,R4,R5} =req.body;
@@ -710,51 +707,55 @@ app.post('/api/Result',(req,res)=>{
     const{input} = req.body;
     if(!model){
         return res.status(500).send('Modelo no cargado')
-    }
-    if (!Array.isArray(input)) {
-        return res.status(400).send('input debe ser un array');
+        }
+        if (!Array.isArray(input)) {
+            return res.status(400).send('input debe ser un array');
     }
     
-     const data = input.map((value, index) => {
+    const data = input.map((value, index) => {
         if (index === 0) return minMaxNormalize(value, 0, 5); // Normalización de 0 a 1
         if (index === 2) return minMaxNormalize(value, 1, 3); // Asumiendo valores entre 0 y 100 para estos índices
         return value; // Sin normalizar para otros índices
-    });
-    
-    try {
-        // Convertir los datos de entrada a un tensor
-        const inputTensor = tf.tensor2d([data], [1, data.length]);
-        const prediction = model.predict(inputTensor, { training: true });
-        const predictionArray = prediction.dataSync();
-        console.log(predictionArray)
-        // Enviar el resultado promedio de la predicción como respuesta
-        // Obtener el índice del valor más alto
-        const maxIndex = predictionArray.indexOf(Math.max(...predictionArray));
-        console.log('Clase predicha:', maxIndex);
-        var prediccion;
-        if(maxIndex===0){
-            prediccion="Apoyo"
-        }else if(maxIndex===1){
-            prediccion="Avanzado"
-        }else{
-            prediccion="Normal"
-        }
-        res.json({ prediction: prediccion });
-    } catch (error) {
-        console.error('Error al hacer la predicción:', error);
-        res.status(500).send('Error al hacer la predicción');
-    }
-
-})*/
+        });
+        
+        try {
+            // Convertir los datos de entrada a un tensor
+            const inputTensor = tf.tensor2d([data], [1, data.length]);
+            const prediction = model.predict(inputTensor, { training: true });
+            const predictionArray = prediction.dataSync();
+            console.log(predictionArray)
+            // Enviar el resultado promedio de la predicción como respuesta
+            // Obtener el índice del valor más alto
+            const maxIndex = predictionArray.indexOf(Math.max(...predictionArray));
+            console.log('Clase predicha:', maxIndex);
+            var prediccion;
+            if(maxIndex===0){
+                prediccion="Apoyo"
+                }else if(maxIndex===1){
+                    prediccion="Avanzado"
+                    }else{
+                        prediccion="Normal"
+                }
+                res.json({ prediction: prediccion });
+                } catch (error) {
+                    console.error('Error al hacer la predicción:', error);
+                    res.status(500).send('Error al hacer la predicción');
+                    }
+                    
+                    })*/
+                   
+function minMaxNormalize(value, min, max) {
+                       return (value - min) / (max - min);
+}
 
 /*Requiere de:{
-    "inputData":[Puntaje,
-                Respuesta a pregunta Facil(0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente),
-                estilodeAprendizaje(numero: 1 Visual,2 Auditivo, 3 Kinestesico),
-                Respuesta a pregunta Dificil(0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente),
-                si se estudio recientemente(si se leeyo la parte teorica 1 sino 0),
-                Pregunta dificil 2 (0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente)]}
-*/ 
+                    "inputData":[Puntaje,
+                    Respuesta a pregunta Facil(0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente),
+                    estilodeAprendizaje(numero: 1 Visual,2 Auditivo, 3 Kinestesico),
+                    Respuesta a pregunta Dificil(0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente),
+                    si se estudio recientemente(si se leeyo la parte teorica 1 sino 0),
+                    Pregunta dificil 2 (0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente)]}
+                    */                    
 app.post('/api/Predpy', async (req,res) =>{
     const { inputData } = req.body; 
     const pred = inputData.map((value, index) => {
