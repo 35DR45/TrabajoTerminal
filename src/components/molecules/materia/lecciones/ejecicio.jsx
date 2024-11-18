@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axios from 'axios';
 
 export default function Ejercicio() {
 
@@ -37,13 +38,20 @@ export default function Ejercicio() {
             }
         });
         setResultados(nuevosResultados);
+      
         // Envía las respuestas a la API
         try {
-            const response = await axios.post('/api/Predpy', respuestas);
-            console.log("Respuestas enviadas:", response.data);
+           const data ={
+                idLeccion:params.idLeccion,
+                Respuestas:respuestas
+            }
+            console.log("Respuestas enviadas:", data);
+            const response = await axios.post('/api/Result', data);
+            console.log("Respuestas Recibidas:", response.data);
         } catch (error) {
             console.error("Error al enviar respuestas:", error);
         }
+
     };
 
 

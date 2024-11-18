@@ -663,11 +663,13 @@ app.get('/api/verTutor/:User',(req,res) =>{
     })
 })
 
-// Normalización Min-Max
 
+//Resultado de ejercicios
 app.post('/api/Result',(req,res)=>{
-    const {idLeccion,R1,R2,R3,R4,R5} =req.body;
-    const answers={R1,R2,R3,R4,R5}
+    const {idLeccion,Respuestas} =req.body;
+    console.log(idLeccion)
+    console.log(Respuestas)
+    //const answers={R1,R2,R3,R4,R5}
     let score = 0
     const results ={}
     const query = "SELECT Contenido FROM leccion WHERE idLeccion = ?";
@@ -678,18 +680,22 @@ app.post('/api/Result',(req,res)=>{
             data = result[0]
             console.log( "PREGUNTAS OBTENIDAS :\n")
             console.log(data)
+            for(const pregunta in Respuestas){
                 data.Contenido.forEach((elemento,index) =>{
+                    if(pregunta == elemento.Enunciado){
+                         //console.log(answers[`R${pos}`])
                     pos=index+1;
-                    //console.log(answers[`R${pos}`])
-                    if (answers[`R${pos}`]==elemento.R_Correcta){
-                            score= score + 1;
-                            results[index]=1
-                    }else if (answers[`R${pos}`]==elemento.R_Truco){
+                    if (Respuestas[pregunta]==elemento.R_Correcta){
+                        score= score + 1;
+                        results[index]=1
+                    }else if (Respuestas[pregunta]==elemento.R_Truco){
                         results[index]=0.5
                     }else{
                         results[index]=0
+                    }    
                     }
                 })
+            }
            // console.log(answers)
             console.log(score)
             console.log(results)
@@ -743,13 +749,13 @@ app.post('/api/Result',(req,res)=>{
                     }
                     
                     })*/
-                   
+// Normalización Min-Max               
 function minMaxNormalize(value, min, max) {
                        return (value - min) / (max - min);
 }
 
 /*Requiere de:{
-                    "inputData":[Puntaje,
+        "inputData":[Puntaje,
                     Respuesta a pregunta Facil(0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente),
                     estilodeAprendizaje(numero: 1 Visual,2 Auditivo, 3 Kinestesico),
                     Respuesta a pregunta Dificil(0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente),
