@@ -123,7 +123,7 @@ INSERT INTO Leccion VALUES(1141,"1.1.4E Ejercicios de Diagramas de Caja, Histogr
 '[
     {
         "Enunciado": "¿Qué información proporciona un diagrama de caja sobre un conjunto de datos?",
-        "R_Correcta": "Un diagrama de caja muestra la mediana, los cuartiles y los valores atípicos del conjunto de datos."
+        "R_Correcta": "Un diagrama de caja muestra la mediana, los cuartiles y los valores atípicos del conjunto de datos.",
         "R_Falsas": [
             "Un diagrama de caja solo muestra el valor máximo y mínimo.",
             "Un diagrama de caja es un tipo de gráfico circular.",

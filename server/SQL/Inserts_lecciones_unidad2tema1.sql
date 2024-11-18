@@ -2,7 +2,7 @@ USE mydb;
 delete from Leccion where materia=2 && tipo=0;
 INSERT INTO Leccion VALUES(1000,"1. Fundamentos de criptografía", 2, 0,
 '{"contenido":
-"Tremendo xd"
+"La criptografía es la disciplina que se encarga de proteger información mediante la codificación de datos, con el objetivo de que solo los usuarios autorizados puedan acceder a ella. La palabra criptografía proviene del griego criptos, que significa oculto, y graφh, que significa escritura"
 }');
 INSERT INTO Leccion VALUES(1100,"1.1 Fundamentos e importancia de criptografía", 2, 0,
 '{"contenido":
