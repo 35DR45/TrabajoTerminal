@@ -14,7 +14,7 @@ app.use(express.json())
 
 const PORT = process.env.PORT || 3000;
 
-//////////// Lista de bibliotecas de Python que deseas instalar para correr el script d epython
+//////////// Lista de bibliotecas de Python que deseas instalar para correr el script de python
 /*const pythonPackages = ['tensorflow', 'numpy'];
 
 exec(`pip install ${pythonPackages.join(' ')}`, (error, stdout, stderr) => {
@@ -116,17 +116,16 @@ app.get('/',(req,res)=>{
         "status":(Aqui te da el mensaje de lo que ocurrio)
         }
 */
-app.post('/api/Login',(req,res)=>{
+app.post('/api/Login',async (req,res)=>{
     const {user,pass} =req.body;
     
     if(user == "" || pass == ""){
         console.log("Vacios");
         return res.status(400).json({status:"Usuario o Contraseña vacios"})
     }    
-
     const query = "SELECT * FROM usuario WHERE NombreUsuario = ?";
 
-    db.query(query,[user,pass],async (err,result) =>{
+    db.query(query,[user],async (err,result) =>{
 
         console.log("recibido usuario:"+ user);
         console.log("recibido contrasena:"+ pass); 
