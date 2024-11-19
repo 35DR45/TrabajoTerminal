@@ -458,43 +458,17 @@ app.get('/api/Cursos',(req,res) =>{
 });
 
 //Recuperar progreso
-app.get('/api/ProgPractica',(req,res) =>{
-    const query = "select (select (select count(idLeccion) from Progreso where idMateria=? & idUsuario=? & Tipo=1) / (select count(idLeccion) from leccion where Materia=? & Tipo=1)) * 100";
-    db.query(query,req.body.materia,req.body.usuario,req.body.materia,(err,result) =>{
-        console.log("materia: "+req.body.materia)
+app.post('/api/Progreso',(req,res) =>{
+    const query = "SELECT 	m.idMateria AS id, m.NombreMateria AS Materia, IFNULL((COUNT(CASE WHEN l.Tipo = 0 THEN p.idLeccion END) / COUNT(CASE WHEN l.Tipo = 0 THEN l.idLeccion END) * 100), 0) AS `PTeo`, IFNULL((COUNT(CASE WHEN l.Tipo = 0 THEN p.idLeccion END) / COUNT(CASE WHEN l.Tipo = 0 THEN l.idLeccion END) * 100), 0) AS `PPra`, IFNULL((COUNT(p.idLeccion) / COUNT(l.idLeccion) * 100), 0) AS `PTot` FROM Materia m LEFT JOIN Leccion l ON m.idMateria = l.Materia LEFT JOIN Progreso p ON l.idLeccion = p.idLeccion AND p.idUsuario IN (select idUsuario from Usuario where NombreUsuario=?) GROUP BY m.idMateria, m.NombreMateria";
+    console.log("materia: "+ req.body.materia, "usuario: ",req.body.usuario);
+    db.query(query,[req.body.usuario],(err,result) =>{
         if(err){
+            console.log(err)
             return res.send("Error al calcular progreso")
         } 
         else {
             console.log(result)
-            return res.send(result)
-        }
-    })
-});
-
-app.get('/api/ProgTeoria',(req,res) =>{
-    const query = "select (select (select count(idLeccion) from Progreso where idMateria=? & idUsuario=? & Tipo=0) / (select count(idLeccion) from leccion where Materia=? & Tipo=0)) * 100";
-    db.query(query,req.body.materia,req.body.usuario,req.body.materia,(err,result) =>{
-        console.log("materia: "+req.body.materia)
-        if(err){
-            return res.send("Error al calcular progreso")
-        } 
-        else {
-            console.log(result)
-            return res.send(result)
-        }
-    })
-});
-app.get('/api/ProgTotal',(req,res) =>{
-    const query = "select (select (select count(idLeccion) from Progreso where idMateria=? & idUsuario=?) / (select count(idLeccion) from leccion where Materia=?)) * 100";
-    db.query(query,req.body.materia,req.body.usuario,req.body.materia,(err,result) =>{
-        console.log("materia: "+req.body.materia)
-        if(err){
-            return res.send("Error al calcular progreso")
-        } 
-        else {
-            console.log(result)
-            return res.send(result)
+            res.send(result)
         }
     })
 });
