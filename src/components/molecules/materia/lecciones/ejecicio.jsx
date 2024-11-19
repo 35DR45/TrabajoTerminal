@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 export default function Ejercicio() {
 
@@ -16,7 +17,39 @@ export default function Ejercicio() {
     // Estado para almacenar la respuesta seleccionada de cada enunciado
     const [respuestas, setRespuestas] = useState({});
     const [resultados, setResultados] = useState({});
-// Estado para mostrar si acertó o no
+    // Estado para mostrar si acertó o no
+
+    const showAlert = async (data)=>{
+       const result= await Swal.fire({
+            title:`Puntuacion de lección :<p style="color: green;"><b > ${data.Puntuación}</b> </p>`,
+            text:`Resultados: P1 : ${data.Respuestas[0]} 
+            P2 :  ${data.Respuestas[1]} 
+            P3 :  ${data.Respuestas[2]}
+            P4 :  ${data.Respuestas[3]}
+            P5 :  ${data.Respuestas[4]}`,
+            icon:'info',
+            background:'#811642',
+            color:'#f2ffeb',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6', 
+            cancelButtonColor: '#d33', 
+            confirmButtonText: '<b >Aceptar</b> ',
+            cancelButtonText: 'Cancelar',
+            footer:'Al aceptar guardaras tu progreso',
+            didOpen: (popup) => {
+                // Aplicar estilos directamente al popup
+                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                popup.style.borderRadius = '15px';       // Bordes redondeados
+              },
+        })
+        if (result.isConfirmed){
+            try{
+            const response = await fetch('/api/Predpy')
+            }catch{
+
+            }
+        }
+    }
 
     // Maneja el cambio de selección para cada enunciado
     const handleOptionChange = (enunciadoId, opcion) => {
@@ -47,6 +80,7 @@ export default function Ejercicio() {
             }
             console.log("Respuestas enviadas:", data);
             const response = await axios.post('/api/Result', data);
+            showAlert(response.data)
             console.log("Respuestas Recibidas:", response.data);
         } catch (error) {
             console.error("Error al enviar respuestas:", error);
