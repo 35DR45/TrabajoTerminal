@@ -782,11 +782,17 @@ function minMaxNormalize(value, min, max) {
                     */                    
 app.post('/api/Predpy', async (req,res) =>{
     const { user,inputData } = req.body; 
+    // Validar que inputData no sea null, undefined o esté vacío
+    console.log(inputData)
+    if (!inputData || !Array.isArray(inputData) || inputData.length === 0) {
+        return res.status(400).send("Datos vacíos o no válidos");
+    }
     const pred = inputData.map((value, index) => {
         if (index === 0) return minMaxNormalize(value, 0, 5); // Normalización de 0 a 1
         if (index === 2) return minMaxNormalize(value, 1, 3); // Asumiendo valores entre 0 y 100 para estos índices
         return value; // Sin normalizar para otros índices
     });
+    
     const pythonProcess = spawn('python', ['CNNB169/NN.py', JSON.stringify(pred)]);
 
     let result = '';
