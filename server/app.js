@@ -763,7 +763,7 @@ function minMaxNormalize(value, min, max) {
                     Pregunta dificil 2 (0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente)]}
                     */                    
 app.post('/api/Predpy', async (req,res) =>{
-    const { inputData } = req.body; 
+    const { user,inputData } = req.body; 
     const pred = inputData.map((value, index) => {
         if (index === 0) return minMaxNormalize(value, 0, 5); // Normalización de 0 a 1
         if (index === 2) return minMaxNormalize(value, 1, 3); // Asumiendo valores entre 0 y 100 para estos índices

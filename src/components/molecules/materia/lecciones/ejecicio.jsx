@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import axios from 'axios';
 import Swal from 'sweetalert2'
-
+import { UserContext } from '../../../../UserContext';
 export default function Ejercicio() {
 
     const params = useParams();
-
+    const { user } = useContext(UserContext);
     const [ejercicio, setEjercicio] = useState([]);
 
     console.log(params);
@@ -31,9 +31,9 @@ export default function Ejercicio() {
             background:'#811642',
             color:'#f2ffeb',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6', 
+            confirmButtonColor: '#f2ffeb', 
             cancelButtonColor: '#d33', 
-            confirmButtonText: '<b >Aceptar</b> ',
+            confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
             cancelButtonText: 'Cancelar',
             footer:'Al aceptar guardaras tu progreso',
             didOpen: (popup) => {
@@ -43,9 +43,44 @@ export default function Ejercicio() {
               },
         })
         if (result.isConfirmed){
+            Swal.fire({
+                title: 'Enviando datos...',
+                text: 'Por favor espera mientras se procesa tu solicitud.',
+                background:'#811642',
+                color:'#f2ffeb',
+                allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+                didOpen: (popup) => {
+                    Swal.showLoading(); 
+                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                    popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+                },
+            });
             try{
-            const response = await fetch('/api/Predpy')
-            }catch{
+            const response = await fetch('/api/Predpy',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "user":user,
+                    "inputData":[data.Puntuación,data.Respuestas[0],1,data.Respuestas[3],1,data.Respuestas[4]],
+                })
+            });
+            const res =await response.json()
+
+            Swal.fire({
+                title:'SE ENVIO',
+                background:'#811642',
+                color:'#f2ffeb',
+                didOpen: (popup) => {
+                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                    popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+                },
+                confirmButtonColor: '#f2ffeb',
+                confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
+                 
+            })
+            }catch(error){
 
             }
         }
