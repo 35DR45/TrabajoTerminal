@@ -96,6 +96,7 @@ export default function Ejercicio() {
 
     // Maneja el envío de todas las respuestas
     const handleSubmit = async () => {
+        event.preventDefault(); 
         // Compara las respuestas del usuario con las correctas
         const nuevosResultados = {};
         ejercicio.forEach(enunciado => {
@@ -155,30 +156,36 @@ export default function Ejercicio() {
                             <p className="Enunciado_Ejercicio">
                                 {problema.Enunciado}
                             </p>
-                            <div className="input-container">
-                                <input value={problema.R_Truco} type="radio"
-                                    name={`enunciado-${problema.Enunciado}`} // Agrupa las opciones de cada enunciado
-                                    checked={respuestas[problema.Enunciado] === problema.R_Truco}
-                                    onChange={() => handleOptionChange(problema.Enunciado, problema.R_Truco)}/>
-                                <label>{problema.R_Truco}</label>
+                            <div className="input_container">
+                                <div className="respuesta_ejercicio">
+                                    <input value={problema.R_Truco} type="radio"
+                                        id={`enunciado-${problema.Enunciado}-3`} // Agrupa las opciones de cada enunciado
+                                        name={`enunciado-${problema.Enunciado}`} // Agrupa las opciones de cada enunciado
+                                        checked={respuestas[problema.Enunciado] === problema.R_Truco}
+                                        onChange={() => handleOptionChange(problema.Enunciado, problema.R_Truco)}/>
+                                    <label htmlFor={`enunciado-${problema.Enunciado}-3`}>{problema.R_Truco}</label>
+                                </div>
                                 
                                 {problema.R_Falsas.map((respuestaIncorrecta, index) => (
-                                    <div key={index} >
+                                    <div key={index} className="respuesta_ejercicio" >
                                         <input value={respuestaIncorrecta}
                                             type="radio"
+                                            id={`enunciado-${problema.Enunciado}-${index}`} // Agrupa las opciones de cada enunciado
                                             name={`enunciado-${problema.Enunciado}`} // Agrupa las opciones de cada enunciado
                                             checked={respuestas[problema.Enunciado] === respuestaIncorrecta}
                                             onChange={() => handleOptionChange(problema.Enunciado, respuestaIncorrecta)}/>
-                                        <label>{respuestaIncorrecta}</label>
+                                        <label htmlFor={`enunciado-${problema.Enunciado}-${index}`}>{respuestaIncorrecta}</label>
                                     </div>
                                 ))}
 
-                                <input value={problema.R_Correcta}
-                                    type="radio"
-                                    name={`enunciado-${problema.Enunciado}`} // Agrupa las opciones de cada enunciado
-                                    checked={respuestas[problema.Enunciado] === problema.R_Correcta}
-                                    onChange={() => handleOptionChange(problema.Enunciado, problema.R_Correcta)} />
-                                <label>{problema.R_Correcta}</label>
+                                <div className="respuesta_ejercicio">
+                                    <input id={`enunciado-${problema.Enunciado}-4`}value={problema.R_Correcta}
+                                        type="radio"
+                                        name={`enunciado-${problema.Enunciado}` } // Agrupa las opciones de cada enunciado
+                                        checked={respuestas[problema.Enunciado] === problema.R_Correcta}
+                                        onChange={() => handleOptionChange(problema.Enunciado, problema.R_Correcta)} />
+                                    <label htmlFor={`enunciado-${problema.Enunciado}-4`} >{problema.R_Correcta}</label>
+                                </div>
                                     {/* Muestra si acertó o falló */}
                             </div>
                             {resultados[problema.Enunciado] && (
@@ -188,7 +195,7 @@ export default function Ejercicio() {
                     ))}
                 </div>
             ))}
-            <button onClick={handleSubmit}>Enviar ejercicio</button>
+            <button className="btn-header" onClick={handleSubmit} >Enviar ejercicio</button>
         </>
     )
 }
