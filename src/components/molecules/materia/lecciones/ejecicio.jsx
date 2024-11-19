@@ -1,10 +1,12 @@
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-
+import { useEffect, useState,useContext } from "react";
+import axios from 'axios';
+import Swal from 'sweetalert2'
+import { UserContext } from '../../../../UserContext';
 export default function Ejercicio() {
 
     const params = useParams();
-
+    const { user } = useContext(UserContext);
     const [ejercicio, setEjercicio] = useState([]);
 
     console.log(params);
@@ -15,7 +17,74 @@ export default function Ejercicio() {
     // Estado para almacenar la respuesta seleccionada de cada enunciado
     const [respuestas, setRespuestas] = useState({});
     const [resultados, setResultados] = useState({});
-// Estado para mostrar si acertó o no
+    // Estado para mostrar si acertó o no
+
+    const showAlert = async (data)=>{
+       const result= await Swal.fire({
+            title:`Puntuacion de lección :<p style="color: green;"><b > ${data.Puntuación}</b> </p>`,
+            text:`Resultados: P1 : ${data.Respuestas[0]} 
+            P2 :  ${data.Respuestas[1]} 
+            P3 :  ${data.Respuestas[2]}
+            P4 :  ${data.Respuestas[3]}
+            P5 :  ${data.Respuestas[4]}`,
+            icon:'info',
+            background:'#811642',
+            color:'#f2ffeb',
+            showCancelButton: true,
+            confirmButtonColor: '#f2ffeb', 
+            cancelButtonColor: '#d33', 
+            confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
+            cancelButtonText: 'Cancelar',
+            footer:'Al aceptar guardaras tu progreso',
+            didOpen: (popup) => {
+                // Aplicar estilos directamente al popup
+                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                popup.style.borderRadius = '15px';       // Bordes redondeados
+              },
+        })
+        if (result.isConfirmed){
+            Swal.fire({
+                title: 'Enviando datos...',
+                text: 'Por favor espera mientras se procesa tu solicitud.',
+                background:'#811642',
+                color:'#f2ffeb',
+                allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+                didOpen: (popup) => {
+                    Swal.showLoading(); 
+                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                    popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+                },
+            });
+            try{
+            const response = await fetch('/api/Predpy',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "user":user,
+                    "inputData":[data.Puntuación,data.Respuestas[0],1,data.Respuestas[3],1,data.Respuestas[4]],
+                })
+            });
+            const res =await response.json()
+
+            Swal.fire({
+                title:'SE ENVIO',
+                background:'#811642',
+                color:'#f2ffeb',
+                didOpen: (popup) => {
+                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                    popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+                },
+                confirmButtonColor: '#f2ffeb',
+                confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
+                 
+            })
+            }catch(error){
+
+            }
+        }
+    }
 
     // Maneja el cambio de selección para cada enunciado
     const handleOptionChange = (enunciadoId, opcion) => {
@@ -37,13 +106,21 @@ export default function Ejercicio() {
             }
         });
         setResultados(nuevosResultados);
+      
         // Envía las respuestas a la API
         try {
-            const response = await axios.post('/api/Predpy', respuestas);
-            console.log("Respuestas enviadas:", response.data);
+           const data ={
+                idLeccion:params.idLeccion,
+                Respuestas:respuestas
+            }
+            console.log("Respuestas enviadas:", data);
+            const response = await axios.post('/api/Result', data);
+            showAlert(response.data)
+            console.log("Respuestas Recibidas:", response.data);
         } catch (error) {
             console.error("Error al enviar respuestas:", error);
         }
+
     };
 
 

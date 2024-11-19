@@ -1,19 +1,41 @@
 import Grouped_btns from '../../molecules/header/grouped_btns'
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../CSS/header.css'
 import { useContext } from 'react';
 import { UserContext } from '../../../UserContext';
+import Swal from 'sweetalert2'
 
 export default function Header(){
     const { setUser } = useContext(UserContext);
-
+    const navigate = useNavigate();
     const handleLogout = () => {
         // Eliminar el usuario del contexto
         setUser(null);
         // Limpiar sessionStorage
         sessionStorage.removeItem('user');
+
+        Swal.fire({
+            title:"Cerrando sesión ",
+            text:"Cargando...",
+            icon:'success',
+            background:'#811642',
+            color:'#f2ffeb',
+            showCancelButton: false,    
+            timer: 2000,
+            timerProgressBar:true,
+            footer:'Hasta pronto!!',
+            didOpen: (popup) => {
+                Swal.showLoading();
+                // Aplicar estilos directamente al popup
+                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                popup.style.borderRadius = '15px';       // Bordes redondeados
+              },
+        }).then(()=> {
+            navigate("/");
+        })
+        
         // Redirigir a la página principal
-        Navigate("/");
+        
     };
 
     const renderLogo = () =>{

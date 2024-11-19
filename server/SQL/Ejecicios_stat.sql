@@ -1888,7 +1888,7 @@ INSERT INTO Leccion VALUES(4221,"4.2.2E Ejercicios de Análisis de segundo orden
         "R_Truco": "Medir la densidad de puntos en un área específica"
     }
 ]');
-INSERT INTO Leccion VALUES(4301,"4.3E Ejercicios de Patrones de puntos marcados", 1, 1,
+INSERT INTO Leccion VALUES(4311,"4.3E Ejercicios de Patrones de puntos marcados", 1, 1,
 '[
     {
         "Enunciado": "En un análisis de patrones de puntos marcados, ¿qué información se utiliza para describir cada punto?",

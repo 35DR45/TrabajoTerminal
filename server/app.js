@@ -14,7 +14,7 @@ app.use(express.json())
 
 const PORT = process.env.PORT || 3000;
 
-//////////// Lista de bibliotecas de Python que deseas instalar para correr el script d epython
+//////////// Lista de bibliotecas de Python que deseas instalar para correr el script de python
 /*const pythonPackages = ['tensorflow', 'numpy'];
 
 exec(`pip install ${pythonPackages.join(' ')}`, (error, stdout, stderr) => {
@@ -116,17 +116,16 @@ app.get('/',(req,res)=>{
         "status":(Aqui te da el mensaje de lo que ocurrio)
         }
 */
-app.post('/api/Login',(req,res)=>{
+app.post('/api/Login',async (req,res)=>{
     const {user,pass} =req.body;
     
     if(user == "" || pass == ""){
         console.log("Vacios");
         return res.status(400).json({status:"Usuario o Contraseña vacios"})
     }    
-
     const query = "SELECT * FROM usuario WHERE NombreUsuario = ?";
 
-    db.query(query,[user,pass],async (err,result) =>{
+    db.query(query,[user],async (err,result) =>{
 
         console.log("recibido usuario:"+ user);
         console.log("recibido contrasena:"+ pass); 
@@ -474,8 +473,30 @@ app.post('/api/Progreso',(req,res) =>{
     })
 });
 
+//insertar progreso
+app.post('/api/insertProgress',(req,res)=>{
+    const{user,idLeccion,idMateria,Leccion_Tipo,Completado}=req.body;
+    const queryget="SELECT idUsuario FROM usuario WHERE NombreUsuario = ?"
+
+    const query ="INSERT INTO PROGRESO(idusuario,idLeccion,idMateria,Leccion_Tipo,Completado) values (?,?,?,?,?)"
+    db.query(queryget,user,(err,result) =>{
+        if(err){
+            console.log("Error ")
+            return res.status(500).json({ error: "Error en la primera consulta de update usuario" });
+        }else{
+            const idUser=result[0].idUsuario
+            db.query(query,[idUser,idLeccion,idMateria,Leccion_Tipo,Completado],(err,result) =>{
+                if(err){
+                    console.log("Error en la segunda consulta no se encontro usuario")
+                    return res.status(500).json({ error: "Error en la segunda consulta no se inserto los datos" });
+                } else return res.json({"status": "Datos insertados correctamente"})
+            })
+        } 
+
+    })
+})
 //ops
-app.get('/api/Pair/:User',(req,res) => {
+/*app.get('/api/Pair/:User',(req,res) => {
     const { User } =req.params
     console.log("Entro "+ User)
     //Primero recuperamos los datos del usuario actual del sistema
@@ -509,7 +530,7 @@ app.get('/api/Pair/:User',(req,res) => {
             return res.send(result)
         }
     })
-});
+});*/
 
 //Emparejar por primera vez
 app.get('/api/Pair/:User/:Rendimiento/:idLeccion',(req,res) => {
@@ -522,10 +543,6 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion',(req,res) => {
     const queryemparejar1 = "SELECT u.idUsuario,u.NombreUsuario,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ? AND p.rendimiento = 1 AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 0 AND idUsuario = ? AND idLeccion = ?);";
     //Esta asigna un tutor considerando un rendimiento de Normal
     const queryemparejar2 = "SELECT u.idUsuario,u.NombreUsuario,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ? AND (p.rendimiento = 1 OR p.rendimiento = 2) AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 2 AND idUsuario = ? AND idLeccion = ?);";
-   
-    //Posteriormente de asignar el tutor actualizamos los datos del tutor y el usuario
-    const queryUpuser = "UPDATE usuario SET Tutor = ? WHERE idUsuario = ?  ";
-    const queryUptutor = "UPDATE usuario SET Tutorado = ? WHERE idUsuario = ?  ";
     
     db.query(querygetUser,User,(err,result) =>{
 
@@ -637,14 +654,13 @@ app.get('/api/verTutor/:User',(req,res) =>{
     })
 })
 
-// Normalización Min-Max
-function minMaxNormalize(value, min, max) {
-    return (value - min) / (max - min);
-}
 
+//Resultado de ejercicios
 app.post('/api/Result',(req,res)=>{
-    const {idLeccion,R1,R2,R3,R4,R5} =req.body;
-    const answers={R1,R2,R3,R4,R5}
+    const {idLeccion,Respuestas} =req.body;
+    console.log(idLeccion)
+    console.log(Respuestas)
+    //const answers={R1,R2,R3,R4,R5}
     let score = 0
     const results ={}
     const query = "SELECT Contenido FROM leccion WHERE idLeccion = ?";
@@ -655,18 +671,22 @@ app.post('/api/Result',(req,res)=>{
             data = result[0]
             console.log( "PREGUNTAS OBTENIDAS :\n")
             console.log(data)
+            for(const pregunta in Respuestas){
                 data.Contenido.forEach((elemento,index) =>{
+                    if(pregunta == elemento.Enunciado){
+                         //console.log(answers[`R${pos}`])
                     pos=index+1;
-                    //console.log(answers[`R${pos}`])
-                    if (answers[`R${pos}`]==elemento.R_Correcta){
-                            score= score + 1;
-                            results[index]=1
-                    }else if (answers[`R${pos}`]==elemento.R_Truco){
+                    if (Respuestas[pregunta]==elemento.R_Correcta){
+                        score= score + 1;
+                        results[index]=1
+                    }else if (Respuestas[pregunta]==elemento.R_Truco){
                         results[index]=0.5
                     }else{
                         results[index]=0
+                    }    
                     }
                 })
+            }
            // console.log(answers)
             console.log(score)
             console.log(results)
@@ -684,58 +704,68 @@ app.post('/api/Result',(req,res)=>{
     const{input} = req.body;
     if(!model){
         return res.status(500).send('Modelo no cargado')
-    }
-    if (!Array.isArray(input)) {
-        return res.status(400).send('input debe ser un array');
+        }
+        if (!Array.isArray(input)) {
+            return res.status(400).send('input debe ser un array');
     }
     
-     const data = input.map((value, index) => {
+    const data = input.map((value, index) => {
         if (index === 0) return minMaxNormalize(value, 0, 5); // Normalización de 0 a 1
         if (index === 2) return minMaxNormalize(value, 1, 3); // Asumiendo valores entre 0 y 100 para estos índices
         return value; // Sin normalizar para otros índices
-    });
-    
-    try {
-        // Convertir los datos de entrada a un tensor
-        const inputTensor = tf.tensor2d([data], [1, data.length]);
-        const prediction = model.predict(inputTensor, { training: true });
-        const predictionArray = prediction.dataSync();
-        console.log(predictionArray)
-        // Enviar el resultado promedio de la predicción como respuesta
-        // Obtener el índice del valor más alto
-        const maxIndex = predictionArray.indexOf(Math.max(...predictionArray));
-        console.log('Clase predicha:', maxIndex);
-        var prediccion;
-        if(maxIndex===0){
-            prediccion="Apoyo"
-        }else if(maxIndex===1){
-            prediccion="Avanzado"
-        }else{
-            prediccion="Normal"
-        }
-        res.json({ prediction: prediccion });
-    } catch (error) {
-        console.error('Error al hacer la predicción:', error);
-        res.status(500).send('Error al hacer la predicción');
-    }
-
-})*/
+        });
+        
+        try {
+            // Convertir los datos de entrada a un tensor
+            const inputTensor = tf.tensor2d([data], [1, data.length]);
+            const prediction = model.predict(inputTensor, { training: true });
+            const predictionArray = prediction.dataSync();
+            console.log(predictionArray)
+            // Enviar el resultado promedio de la predicción como respuesta
+            // Obtener el índice del valor más alto
+            const maxIndex = predictionArray.indexOf(Math.max(...predictionArray));
+            console.log('Clase predicha:', maxIndex);
+            var prediccion;
+            if(maxIndex===0){
+                prediccion="Apoyo"
+                }else if(maxIndex===1){
+                    prediccion="Avanzado"
+                    }else{
+                        prediccion="Normal"
+                }
+                res.json({ prediction: prediccion });
+                } catch (error) {
+                    console.error('Error al hacer la predicción:', error);
+                    res.status(500).send('Error al hacer la predicción');
+                    }
+                    
+                    })*/
+// Normalización Min-Max               
+function minMaxNormalize(value, min, max) {
+                       return (value - min) / (max - min);
+}
 
 /*Requiere de:{
-    "inputData":[Puntaje,
-                Respuesta a pregunta Facil(0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente),
-                estilodeAprendizaje(numero: 1 Visual,2 Auditivo, 3 Kinestesico),
-                Respuesta a pregunta Dificil(0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente),
-                si se estudio recientemente(si se leeyo la parte teorica 1 sino 0),
-                Pregunta dificil 2 (0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente)]}
-*/ 
+        "inputData":[Puntaje,
+                    Respuesta a pregunta Facil(0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente),
+                    estilodeAprendizaje(numero: 1 Visual,2 Auditivo, 3 Kinestesico),
+                    Respuesta a pregunta Dificil(0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente),
+                    si se estudio recientemente(si se leeyo la parte teorica 1 sino 0),
+                    Pregunta dificil 2 (0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente)]}
+                    */                    
 app.post('/api/Predpy', async (req,res) =>{
-    const { inputData } = req.body; 
+    const { user,inputData } = req.body; 
+    // Validar que inputData no sea null, undefined o esté vacío
+    console.log(inputData)
+    if (!inputData || !Array.isArray(inputData) || inputData.length === 0) {
+        return res.status(400).send("Datos vacíos o no válidos");
+    }
     const pred = inputData.map((value, index) => {
         if (index === 0) return minMaxNormalize(value, 0, 5); // Normalización de 0 a 1
         if (index === 2) return minMaxNormalize(value, 1, 3); // Asumiendo valores entre 0 y 100 para estos índices
         return value; // Sin normalizar para otros índices
     });
+    
     const pythonProcess = spawn('python', ['CNNB169/NN.py', JSON.stringify(pred)]);
 
     let result = '';
