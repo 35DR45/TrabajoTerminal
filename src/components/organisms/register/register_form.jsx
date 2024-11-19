@@ -5,7 +5,7 @@ import '../CSS/register_form.css'
 import Btn_Register from "../../atoms/header/btn_Register";
 import Email from "../../molecules/register/email";
 import { useNavigate } from 'react-router-dom';
-
+import Swal from 'sweetalert2'
 export default function Register_form(){
 
 
@@ -75,8 +75,46 @@ export default function Register_form(){
                 });
                 if (response.ok) {
                     // Redirige al usuario a la URL /registrado
-                    navigate("/login");
+                    Swal.fire({
+                        title:"Gracias por registrarte",
+                        text:"Registro exitoso!",
+                        icon:'success',
+                        background:'#811642',
+                        color:'#f2ffeb',
+                        showCancelButton: false,    
+                        timer: 2000,
+                        timerProgressBar:true,
+                        footer:'Recuerda no compartir tus datos de acceso',
+                        didOpen: (popup) => {
+                            Swal.showLoading();
+                            // Aplicar estilos directamente al popup
+                            popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                            popup.style.borderRadius = '15px';       // Bordes redondeados
+                          },
+                    }).then(()=> {
+                        navigate("/login");
+                    })
+                    
                 } else {
+                    Swal.fire({
+                        title:"Error en registrarte",
+                        text:"Reintentalo!",
+                        icon:'error',
+                        background:'#811642',
+                        color:'#f2ffeb',
+                        showCancelButton: false,    
+                        timer: 2000,
+                        timerProgressBar:true,
+                        footer:'Recuerda no compartir tus datos de acceso',
+                        didOpen: (popup) => {
+                            Swal.showLoading();
+                            // Aplicar estilos directamente al popup
+                            popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                            popup.style.borderRadius = '15px';       // Bordes redondeados
+                          },
+                    }).then(()=> {
+                        navigate("/register");
+                    })
                     console.error('Error al registrar usuario');
                 }
             } catch (error) {
