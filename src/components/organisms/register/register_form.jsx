@@ -57,7 +57,7 @@ export default function Register_form(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(userError === '' && passError === ''){
+        if(userError === '' && passError === '' && emailError === ''){
             const FormData = {
                 user: username, 
                 pass: password,
@@ -74,6 +74,8 @@ export default function Register_form(){
                     body: JSON.stringify(FormData)
                 });
                 if (response.ok) {
+                    const data = await response.json();
+                    if(data.status=="Usuario Creado"){
                     // Redirige al usuario a la URL /registrado
                     Swal.fire({
                         title:"Gracias por registrarte",
@@ -94,7 +96,27 @@ export default function Register_form(){
                     }).then(()=> {
                         navigate("/login");
                     })
-                    
+                }else{
+                    Swal.fire({
+                        title:"Error en registrarte",
+                        text:"Reintentalo!",
+                        icon:'error',
+                        background:'#811642',
+                        color:'#f2ffeb',
+                        showCancelButton: false,    
+                        timer: 2000,
+                        timerProgressBar:true,
+                        footer:'Recuerda no compartir tus datos de acceso',
+                        didOpen: (popup) => {
+                            Swal.showLoading();
+                            // Aplicar estilos directamente al popup
+                            popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                            popup.style.borderRadius = '15px';       // Bordes redondeados
+                          },
+                    }).then(()=> {
+                        navigate("/register");
+                    })
+                }   
                 } else {
                     Swal.fire({
                         title:"Error en registrarte",
@@ -121,7 +143,7 @@ export default function Register_form(){
                 console.error('Error:', error);
             }
         }else
-            if(userError !== '' || passError !== '' || email === ''){
+            if(userError !== '' || passError !== '' || emailError !== ''){
                 setEnvioError('No puede enviar el formulario sin corregir los errores');
             }
         
