@@ -37,7 +37,7 @@ export default function Login_form(){
                 
             } else {
                 Swal.fire({
-                    title:"Fallo",
+                    title:"Error",
                     text:"Inicio de sesión fallido",
                     icon:'error',
                     background:'#811642',

@@ -1,6 +1,6 @@
 USE mydb;
 delete from Leccion where Materia=2 and Tipo=1;
-INSERT INTO Leccion VALUES(1201,"1.2E Ejercicios de aritmética en campos primos", 2, 1,
+INSERT INTO Leccion VALUES(1211,"1.2.1E Ejercicios de aritmética en campos primos", 2, 1,
 '[
     {
         "Enunciado": "Realiza las siguientes multiplicaciones en el campo ( mathbb{Z}/5mathbb{Z} ) (campo de cinco elementos, con {0,1,2,3,4}): ( 4 times 4 = ? )",
@@ -37,7 +37,7 @@ INSERT INTO Leccion VALUES(1201,"1.2E Ejercicios de aritmética en campos primos
         "R_Truco": "Módulo 9"
     }
 ]');
-INSERT INTO Leccion VALUES(1301,"1.3E Ejercicios de Cifradores clásicos", 2, 1,
+INSERT INTO Leccion VALUES(1311,"1.3.1E Ejercicios de Cifradores clásicos", 2, 1,
 '[
     {
         "Enunciado": "Si utilizas un desplazamiento de 5 en el cifrado de César, ¿cómo se cifraría la palabra GATO?",
@@ -70,7 +70,7 @@ INSERT INTO Leccion VALUES(1301,"1.3E Ejercicios de Cifradores clásicos", 2, 1,
         "R_Truco": "LRPUD"
     }
 ]');
-INSERT INTO Leccion VALUES(1401,"1.4E Ejercicios de Aritmetica en campos binarios", 2, 1,
+INSERT INTO Leccion VALUES(1411,"1.4.1E Ejercicios de Aritmetica en campos binarios", 2, 1,
 '[
     {
         "Enunciado": "¿Cuántos símbolos se utilizan en los campos binarios?",
@@ -103,7 +103,7 @@ INSERT INTO Leccion VALUES(1401,"1.4E Ejercicios de Aritmetica en campos binario
         "R_Truco": "001"
     }
 ]');
-INSERT INTO Leccion VALUES(2201,"2.2E Ejercicios de Cifradores de bloque", 2, 1,
+INSERT INTO Leccion VALUES(2211,"2.2.1E Ejercicios de Cifradores de bloque", 2, 1,
 '[
     {
         "Enunciado": "¿Cuál es una de las características principales de los cifradores de bloque?",
@@ -156,7 +156,7 @@ INSERT INTO Leccion VALUES(2201,"2.2E Ejercicios de Cifradores de bloque", 2, 1,
         "R_Truco": "Un valor de hash de los bloques anteriores"
     }
 ]');
-INSERT INTO Leccion VALUES(2301,"2.3E Ejercicios de Cifradores de flujo", 2, 1,
+INSERT INTO Leccion VALUES(2311,"2.3.1E Ejercicios de Cifradores de flujo", 2, 1,
 '[
     {
         "Enunciado": "¿Qué caracteriza a un cifrador de flujo?",
@@ -209,7 +209,7 @@ INSERT INTO Leccion VALUES(2301,"2.3E Ejercicios de Cifradores de flujo", 2, 1,
         "R_Truco": "Generan bloques de texto plano antes del cifrado."
     }
 ]');
-INSERT INTO Leccion VALUES(3101,"3.1E Ejercicios de Funciones Hash Criptográficas", 2, 1,
+INSERT INTO Leccion VALUES(3111,"3.1.1E Ejercicios de Funciones Hash Criptográficas", 2, 1,
 '[
     {
         "Enunciado": "¿Cuál de las siguientes es una característica principal de una función hash criptográfica?",
@@ -262,7 +262,7 @@ INSERT INTO Leccion VALUES(3101,"3.1E Ejercicios de Funciones Hash Criptográfic
         "R_Truco": "2^{n/2}"
     }
 ]');
-INSERT INTO Leccion VALUES(3201,"3.2E Ejercicios de Codigos de autenticacion de mensaje (MAC)", 2, 1,
+INSERT INTO Leccion VALUES(3211,"3.2.1E Ejercicios de Codigos de autenticacion de mensaje (MAC)", 2, 1,
 '[
     {
         "Enunciado": "¿Cuál es la función principal de un código de autenticación de mensajes (MAC)?",
@@ -315,7 +315,7 @@ INSERT INTO Leccion VALUES(3201,"3.2E Ejercicios de Codigos de autenticacion de 
         "R_Truco": "El MAC se regenerará y coincidirá si la clave es correcta"
     }
 ]');
-INSERT INTO Leccion VALUES(4201,"4.2E Ejercicios de Algoritmo de intercambio de claves Diffie-Hellman", 2, 1,
+INSERT INTO Leccion VALUES(4211,"4.2.1E Ejercicios de Algoritmo de intercambio de claves Diffie-Hellman", 2, 1,
 '[
     {
         "Enunciado": "En el intercambio de claves Diffie-Hellman, si Alice elige un valor secreto ( a ) y Bob elige un valor secreto ( b ), ¿cómo se calcula la clave compartida?",
@@ -368,7 +368,7 @@ INSERT INTO Leccion VALUES(4201,"4.2E Ejercicios de Algoritmo de intercambio de 
         "R_Truco": "17"
     }
 ]');
-INSERT INTO Leccion VALUES(4401,"4.4E Ejercicios de Soluciones a problemas de autenticación y no repudio", 2, 1,
+INSERT INTO Leccion VALUES(4411,"4.4.1E Ejercicios de Soluciones a problemas de autenticación y no repudio", 2, 1,
 '[
     {
         "Enunciado": "¿Cuál es el propósito principal de una firma digital en la criptografía de clave pública?",

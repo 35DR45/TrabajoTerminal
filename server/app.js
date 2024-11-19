@@ -500,6 +500,28 @@ app.get('/api/ProgTotal',(req,res) =>{
     })
 });
 
+//insertar progreso
+app.post('/api/insertProgress',(req,res)=>{
+    const{user,idLeccion,idMateria,Leccion_Tipo,Completado}=req.body;
+    const queryget="SELECT idUsuario FROM usuario WHERE NombreUsuario = ?"
+
+    const query ="INSERT INTO PROGRESO(idusuario,idLeccion,idMateria,Leccion_Tipo,Completado) values (?,?,?,?,?)"
+    db.query(queryget,user,(err,result) =>{
+        if(err){
+            console.log("Error ")
+            return res.status(500).json({ error: "Error en la primera consulta de update usuario" });
+        }else{
+            const idUser=result[0].idUsuario
+            db.query(query,[idUser,idLeccion,idMateria,Leccion_Tipo,Completado],(err,result) =>{
+                if(err){
+                    console.log("Error en la segunda consulta no se encontro usuario")
+                    return res.status(500).json({ error: "Error en la segunda consulta no se inserto los datos" });
+                } else return res.json({"status": "Datos insertados correctamente"})
+            })
+        } 
+
+    })
+})
 //ops
 /*app.get('/api/Pair/:User',(req,res) => {
     const { User } =req.params
@@ -548,10 +570,6 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion',(req,res) => {
     const queryemparejar1 = "SELECT u.idUsuario,u.NombreUsuario,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ? AND p.rendimiento = 1 AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 0 AND idUsuario = ? AND idLeccion = ?);";
     //Esta asigna un tutor considerando un rendimiento de Normal
     const queryemparejar2 = "SELECT u.idUsuario,u.NombreUsuario,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ? AND (p.rendimiento = 1 OR p.rendimiento = 2) AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 2 AND idUsuario = ? AND idLeccion = ?);";
-   
-    //Posteriormente de asignar el tutor actualizamos los datos del tutor y el usuario
-    const queryUpuser = "UPDATE usuario SET Tutor = ? WHERE idUsuario = ?  ";
-    const queryUptutor = "UPDATE usuario SET Tutorado = ? WHERE idUsuario = ?  ";
     
     db.query(querygetUser,User,(err,result) =>{
 
