@@ -1,5 +1,5 @@
-import { Link, useParams } from "react-router-dom";
-import { useEffect, useState,useContext } from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import { UserContext } from '../../../../UserContext';
@@ -9,95 +9,110 @@ export default function Ejercicio() {
     const { user } = useContext(UserContext);
     const [ejercicio, setEjercicio] = useState([]);
 
-    console.log(params);
-    console.log(params.idLeccion);
-    console.log(params.cursoID);
-    console.log(params.tipo);
-
     // Estado para almacenar la respuesta seleccionada de cada enunciado
     const [respuestas, setRespuestas] = useState({});
     const [resultados, setResultados] = useState({});
     // Estado para mostrar si acertó o no
 
-    const showAlert = async (data)=>{
-       const result= await Swal.fire({
-            title:`Puntuacion de lección :<p style="color: green;"><b > ${data.Puntuación}</b> </p>`,
-            text:`Resultados: P1 : ${data.Respuestas[0]} 
+    const showAlert = async (data) => {
+        const result = await Swal.fire({
+            title: `Puntuacion de lección :<p style="color: green;"><b > ${data.Puntuación}</b> </p>`,
+            text: `Resultados: P1 : ${data.Respuestas[0]} 
             P2 :  ${data.Respuestas[1]} 
             P3 :  ${data.Respuestas[2]}
             P4 :  ${data.Respuestas[3]}
             P5 :  ${data.Respuestas[4]}`,
-            icon:'info',
-            background:'#811642',
-            color:'#f2ffeb',
+            icon: 'info',
+            background: '#811642',
+            color: '#f2ffeb',
             showCancelButton: true,
-            confirmButtonColor: '#f2ffeb', 
-            cancelButtonColor: '#d33', 
+            confirmButtonColor: '#f2ffeb',
+            cancelButtonColor: '#d33',
             confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
             cancelButtonText: 'Cancelar',
-            footer:'Al aceptar guardaras tu progreso',
+            footer: 'Al aceptar guardaras tu progreso',
             didOpen: (popup) => {
                 // Aplicar estilos directamente al popup
                 popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
                 popup.style.borderRadius = '15px';       // Bordes redondeados
-              },
+            },
         })
-        if (result.isConfirmed){
+        if (result.isConfirmed) {
             Swal.fire({
                 title: 'Enviando datos...',
                 text: 'Por favor espera mientras se procesa tu solicitud.',
-                background:'#811642',
-                color:'#f2ffeb',
+                background: '#811642',
+                color: '#f2ffeb',
                 allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
                 didOpen: (popup) => {
-                    Swal.showLoading(); 
+                    Swal.showLoading();
                     popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
                     popup.style.borderRadius = '15px';  // Mostrar indicador de carga
                 },
             });
-            try{
-            const response = await fetch('/api/Predpy',{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "user":user,
-                    "inputData":[data.Puntuación,data.Respuestas[0],1,data.Respuestas[3],1,data.Respuestas[4]],
+            try {
+                const response = await fetch('/api/Predpy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "user": user,
+                        "inputData": [data.Puntuación, data.Respuestas[0], 1, data.Respuestas[3], 1, data.Respuestas[4]],
+                    })
+                });
+                const res = await response.json()
+
+                Swal.fire({
+                    title: 'SE ENVIO',
+                    background: '#811642',
+                    color: '#f2ffeb',
+                    didOpen: (popup) => {
+                        popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                        popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+                    },
+                    confirmButtonColor: '#f2ffeb',
+                    confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
+
                 })
-            });
-            const res =await response.json()
-
-            Swal.fire({
-                title:'SE ENVIO',
-                background:'#811642',
-                color:'#f2ffeb',
-                didOpen: (popup) => {
-                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
-                    popup.style.borderRadius = '15px';  // Mostrar indicador de carga
-                },
-                confirmButtonColor: '#f2ffeb',
-                confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
-                 
-            })
-            }catch(error){
-
+            } catch (error) {
+                console.log("Error del tipo: ", error);
             }
         }
     }
 
     // Maneja el cambio de selección para cada enunciado
-    const handleOptionChange = (enunciadoId = "default", opcion ="default") => {
+    const handleOptionChange = (enunciadoId = "default", opcion = "default") => {
         setRespuestas({
             ...respuestas,
             [enunciadoId]: opcion
-        });
+        });        
     };
 
     // Maneja el envío de todas las respuestas
-    const handleSubmit = async () => {
-        event.preventDefault(); 
+    const handleSubmit = async (event) => {
+
+        event.preventDefault();
         // Compara las respuestas del usuario con las correctas
+        const preguntasSinResponder = ejercicio.flatMap(clase => clase.Contenido).filter(problema => respuestas[problema.Enunciado].trim() === "Sin responder");
+
+        console.log("Ejercicios sin respuesta: ", preguntasSinResponder);
+        console.log("Supuestas respuestas", respuestas);
+        
+        if (preguntasSinResponder.length > 0) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Por favor responde todas las preguntas antes de enviar.',
+                icon: 'error',
+                background: '#811642',
+                color: '#f2ffeb',
+                confirmButtonColor: '#f2ffeb',
+                confirmButtonText: '<b style="color: black;">Aceptar</b>',
+            });
+            return; // Salir de la función si faltan respuestas
+        }
+
+
         const nuevosResultados = {};
         ejercicio.forEach(enunciado => {
             if (respuestas[enunciado.id] === enunciado.respuestaCorrecta) {
@@ -107,12 +122,14 @@ export default function Ejercicio() {
             }
         });
         setResultados(nuevosResultados);
-      
+        console.log("Nuevos resultados ? ",nuevosResultados);
+        
+
         // Envía las respuestas a la API
         try {
-           const data ={
-                idLeccion:params.idLeccion,
-                Respuestas:respuestas
+            const data = {
+                idLeccion: params.idLeccion,
+                Respuestas: respuestas
             }
             console.log("Respuestas enviadas:", data);
             const response = await axios.post('/api/Result', data);
@@ -149,12 +166,6 @@ export default function Ejercicio() {
         });
         setRespuestas(initialState);
     }, [ejercicio]);
-    
-    console.log(ejercicio);
-    // console.log(ejercicio[0].Titulo);
-    // console.log(ejercicio[0].Tipo);
-    // console.log(ejercicio[0].Contenido);
-
 
     return (
         <>
@@ -172,10 +183,10 @@ export default function Ejercicio() {
                                         id={`enunciado-${problema.Enunciado}-3`} // Agrupa las opciones de cada enunciado
                                         name={`enunciado-${problema.Enunciado}`} // Agrupa las opciones de cada enunciado
                                         checked={respuestas[problema.Enunciado] === problema.R_Truco}
-                                        onChange={() => handleOptionChange(problema.Enunciado, problema.R_Truco)}/>
+                                        onChange={() => handleOptionChange(problema.Enunciado, problema.R_Truco)} />
                                     <label htmlFor={`enunciado-${problema.Enunciado}-3`}>{problema.R_Truco}</label>
                                 </div>
-                                
+
                                 {problema.R_Falsas.map((respuestaIncorrecta, index) => (
                                     <div key={index} className="respuesta_ejercicio" >
                                         <input value={respuestaIncorrecta}
@@ -183,20 +194,20 @@ export default function Ejercicio() {
                                             id={`enunciado-${problema.Enunciado}-${index}`} // Agrupa las opciones de cada enunciado
                                             name={`enunciado-${problema.Enunciado}`} // Agrupa las opciones de cada enunciado
                                             checked={respuestas[problema.Enunciado] === respuestaIncorrecta}
-                                            onChange={() => handleOptionChange(problema.Enunciado, respuestaIncorrecta)}/>
+                                            onChange={() => handleOptionChange(problema.Enunciado, respuestaIncorrecta)} />
                                         <label htmlFor={`enunciado-${problema.Enunciado}-${index}`}>{respuestaIncorrecta}</label>
                                     </div>
                                 ))}
 
                                 <div className="respuesta_ejercicio">
-                                    <input id={`enunciado-${problema.Enunciado}-4`}value={problema.R_Correcta}
+                                    <input id={`enunciado-${problema.Enunciado}-4`} value={problema.R_Correcta}
                                         type="radio"
-                                        name={`enunciado-${problema.Enunciado}` } // Agrupa las opciones de cada enunciado
+                                        name={`enunciado-${problema.Enunciado}`} // Agrupa las opciones de cada enunciado
                                         checked={respuestas[problema.Enunciado] === problema.R_Correcta}
                                         onChange={() => handleOptionChange(problema.Enunciado, problema.R_Correcta)} />
                                     <label htmlFor={`enunciado-${problema.Enunciado}-4`} >{problema.R_Correcta}</label>
                                 </div>
-                                    {/* Muestra si acertó o falló */}
+                                {/* Muestra si acertó o falló */}
                             </div>
                             {resultados[problema.Enunciado] && (
                                 <p>{resultados[problema.Enunciado]}</p>
