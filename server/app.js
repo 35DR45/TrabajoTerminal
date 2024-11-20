@@ -413,11 +413,7 @@ app.get('/api/SeeLC/:Materia',(req,res) =>{
 */
 app.get('/api/ContentLC/:IdLeccion/:Materia/:Tipo',(req,res) =>{
     console.log(req.params);
-    const {IdLeccion, Materia, Tipo} = req.params
-    console.log(IdLeccion);
-    console.log(Materia);
-    console.log(Tipo);
-    console.log("Hola");
+    const {IdLeccion, Materia, Tipo} = req.params;
     
     
     const query = "Select * from leccion where idLeccion= ? and Materia = ? and Tipo = ?";

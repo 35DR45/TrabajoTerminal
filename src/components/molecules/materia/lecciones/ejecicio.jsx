@@ -76,7 +76,8 @@ export default function Ejercicio() {
                  
             })
             }catch(error){
-
+                console.log("Error: ", error);
+                
             }
         }
     }
@@ -169,9 +170,6 @@ export default function Ejercicio() {
     }, [ejercicio]);
     
     console.log(ejercicio);
-    // console.log(ejercicio[0].Titulo);
-    // console.log(ejercicio[0].Tipo);
-    // console.log(ejercicio[0].Contenido);
 
 
     return (
