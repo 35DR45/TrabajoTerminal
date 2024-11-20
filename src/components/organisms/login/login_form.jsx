@@ -9,10 +9,9 @@ import { UserContext } from '../../../UserContext';
 import Swal from 'sweetalert2'
 export default function Login_form(){
 
-    const { user, setUser } = useContext(UserContext);
+    const { user, setUser ,iduser, setidUser} = useContext(UserContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [status, setStatus] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -33,9 +32,9 @@ export default function Login_form(){
             if (response.ok) {
                 // Redirige al usuario a la URL /registrado
                 const data = await response.json();
-                setUser(username)
-                console.log(data.status)
                 
+                //console.log(data.status)
+                //console.log(data.idUsuario)
                 if (data.status=="Inicio de Sesión Exitoso") {
                     Swal.fire({
                         title:"Bienvenido!",
@@ -54,6 +53,8 @@ export default function Login_form(){
                             popup.style.borderRadius = '15px';       // Bordes redondeados
                           },
                     }).then(()=> {
+                        setUser(username)
+                        setidUser(data.idUsuario)
                         navigate("/student");
                     })
                     

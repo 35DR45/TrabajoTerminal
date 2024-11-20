@@ -133,24 +133,24 @@ app.post('/api/Login',async (req,res)=>{
         if(err) return res.send("Error al iniciar sesion")
 
         if(result.length >= 0){
-            if(result[0] == undefined){
-                console.log("No encontro datos asi que es undefined")
-                return res.status(400).json({error:"Usuario o Contraseña no definidos"})
+            for(const user of result){
+                console.log
+                if(user == undefined){
+                    console.log("No encontro datos asi que es undefined")
+                    return res.status(400).json({error:"Usuario o Contraseña no definidos"})
 
-            }else{
-                const user_res = result[0];
-                console.log(result);
-                const contraseñaAlmacenada =  user_res.pass;
-                const match = await bcrypt.compare(pass,contraseñaAlmacenada);
-                console.log(match);
-                if(match){
-                    console.log("Inicio de Sesión Exitoso")
-                    return res.json({status:"Inicio de Sesión Exitoso"});
-                }else{
-                    console.log("Inicio de Sesión Fallido")
-                    return res.json({status:"Inicio de Sesión Fallido"});
                 }
-        }
+                const contraseñaAlmacenada =  user.pass;
+                const match = await bcrypt.compare(pass,contraseñaAlmacenada);
+                    if(match){
+                        console.log("Inicio de Sesión Exitoso")
+                        return res.json({status:"Inicio de Sesión Exitoso",
+                                idUsuario:user.idUsuario
+                        });
+                    }
+            }
+            console.log("Inicio de Sesión Fallido")
+            return res.json({status:"Inicio de Sesión Fallido"});
         }else{
             return res.json({status:"No se encontro coincidencia"})
         }
@@ -471,25 +471,15 @@ app.post('/api/Progreso',(req,res) =>{
 
 //insertar progreso
 app.post('/api/insertProgress',(req,res)=>{
-    const{user,idLeccion,idMateria,Leccion_Tipo,Completado}=req.body;
-    const queryget="SELECT idUsuario FROM usuario WHERE NombreUsuario = ?"
+    const{idUser,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento}=req.body;
+    const query ="INSERT INTO PROGRESO(idusuario,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento) values (?,?,?,?,?,?,?)"
 
-    const query ="INSERT INTO PROGRESO(idusuario,idLeccion,idMateria,Leccion_Tipo,Completado) values (?,?,?,?,?)"
-    db.query(queryget,user,(err,result) =>{
-        if(err){
-            console.log("Error ")
-            return res.status(500).json({ error: "Error en la primera consulta de update usuario" });
-        }else{
-            const idUser=result[0].idUsuario
-            db.query(query,[idUser,idLeccion,idMateria,Leccion_Tipo,Completado],(err,result) =>{
+            db.query(query,[idUser,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento],(err,result) =>{
                 if(err){
-                    console.log("Error en la segunda consulta no se encontro usuario")
-                    return res.status(500).json({ error: "Error en la segunda consulta no se inserto los datos" });
+                    console.log("No se insertaron los datos o ya existian")
+                    return res.status(500).json({ error: "No se insertaron los datos o ya existian" });
                 } else return res.json({"status": "Datos insertados correctamente"})
             })
-        } 
-
-    })
 })
 //ops
 /*app.get('/api/Pair/:User',(req,res) => {
@@ -650,6 +640,55 @@ app.get('/api/verTutor/:User',(req,res) =>{
     })
 })
 
+app.post('/api/serTutor',(req,res)=>{
+    const {Tipo,idUser} =req.body;
+    console.log(Tipo)
+    console.log(idUser)
+    query2 ="UPDATE usuario SET Tipo = ? WHERE idUsuario = ?"
+    query ="SELECT Telefono FROM usuario WHERE idUsuario = ?"
+    db.query(query,idUser,(err,result) =>{
+        if(err){
+            console.log("Error al obtener usuario")
+            return res.status(500).json({ error: "Error al obtener usuario" });
+        }else{
+            let Telefono=""
+            if(result[0].Telefono==12345) Telefono ="Sin telefono"
+            else Telefono=result[0].Telefono
+            
+
+            db.query(query,[Tipo,idUser],(err,result) =>{
+                if(err){
+                    
+                    console.log("Error al asignar tutor")
+                    return res.status(500).json({ error: "Error al convertirlo en tutor" });
+
+                } else{
+                    
+                    console.log("Nuevo Tutor creado")
+                    return res.status(200).json({Status:"Tutor Agregado",
+                                                Telefono:Telefono
+                    })
+                }  
+            })
+        }
+
+    })
+})
+app.post('/api/setTelefono',(req,res)=>{
+    const {Telefono,idUser} =req.body;
+    console.log(Telefono)
+    console.log(idUser)
+    query ="UPDATE usuario SET Telefono = ? WHERE idUsuario = ?"
+    db.query(query,[Telefono,idUser],(err,result) =>{
+        if(err){
+            console.log("Error al actualizar el número de teléfono")
+            return res.status(500).json({ error: "Error al actualizar el número de teléfono" });
+        }else{
+            console.log("Teléfono celular actualizado")
+            return res.status(200).json({Status:"Telefono modificado"})
+            }
+    })
+})
 
 //Resultado de ejercicios
 app.post('/api/Result',(req,res)=>{

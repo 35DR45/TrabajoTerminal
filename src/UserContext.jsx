@@ -8,6 +8,11 @@ export const UserProvider = ({ children }) => {
         return sessionStorage.getItem('user') || null;
     });
 
+    const [iduser, setidUser] = useState(() => {
+        return sessionStorage.getItem('iduser') || null;
+    });
+
+
     useEffect(() => {
         if (user) {
             sessionStorage.setItem('user', user);
@@ -16,8 +21,13 @@ export const UserProvider = ({ children }) => {
         }
     }, [user]);
 
+    // Sincroniza `theme` con `sessionStorage`
+    useEffect(() => {
+        sessionStorage.setItem('iduser', iduser);
+    }, [iduser]);
+
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser ,iduser,setidUser}}>
             {children}
         </UserContext.Provider>
     );
