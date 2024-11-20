@@ -69,7 +69,8 @@ export default function Ejercicio() {
             const res =await response.json()
 
             Swal.fire({
-                title:'SE ENVIO',
+                title:'Detectamos que el rendimiento que tienes es:',
+                text: ``,
                 background:'#811642',
                 color:'#f2ffeb',
                 didOpen: (popup) => {
@@ -112,6 +113,7 @@ export default function Ejercicio() {
         try {
            const data ={
                 idLeccion:params.idLeccion,
+                Materia:params.cursoID,
                 Respuestas:respuestas
             }
             console.log("Respuestas enviadas:", data);
@@ -149,8 +151,8 @@ export default function Ejercicio() {
         });
         setRespuestas(initialState);
     }, [ejercicio]);
-    
-    console.log(ejercicio);
+
+    //console.log(ejercicio);
     // console.log(ejercicio[0].Titulo);
     // console.log(ejercicio[0].Tipo);
     // console.log(ejercicio[0].Contenido);

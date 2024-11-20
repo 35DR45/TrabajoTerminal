@@ -657,15 +657,15 @@ app.get('/api/verTutor/:User',(req,res) =>{
 
 //Resultado de ejercicios
 app.post('/api/Result',(req,res)=>{
-    const {idLeccion,Respuestas} =req.body;
+    const {idLeccion,Materia,Respuestas} =req.body;
     console.log(idLeccion)
     console.log(Respuestas)
     //const answers={R1,R2,R3,R4,R5}
     let score = 0
     const results ={}
-    const query = "SELECT Contenido FROM leccion WHERE idLeccion = ?";
+    const query = "SELECT Contenido FROM leccion WHERE idLeccion = ? AND Materia = ? ";
 
-    db.query(query,[idLeccion],async (err,result) =>{
+    db.query(query,[idLeccion,Materia],async (err,result) =>{
         if(err) return res.send("Error obteniendo los datos")
         if(result.length >= 0){
             data = result[0]
