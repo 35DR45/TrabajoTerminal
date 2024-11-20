@@ -97,8 +97,8 @@ app.use(cors({
 const db=mysql.createConnection({
     host:"localhost",
     user: "root",
-    password: "PaS$R4z32",
-    // password: "1234",
+   // password: "PaS$R4z32",
+     password: "1234",
     database: "mydb",
 });
 
@@ -755,6 +755,7 @@ function minMaxNormalize(value, min, max) {
                     */                    
 app.post('/api/Predpy', async (req,res) =>{
     const { user,inputData } = req.body; 
+    console.log(inputData)
     // Validar que inputData no sea null, undefined o esté vacío
     if (!inputData || !Array.isArray(inputData) || inputData.length === 0 || inputData.some(item => item === null)) {
         return res.status(400).send("Datos vacíos, no válidos o contienen valores nulos");

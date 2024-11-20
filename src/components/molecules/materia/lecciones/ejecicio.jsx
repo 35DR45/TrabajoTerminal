@@ -87,7 +87,7 @@ export default function Ejercicio() {
     }
 
     // Maneja el cambio de selección para cada enunciado
-    const handleOptionChange = (enunciadoId, opcion) => {
+    const handleOptionChange = (enunciadoId = "default", opcion ="default") => {
         setRespuestas({
             ...respuestas,
             [enunciadoId]: opcion
@@ -140,6 +140,16 @@ export default function Ejercicio() {
         fetchEjercicio();
     }, [params.idLeccion, params.cursoID, params.tipo]); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
 
+    useEffect(() => {
+        const initialState = {};
+        ejercicio.forEach(clase => {
+            clase.Contenido.forEach(problema => {
+                initialState[problema.Enunciado] = "Sin responder"; // Valor por defecto
+            });
+        });
+        setRespuestas(initialState);
+    }, [ejercicio]);
+    
     console.log(ejercicio);
     // console.log(ejercicio[0].Titulo);
     // console.log(ejercicio[0].Tipo);
