@@ -220,7 +220,7 @@ export default function Ejercicio() {
                     ))}
                 </div>
             ))}
-            <button className="btn-header" onClick={handleSubmit} >Enviar ejercicio</button>
+            <div className="div_btn_sub"><button className="btn_submit_ex" onClick={handleSubmit} >Enviar ejercicio</button></div>
         </>
     )
 }

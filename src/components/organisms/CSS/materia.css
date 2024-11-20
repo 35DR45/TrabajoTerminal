@@ -88,3 +88,23 @@ input[type="radio"] {
         width: 0px;
     }
 }
+
+.div_btn_sub{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn_submit_ex{
+    background-color: #FFFFFF;
+    border: 5px solid #9D1B51;
+    text-align: center;
+    border-radius: 10px;
+    color: #242424;
+    width: 20%;
+    height: max-content;
+    text-decoration: none;
+    margin-bottom: 60px;
+    font-size: larger;
+    font-weight: 700;
+}
