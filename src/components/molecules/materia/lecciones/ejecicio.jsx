@@ -129,6 +129,7 @@ export default function Ejercicio() {
         try {
            const data ={
                 idLeccion:params.idLeccion,
+                Materia:params.cursoID,
                 Respuestas:respuestas
             }
             console.log("Respuestas enviadas:", data);
