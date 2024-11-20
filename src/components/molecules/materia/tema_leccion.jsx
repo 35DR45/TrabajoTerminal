@@ -76,7 +76,9 @@ export default function Tema_Leccion(){
         <ul>
             {tree.map((capitulo) => (
                 <li key={capitulo.idLeccion}>
+                <Link className="textoTemario" to={`/leccion/${capitulo.idLeccion}/${params.cursoID}/${0}`}>
                     <h2>{capitulo.Titulo}</h2>
+                </Link>
                     <hr/>
                     {capitulo.temas.length > 0 && (
                         <ul>

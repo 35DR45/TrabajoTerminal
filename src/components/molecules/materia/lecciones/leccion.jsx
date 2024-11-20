@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function Leccion(){
@@ -6,12 +6,6 @@ export default function Leccion(){
     const params = useParams();
 
     const [leccion, setLeccion] = useState([]);
-
-    console.log(params);
-    console.log(params.idLeccion);
-    console.log(params.cursoID);
-    console.log(params.tipo);
-    
 
     useEffect(() => {
         // Función para obtener los datos de la API
@@ -29,10 +23,6 @@ export default function Leccion(){
     }, [params.idLeccion, params.cursoID, params.tipo]); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
     
     console.log(leccion);
-    // console.log(leccion[0].Titulo);
-    // console.log(leccion[0].Tipo);
-    // console.log(leccion[0].Contenido);
-
 
     return(
         <>
