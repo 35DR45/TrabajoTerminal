@@ -63,20 +63,20 @@ export default function Ejercicio() {
                 });
                 const res = await response.json()
 
-                Swal.fire({
-                    title: 'SE ENVIO',
-                    background: '#811642',
-                    color: '#f2ffeb',
-                    didOpen: (popup) => {
-                        popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
-                        popup.style.borderRadius = '15px';  // Mostrar indicador de carga
-                    },
-                    confirmButtonColor: '#f2ffeb',
-                    confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
+            Swal.fire({
+                title:'SE ENVIO',
+                background:'#811642',
+                color:'#f2ffeb',
+                didOpen: (popup) => {
+                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                    popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+                },
+                confirmButtonColor: '#f2ffeb',
+                confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
+                 
+            })
+            }catch(error){
 
-                })
-            } catch (error) {
-                console.log("Error del tipo: ", error);
             }
         }
     }
@@ -127,9 +127,9 @@ export default function Ejercicio() {
 
         // Envía las respuestas a la API
         try {
-            const data = {
-                idLeccion: params.idLeccion,
-                Respuestas: respuestas
+           const data ={
+                idLeccion:params.idLeccion,
+                Respuestas:respuestas
             }
             console.log("Respuestas enviadas:", data);
             const response = await axios.post('/api/Result', data);
@@ -166,6 +166,12 @@ export default function Ejercicio() {
         });
         setRespuestas(initialState);
     }, [ejercicio]);
+    
+    console.log(ejercicio);
+    // console.log(ejercicio[0].Titulo);
+    // console.log(ejercicio[0].Tipo);
+    // console.log(ejercicio[0].Contenido);
+
 
     return (
         <>
