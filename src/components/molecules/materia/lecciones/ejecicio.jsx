@@ -264,7 +264,7 @@ export default function Ejercicio() {
                         })
                     }else{
                         Swal.fire({
-                            title: `La leccion ya fue resuelta previamente`,
+                            title: `La lección ya fue resuelta previamente`,
                             text: ``,
                             icon: 'error',
                             background: '#811642',
