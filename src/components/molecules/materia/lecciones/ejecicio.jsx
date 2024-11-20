@@ -107,6 +107,10 @@ export default function Ejercicio() {
                 icon: 'error',
                 background: '#811642',
                 color: '#f2ffeb',
+                didOpen: (popup) => {
+                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                    popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+                },
                 confirmButtonColor: '#f2ffeb',
                 confirmButtonText: '<b style="color: black;">Aceptar</b>',
             });
@@ -130,6 +134,7 @@ export default function Ejercicio() {
         try {
            const data ={
                 idLeccion:params.idLeccion,
+                Materia:params.cursoID,
                 Respuestas:respuestas
             }
             console.log("Respuestas enviadas:", data);
