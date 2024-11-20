@@ -108,3 +108,13 @@ input[type="radio"] {
     font-size: larger;
     font-weight: 700;
 }
+
+.textoTemario{
+    color: #FFFFFF;
+}
+
+.textoTemario:hover{
+    color: #FFFFFF;
+    font-weight: 800;
+    transition: 300ms;
+}

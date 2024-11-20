@@ -1,10 +1,10 @@
 USE mydb;
 delete from Leccion where Materia=1 and Tipo=0;
-INSERT INTO Leccion VALUES(1000,"1. Estadistica descriptiva e inferencial", 1,0,
+INSERT INTO Leccion VALUES(1000,"1. Estadística descriptiva e inferencial", 1,0,
 '{"contenido":[
 "La estadística se utiliza para la recolección, presentación, organización y análisis de datos, con la cual se pueden obtener conclusiones que nos permiten tomar decisiones basado en un análisis previo."
 ]}');
-INSERT INTO Leccion VALUES(1100,"1.1 Estadística desctiptiva", 1,0,
+INSERT INTO Leccion VALUES(1100,"1.1 Estadística descriptiva", 1,0,
 '{"contenido":[
 "Cuando se examina un grupo a este se le conoce como población o universo mientras que, si se examina un grupo derivado del anterior, a este se le llama muestra."
 ]}');
