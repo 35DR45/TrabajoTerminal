@@ -1,6 +1,7 @@
 use mydb;
 -- id, nombre, correo, pass, telefono, tipo, tutor, tutorado, aprendizaje, reputacion;
-insert into usuario values (null, "juan", "a@a.com", "123", "5500112233", 2, null, 2, 1, default);
+delete from usuario;
+insert into usuario values (null, "juan", "a@a.com", sha("123", 256), "5500112233", 2, null, 2, 1, default);
 insert into usuario values (null, "pedro", "b@b.com", "123", "5511223344", 1, 1, null, 1, default);
 insert into usuario values (null, "pepe", "c@c.com", "123", "5522334455", 2, null, null, 1, default);
 insert into usuario values (null, "Miguel", "d@d.com", "123", "555920185", 2, null, null, 1, default);
