@@ -4,11 +4,13 @@ import DefaultCourseImage from "../../../../assets/DefaultCourseImage.png";
 import Course_Name from "../../../atoms/student/card_courses/course_Name";
 
 
-export default function Card_Courses({courseName = "Default course name", id}){
+export default function Card_Courses({courseName = "Default course name",img, id}){
+    console.log({img})
     return(
         <Link className="Card_Course" to={`/curso/${id}`}>
-            <img src={DefaultCourseImage} alt="Imagen del curso por defecto"/>
             <Course_Name name={courseName}/>
+            
+            <img src={img} alt="Imagen del curso por defecto"/>
         </Link>
     )
 }

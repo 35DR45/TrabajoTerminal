@@ -31,7 +31,7 @@ export default function Courses(){
         <> 
             <div className="Course_Container">
             {subjects.map((subject, index) => (
-                <Card_Courses key={index} courseName={subject.NombreMateria} id={subject.idMateria}/>
+                <Card_Courses key={index} courseName={subject.NombreMateria} img={subject.ImagenMateria} id={subject.idMateria}/>
             ))}
             </div>
             <Link to={"/tools"} className="Tools_container" >
