@@ -454,7 +454,7 @@ app.get('/api/Cursos',(req,res) =>{
 
 //Recuperar progreso
 app.post('/api/Progreso',(req,res) =>{
-    const query = "SELECT 	m.idMateria AS id, m.NombreMateria AS Materia, IFNULL((COUNT(CASE WHEN l.Tipo = 0 THEN p.idLeccion END) / COUNT(CASE WHEN l.Tipo = 0 THEN l.idLeccion END) * 100), 0) AS `PTeo`, IFNULL((COUNT(CASE WHEN l.Tipo = 0 THEN p.idLeccion END) / COUNT(CASE WHEN l.Tipo = 0 THEN l.idLeccion END) * 100), 0) AS `PPra`, IFNULL((COUNT(p.idLeccion) / COUNT(l.idLeccion) * 100), 0) AS `PTot` FROM Materia m LEFT JOIN Leccion l ON m.idMateria = l.Materia LEFT JOIN Progreso p ON l.idLeccion = p.idLeccion AND p.idUsuario IN (select idUsuario from Usuario where NombreUsuario=?) GROUP BY m.idMateria, m.NombreMateria";
+    const query = "SELECT 	m.idMateria AS id, m.NombreMateria AS Materia, IFNULL((COUNT(CASE WHEN l.Tipo = 0 THEN p.idLeccion END) / COUNT(CASE WHEN l.Tipo = 0 THEN l.idLeccion END) * 100), 0) AS `PTeo`, IFNULL((COUNT(CASE WHEN l.Tipo = 1 THEN p.idLeccion END) / COUNT(CASE WHEN l.Tipo = 1 THEN l.idLeccion END) * 100), 0) AS `PPra`, IFNULL((COUNT(p.idLeccion) / COUNT(l.idLeccion) * 100), 0) AS `PTot` FROM Materia m LEFT JOIN Leccion l ON m.idMateria = l.Materia LEFT JOIN Progreso p ON l.idLeccion = p.idLeccion AND p.idUsuario IN (select idUsuario from Usuario where NombreUsuario=?) GROUP BY m.idMateria, m.NombreMateria";
     console.log("materia: "+ req.body.materia, "usuario: ",req.body.usuario);
     db.query(query,[req.body.usuario],(err,result) =>{
         if(err){

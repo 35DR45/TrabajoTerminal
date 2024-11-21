@@ -23,18 +23,19 @@ export default function Leccion(){
     }, [params.idLeccion, params.cursoID, params.tipo]); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
     
     console.log(leccion);
-
+    // console.log(leccion[0].Titulo);
+    // console.log(leccion[0].Tipo);
+    // console.log(leccion[0].Contenido);
+    
     return(
         <>
             {leccion.map((clase, index) => (
                 <div  key={index}>
                     <h1 className="Titulo_Leccion">{clase.Titulo} </h1>
                     <div className="listado_contenido_tema">
-                        <p>
                             {clase.Contenido.contenido.map((parrafo, index) =>(
-                                <p key={index}>{parrafo}</p>
+                                <div key={index} dangerouslySetInnerHTML={{__html: parrafo}}></div>
                             ))}
-                        </p>
                     </div>
                 </div>
             ))}
