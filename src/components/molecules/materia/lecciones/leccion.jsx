@@ -33,11 +33,9 @@ export default function Leccion(){
                 <div  key={index}>
                     <h1 className="Titulo_Leccion">{clase.Titulo} </h1>
                     <div className="listado_contenido_tema">
-                        <p>
                             {clase.Contenido.contenido.map((parrafo, index) =>(
                                 <div key={index} dangerouslySetInnerHTML={{__html: parrafo}}></div>
                             ))}
-                        </p>
                     </div>
                 </div>
             ))}
