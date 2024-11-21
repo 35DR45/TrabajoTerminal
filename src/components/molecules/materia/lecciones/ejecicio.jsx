@@ -67,12 +67,14 @@ export default function Ejercicio() {
                         "inputData": [data.Puntuación, data.Respuestas[0], 1, data.Respuestas[3], 1, data.Respuestas[4]],
                     })
                 });
-                const res = await response.json()
-                progreso.Rendimiento=res.maxIndex
-                if(res.maxIndex==1){
+                const respons = await fetch(`/api/LecFinished/${iduser}/${params.idLeccion}/${params.cursoID}`);
+                const res1 = await response.json()
+                const res2 = await respons.json()
+                progreso.Rendimiento=res1.maxIndex
+                if(res1.maxIndex==1 && res2.status!="Existe"){
                     const result = await  Swal.fire({
                         title:"FELICIDADES!!! ",
-                        html:`Detectamos que  mediante tus respuestas tienes un rendimiento de: <p style="color: green; font-size: 30px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"><b > ${res.prediccion}</b> </p> ¿Te gustaria apoyar a otros usuarios en este tema volviendote un tutor? `,
+                        html:`Detectamos que  mediante tus respuestas tienes un rendimiento de: <p style="color: green; font-size: 30px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"><b > ${res1.prediccion}</b> </p> ¿Te gustaria apoyar a otros usuarios en este tema volviendote un tutor? `,
                         background:'#811642',
                         color:'#f2ffeb',
                         allowOutsideClick: false,
@@ -178,10 +180,32 @@ export default function Ejercicio() {
                     }else{
                         endAlert()
                     }
+                
+                }else if(res2.status=="Existe"){
+                    Swal.fire({
+                        title: `La lección ya fue resuelta previamente`,
+                        text: ``,
+                        icon: 'error',
+                        background: '#811642',
+                        color: '#f2ffeb',
+                        //showCancelButton: true,
+                        confirmButtonColor: '#f2ffeb',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
+                        cancelButtonText: 'Cancelar',
+                        allowOutsideClick: false,
+                        didOpen: (popup) => {
+                            // Aplicar estilos directamente al popup
+                            popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                            popup.style.borderRadius = '15px';       // Bordes redondeados
+                        },
+                    }).then(async (result) => {
+                        if(result.isConfirmed) navigate(-1);
+                    })
                 }else{
-                    const result = await Swal.fire({
+                    Swal.fire({
                         title:"Resultado ",
-                        html:`Detectamos que  mediante tus respuestas tienes un rendimiento de: <p style="color: green; font-size: 30px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"><b > ${res.prediccion}</b> </p> ¿Quieres que se te asigne un tutor? `,
+                        html:`Detectamos que  mediante tus respuestas tienes un rendimiento de: <p style="color: green; font-size: 30px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"><b > ${res1.prediccion}</b> </p> ¿Quieres que se te asigne un tutor? `,
                         background:'#811642',
                         color:'#f2ffeb',
                         allowOutsideClick: false,
@@ -194,6 +218,98 @@ export default function Ejercicio() {
                         cancelButtonColor: '#d33',
                         cancelButtonText: 'No',
                         showCancelButton: true,
+                        footer: 'Si decides emparejar se dara por terminada la lección',
+                    }).then(async (result) => {
+                        
+                        if(result.isConfirmed){
+                            Swal.fire({
+                                title: 'Emparejando...',
+                                text: 'Por favor espera mientras se procesa tu solicitud.',
+                                background: '#811642',
+                                color: '#f2ffeb',
+                                allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+                                didOpen: (popup) => {
+                                    Swal.showLoading();
+                                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                                    popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+                                },
+                            });
+                            try {
+                                console.log(iduser)
+                                console.log(progreso.Rendimiento)
+                                console.log(params.idLeccion)
+                                console.log(params.idMateria)
+                                const response = await fetch(`/api/Pair/${iduser}/${progreso.Rendimiento}/${params.idLeccion}/${params.cursoID}`);
+                                const res = await response.json()
+                                console.log(res)
+                                if(res.status=="Ya tiene un tutor asignado"){
+                                    Swal.fire({
+                                        title:"Ya tienes un tutor asignado ",
+                                        html:"¿Deseeas reemplazar el tutor que tienes actualmente?",
+                                        background:'#811642',
+                                        color:'#f2ffeb',
+                                        icon:"info",
+                                        allowOutsideClick: false,
+                                        didOpen: (popup) => {
+                                            popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                                            popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+                                        },
+                                        confirmButtonColor: '#f2ffeb',
+                                        confirmButtonText: '<b style="color: black;">Si</b> ',
+                                        cancelButtonColor: '#d33',
+                                        cancelButtonText: 'No',
+                                        showCancelButton: true,
+                                    }).then(async (result) => {
+                                        if(result.isConfirmed){
+                                            try {
+                                                const response = await fetch(`/api/Pair/${iduser}`);
+                                                const res = await response.json()
+                                                if(res.status=="Exito"){
+                                                    Swal.fire({
+                                                        title: 'Emparejando...',
+                                                        text: 'Por favor espera mientras se procesa tu solicitud.',
+                                                        background: '#811642',
+                                                        color: '#f2ffeb',
+                                                        allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+                                                        didOpen: (popup) => {
+                                                            Swal.showLoading();
+                                                            popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                                                            popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+                                                        },
+                                                    });
+                                                    try {
+                                                        const response = await fetch('/api/Pair/:User/:Rendimiento/:idLeccion', {
+                                                            method: 'POST',
+                                                            headers: {
+                                                                'Content-Type': 'application/json'
+                                                            },
+                                                            body: JSON.stringify({
+                                                                "idUser": iduser,
+                                                                "Rendimiento": progreso.Rendimiento,
+                                                                "idLeccion": params.idLeccion,
+                                                                "idMateria": params.idMateria
+                                                            })
+                                                        });
+                                                        const res = await response.json()
+                                                    }catch(error){
+
+                                                    }
+                                                }
+                                            }catch(error){
+
+                                            }
+                                        }
+                                    })
+                                }else{
+
+                                }
+                            }catch(error){
+                                
+                            }    
+
+                        }else{
+
+                        }
                     })
                 }
             }catch(error){
