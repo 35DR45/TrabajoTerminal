@@ -12,9 +12,8 @@ export default function Profile_Form(){
         <form className="profile_form">
             <Profile_Entry labelText={"Nombre: "} placeText={"Nombre de usuario"} fetchVal={user} type={"text"}/>
             <Profile_Entry labelText={"Contacto: "} placeText={"Número telefonico"} type={"tel"}/>
-            <Profile_Entry labelText={"Quiero ser tutor: "} type={"checkbox"}/>
-            <button type="submit" className="btn-register-form"><Profile_Button text={"Actualizar datos"}/></button>
-            <button type="button" className="btn-register-form"><Profile_Button text={"Cambiar contraseña"}/></button>
+            <button type="submit" className="btn_profile_form"><Profile_Button text={"Actualizar datos"}/></button>
+            <button type="button" className="btn_profile_form"><Profile_Button text={"Cambiar contraseña"}/></button>
         </form>
     )
 }

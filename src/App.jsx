@@ -53,6 +53,23 @@ const App = () =>{
             <Contenido_Ejercicio/>
           </ProtectedRoute>
         }/>
+        {/* Perfiles */}
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <Profile/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/profile/progress" element={
+          <ProtectedRoute>
+            <Progress/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/tutor" element={
+          <ProtectedRoute>
+            <Tutor/>
+          </ProtectedRoute>
+        }/>
+        {/* Herramientas*/}
         <Route path="/tools" element={
           <ProtectedRoute>
             <Tools/>
@@ -81,21 +98,6 @@ const App = () =>{
         <Route path="/tools/5" element={
           <ProtectedRoute>
             <Contenido_Tool5/>
-          </ProtectedRoute>
-        }/>
-        <Route path="/profile" element={
-          <ProtectedRoute>
-            <Profile/>
-          </ProtectedRoute>
-        }/>
-        <Route path="/profile/progress" element={
-          <ProtectedRoute>
-            <Progress/>
-          </ProtectedRoute>
-        }/>
-        <Route path="/tutor" element={
-          <ProtectedRoute>
-            <Tutor/>
           </ProtectedRoute>
         }/>
       </Routes>

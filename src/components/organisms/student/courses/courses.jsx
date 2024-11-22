@@ -35,8 +35,10 @@ export default function Courses(){
             ))}
             </div>
             <Link to={"/tools"} className="Tools_container" >
-                <img src={ToolsImage} alt="Logo de herrramientas"/>
-                <h3>Herramientas</h3>
+                <div className="tools_div_container">
+                    <img className="tools_image" src={ToolsImage} alt="Logo de herrramientas"/>
+                    <h3>Herramientas</h3>
+                </div>
             </Link>
         </>
     )
