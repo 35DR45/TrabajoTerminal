@@ -551,7 +551,7 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
             if(Tutor != null) return res.json({"status":"Ya tiene un tutor asignado"})
             if (Rendimiento == 0){
                 console.log("Entro a rend 0")
-                db.query(queryemparejar1,[User,Aprendizaje,idMateria,idLeccion,User,idLeccion,idMateria],(err,result) =>{
+                db.query(queryemparejar1,[User,Aprendizaje,idLeccion,User,idLeccion,idMateria],(err,result) =>{
                     if(err){
                         console.log("Error en la segunda consulta no se encontro usuario")
                         return res.status(500).json({ "status": "Error en la segunda consulta no se encontro usuario" });
@@ -570,7 +570,7 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
 
             }else if (Rendimiento == 2){
                 console.log("Entro a rend 2")
-                db.query(queryemparejar2,[User,Aprendizaje,idMateria,idLeccion,User,idLeccion,idMateria],(err,result) =>{
+                db.query(queryemparejar2,[User,Aprendizaje,idLeccion,User,idLeccion,idMateria],(err,result) =>{
                     if(err){
                         console.log("Error en la segunda consulta no se encontro usuario")
                         return res.status(500).json({ "status": "Error en la segunda consulta no se encontro usuario" });
