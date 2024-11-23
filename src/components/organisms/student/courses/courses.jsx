@@ -31,12 +31,14 @@ export default function Courses(){
         <> 
             <div className="Course_Container">
             {subjects.map((subject, index) => (
-                <Card_Courses key={index} courseName={subject.NombreMateria} id={subject.idMateria}/>
+                <Card_Courses key={index} courseName={subject.NombreMateria} img={subject.ImagenMateria} id={subject.idMateria}/>
             ))}
             </div>
             <Link to={"/tools"} className="Tools_container" >
-                <img src={ToolsImage} alt="Logo de herrramientas"/>
-                <h3>Herramientas</h3>
+                <div className="tools_div_container">
+                    <img className="tools_image" src={ToolsImage} alt="Logo de herrramientas"/>
+                    <h3>Herramientas</h3>
+                </div>
             </Link>
         </>
     )

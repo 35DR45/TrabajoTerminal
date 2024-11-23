@@ -20,3 +20,19 @@
 .profile_label{
     font-size: larger;
 }
+
+.btn_profile_form:hover{
+    border: solid 1px #FFFFFF;
+    cursor: pointer;
+}
+
+.btn_profile_form{
+    background-color: #FFFFFF;
+    margin-top: 5px;
+    border-radius: 15px;
+    font-size: 20px;
+    padding: 5px 10px;
+    text-decoration: none;
+    width: max-content;
+    border: 0px;
+}

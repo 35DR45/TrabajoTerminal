@@ -6,6 +6,11 @@
     margin-bottom: 50px;
 }
 
+.Card_Course:hover{
+    color: rgb(196, 194, 194);
+    background-color: #9b2a59;
+}
+
 .Card_Course{
     background-color: #811642;
     padding: 20px;
@@ -13,14 +18,27 @@
     flex-direction: column;
     gap: 20px;
     border-radius: 20px;
+    color: white;
+    font-weight: bold;
 }
 
 .Tools_container{
-    color: black;
     width: 100%;
     justify-content: space-around;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 50px;
+}
+
+.tools_div_container{
+    padding: 20px;
+    border-radius: 20px;
+    color: black;
+    text-align: center;
+}
+.tools_div_container:hover > h3{ 
+    text-decoration: underline 3px #811642;
+    transition: 50ms;
+    text-align: center;
 }

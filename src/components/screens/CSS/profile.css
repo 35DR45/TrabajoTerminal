@@ -25,7 +25,13 @@
     width: max-content;
 }
 
-.buttons_pair_row > a > button:hover {
-        background-color: #6C6Ac1;
+.buttons_pair_row> a:first-of-type button:hover{
+    background-color: #91d96d;
+    cursor: pointer;
+
 }
 
+.buttons_pair_row  a:last-of-type button:hover {
+    cursor: pointer;
+    background-color: #78b5da;
+}
