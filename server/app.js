@@ -252,10 +252,11 @@ app.get('/api/SeeUsers',(req,res) =>{
         
 */
 // TODO: cambiar los gets para que no pidan el body y pidan params
-app.get('/api/SeeUser',(req,res) =>{
+app.get('/api/SeeUser/:idUser',(req,res) =>{
+    const {idUser} = req.params
     console.log("Entro ver usuario")
-    const query = "SELECT * FROM usuario WHERE Correo = ?";
-    db.query(query,req.body.mail,(err,result) =>{
+    const query = "SELECT * FROM usuario WHERE idUsuario = ?";
+    db.query(query,idUser,(err,result) =>{
         if(err){
             console.log("Usuario no enviado")
             return res.send({status:"No enviado"})
@@ -677,7 +678,7 @@ app.get('/api/Pair/:idUser/:idTutor',(req,res) =>{
 app.get('/api/verTutor/:User',(req,res) =>{
     const{ User } = req.params
     //console.log("Entro "+ User)
-    const query = "SELECT Tutor FROM usuario WHERE NombreUsuario = ?"
+    const query = "SELECT Tutor FROM usuario WHERE idUsuario = ?"
 
     const query2="SELECT Telefono,NombreUsuario FROM usuario WHERE idUsuario= ?"
 
@@ -757,6 +758,7 @@ app.post('/api/setTelefono',(req,res)=>{
             }
     })
 })
+
 
 //Resultado de ejercicios
 app.post('/api/Result',(req,res)=>{

@@ -4,7 +4,7 @@ import Profile_Entry from "../../molecules/perfil/profile_entry"
 import { UserContext } from "../../../UserContext";
 
 const TutorForm = () =>{
-    const { user } = useContext(UserContext);
+    const { user,iduser } = useContext(UserContext);
     const [tutorData, setTutorData] = useState({
         tutor: '',
         phone: ''
@@ -14,13 +14,16 @@ const TutorForm = () =>{
         // Función para obtener los datos de la API
         const fetchTutor = async () => {
         try {
-            const response = await fetch(`/api/verTutor/${user}`); 
+            const response = await fetch(`/api/verTutor/${iduser}`); 
             const data = await response.json();
-            console.log(data)
+           
+
             setTutorData({
                 tutor: data.Nombre,
                 phone: data.Telefono
             });
+
+            console.log(tutorData)
         } catch (error) {
             console.error("Error fetching tutor:", error);
         }
@@ -47,8 +50,8 @@ const TutorForm = () =>{
     
     return(
         <form className="profile_form">
-            <Profile_Entry labelText={"Nombre de tu tutor: "} value={tutorData.tutor} type={"text"}/>
-            <Profile_Entry labelText={"Contacto de tu tutor: "} value={tutorData.phone} type={"text"}/>
+            <Profile_Entry labelText={"Nombre de tu tutor: "} fetchVal={tutorData.tutor} type={"text"}/>
+            <Profile_Entry labelText={"Contacto de tu tutor: "} fetchVal={tutorData.phone} type={"text"}/>
            {/* <button type="button" className="btn-register-form" onClick={handleSubmit} ><Profile_Button text={"Muéstrame otro tutor"}/></button>*/}
         </form>
     )
