@@ -83,7 +83,9 @@ export default function Ejercicio() {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        "user": user,
+                        "user": iduser,
+                        "idLeccion":params.idLeccion,
+                        "idMateria":params.cursoID,
                         "inputData": [data.Puntuación, data.Respuestas[0], 1, data.Respuestas[3], 1, data.Respuestas[4]],
                     })
                 });

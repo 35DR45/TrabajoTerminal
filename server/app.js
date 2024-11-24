@@ -471,12 +471,13 @@ app.post('/api/Progreso',(req,res) =>{
 //insertar progreso
 app.post('/api/insertProgress',(req,res)=>{
     const{idUser,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento}=req.body;
+    console.log("ENTRO EN INSERTAR PROGRESO")
     const query ="INSERT INTO PROGRESO(idusuario,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento) values (?,?,?,?,?,?,?)"
 
             db.query(query,[idUser,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento],(err,result) =>{
                 if(err){
                     console.log("No se insertaron los datos o ya existian")
-                    return res.status(500).json({ error: "No se insertaron los datos o ya existian" });
+                    return res.json({ "error": "No se insertaron los datos o ya existian" });
                 } else return res.json({"status": "Datos insertados correctamente"})
             })
 })
@@ -856,8 +857,38 @@ function minMaxNormalize(value, min, max) {
                     Pregunta dificil 2 (0 si se respondio mal,0.5 si se respondio la respuesta trampa y 1 si se respondio correctamente)]}
                     */                    
 app.post('/api/Predpy', async (req,res) =>{
-    const { user,inputData } = req.body; 
+    const { user,idLeccion,idMateria,inputData } = req.body; 
+
+    query1="SELECT Aprendizaje FROM usuario WHERE idUsuario = ? "
+    query2= "SELECT Completado FROM progreso WHERE idUsuario= ? AND idLeccion = ? AND idMateria = ?"
+    console.log("ENTRA PREDPY")
     console.log(inputData)
+    console.log(user)
+    console.log(idLeccion)
+    console.log(parseInt(idLeccion)+1)
+    console.log(idMateria)
+    db.query(query1,[user],async (err,result) =>{
+        if(err){
+            console.log("Error al obtener aprendizaje de  usuario")
+        }else{
+            console.log(result[0].Aprendizaje)
+            inputData[2] =result[0].Aprendizaje
+            console.log(inputData[2])
+            console.log(inputData)
+            db.query(query2,[user,parseInt(idLeccion)-1,idMateria,],async (err,result) =>{
+                console.log(result)
+                if(err){
+                    console.log("Aun no ha revisado la teoria")
+                        inputData[4] = 0
+                }else if(result.length > 0 ) {
+                    inputData[4] = 1
+                }else inputData[4] = 0
+                console.log(inputData)
+                console.log(inputData[4])
+            })
+        
+         }
+    })
     // Validar que inputData no sea null, undefined o esté vacío
     if (!inputData || !Array.isArray(inputData) || inputData.length === 0 || inputData.some(item => item === null)) {
         return res.status(400).send("Datos vacíos, no válidos o contienen valores nulos");

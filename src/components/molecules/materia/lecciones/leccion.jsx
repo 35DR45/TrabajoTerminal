@@ -1,12 +1,41 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-
+import { useParams ,useNavigate} from "react-router-dom";
+import { useEffect, useState,useContext } from "react";
+import { UserContext } from '../../../../UserContext';
 export default function Leccion(){
 
     const params = useParams();
+    const {iduser } = useContext(UserContext);
 
     const [leccion, setLeccion] = useState([]);
-
+    const navigate = useNavigate();
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try{
+            const response = await fetch('/api/insertProgress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "idUser": iduser,
+                    "idLeccion": params.idLeccion,
+                    "idMateria":params.cursoID,
+                    "Leccion_Tipo":params.tipo,
+                    "Completado":1,
+                    "Puntaje":null,
+                    "Rendimiento":null
+                })
+            });
+            const respo = await response.json()
+            if(respo.error=="No se insertaron los datos o ya existian") navigate(-1)
+            else navigate(-1)
+                
+            
+       }catch(error){
+        console.log(error)
+       }
+    }
+    
     useEffect(() => {
         // Función para obtener los datos de la API
         const fetchLeccion = async () => {
@@ -37,8 +66,11 @@ export default function Leccion(){
                                 <div key={index} dangerouslySetInnerHTML={{__html: parrafo}}></div>
                             ))}
                     </div>
+                    
                 </div>
+                
             ))}
+            <div className="div_btn_sub"><button  className="btn_submit_ex" onClick={handleSubmit} >Terminar</button></div>
         </>
     )
 }
