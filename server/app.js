@@ -97,8 +97,8 @@ app.use(cors({
 const db=mysql.createConnection({
     host:"localhost",
     user: "root",
-    password: "PaS$R4z32",
-    // password: "1234",
+    //password: "PaS$R4z32",
+    password: "1234",
     database: "mydb",
 });
 
@@ -520,10 +520,11 @@ app.post('/api/insertProgress',(req,res)=>{
 //Emparejar
 app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
     const { User,Rendimiento,idLeccion,idMateria } =req.params
+    console.log("Entra a buscar tutor")
     console.log(User)
     console.log(Rendimiento)
-    console.log(idLeccion)
-    console.log(idMateria)
+    //console.log(idLeccion)
+    //console.log(idMateria)
     
     //Primero recuperamos los datos del usuario actual del sistema
     const querygetUser = "SELECT NombreUsuario,Aprendizaje,Tutor FROM usuario WHERE idUsuario = ?"
@@ -543,12 +544,15 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
         if(result.length > 0){
             const Aprendizaje = result[0].Aprendizaje
             const Tutor = result[0].Tutor
-            console.log(User)
-            console.log(Aprendizaje)
+            //console.log(User)
+            //console.log(Aprendizaje)
+            console.log("Aqui ID TUTOR")
             console.log(Tutor)
             let random_index 
             let random_item = [] 
-            if(Tutor != null) return res.json({"status":"Ya tiene un tutor asignado"})
+            if(Tutor != null) return res.json({"status":"Ya tiene un tutor asignado",
+                                                "Tutor":Tutor
+            })
             if (Rendimiento == 0){
                 console.log("Entro a rend 0")
                 db.query(queryemparejar1,[User,Aprendizaje,idLeccion,User,idLeccion,idMateria],(err,result) =>{
@@ -614,6 +618,9 @@ app.get('/api/LecFinished/:User/:idLeccion/:idMateria',(req,res) => {
 app.get('/api/Pair/:idUser',(req,res)=> {
     const {idUser} = req.params;
     let Tutor="";
+
+    console.log("Aqui desemparejamos")
+    console.log(idUser)
     const querygetTutor ="SELECT Tutor FROM usuario WHERE idUsuario = ? ";
     const queryUpuser = "UPDATE usuario SET Tutor = null WHERE idUsuario = ? ";
     const queryUptutor = "UPDATE usuario SET Tutorado = null WHERE idUsuario = ?  ";
@@ -622,16 +629,20 @@ app.get('/api/Pair/:idUser',(req,res)=> {
             console.log("Error ")
             return res.status(500).json({ error: "Error en la primera consulta de get usuario" });
         }else{
-            Tutor=result.Tutor;
+            
+            Tutor=result[0].Tutor;
+            console.log(Tutor)
             db.query(queryUpuser,[idUser],(err,result) =>{
                 if(err){
                     console.log("Error ")
                     return res.status(500).json({ error: "Error en la primera consulta de update usuario" });
                 }else{
+                    console.log("IDETUTOR")
+                    console.log(Tutor)
                     db.query(queryUptutor,[Tutor],(err,result) =>{
         
                         if(err){
-                            console.log("Error en la primera consulta no se encontro usuario")
+                            console.log("Error en la primera consulta no se Actualizo el usuario usuario")
                             return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
                         } else return res.json({"status": "Exito"})
                     })
@@ -711,7 +722,7 @@ app.post('/api/serTutor',(req,res)=>{
             else Telefono=result[0].Telefono
             
 
-            db.query(query,[Tipo,idUser],(err,result) =>{
+            db.query(query2,[Tipo,idUser],(err,result) =>{
                 if(err){
                     
                     console.log("Error al asignar tutor")
