@@ -5,6 +5,7 @@ import Login_Form from "./components/screens/login_Form";
 import Register_Form from "./components/screens/register_Form";
 import Recover_Pass from "./components/screens/recover_Pass";
 import Tutor from "./components/screens/tutor";
+import Tutorado from "./components/screens/tutorado";
 import Verified_user from "./components/screens/verified_user";
 import Recovery_sent from "./components/screens/recovery_Sent";
 import Student from "./components/screens/student";
@@ -67,6 +68,11 @@ const App = () =>{
         <Route path="/tutor" element={
           <ProtectedRoute>
             <Tutor/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/tutorado" element={
+          <ProtectedRoute>
+            <Tutorado/>
           </ProtectedRoute>
         }/>
         {/* Herramientas*/}

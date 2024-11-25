@@ -5,25 +5,25 @@ import Profile_Entry from "../../molecules/perfil/profile_entry"
 import { UserContext } from "../../../UserContext";
 import Swal from 'sweetalert2'
 
-const TutorForm = () =>{
+const TutoradoForm = () =>{
     const { user,iduser } = useContext(UserContext);
     const navigate = useNavigate();
-    const [tutorData, setTutorData] = useState({
-        tutor: '',
-        phone: ''
+    const [userData, setUserData] = useState({
+        usuario: '',
+        correo: ''
     });
 
     useEffect(() => {
         // Función para obtener los datos de la API
         const fetchTutor = async () => {
         try {
-            const response = await fetch(`/api/verTutor/${iduser}`); 
+            const response = await fetch(`/api/verUsuario/${iduser}`); 
             const data = await response.json();
            
 
-            setTutorData({
-                tutor: data.Nombre,
-                phone: data.Telefono
+            setUserData({
+                usuario: data.Nombre,
+                correo: data.Correo
             });
 
             console.log(tutorData)
@@ -39,20 +39,20 @@ const TutorForm = () =>{
         e.preventDefault();
         console.log("HOLAAAAA")
         try{
-            const response = await fetch(`api/Pair/${iduser}`);
+            const response = await fetch(`api/unPair/${iduser}`);
             if (response.ok) {
                 // Redirige al usuario a la URL /registrado
                 const data = await response.json();
                 Swal.fire({
-                    title:"Tutor desasignado",
-                    text:"Ahora no tienes un tutor asignado",
+                    title:"Usuario desasignado",
+                    text:"Ahora no tienes un usuario asignado",
                     icon:'error',
                     background:'#811642',
                     color:'#f2ffeb',
                     showCancelButton: false,    
                     timer: 2000,
                     timerProgressBar:true,
-                    footer:'Si quieres tener un tutor asignado debes de seguir con las lecciones',
+                    footer:'Si quieres tener un usuario asignado debes de seguir con las lecciones, tener buena calificación y permitir ser un tutor',
                     didOpen: (popup) => {
                         Swal.showLoading();
                         // Aplicar estilos directamente al popup
@@ -72,11 +72,11 @@ const TutorForm = () =>{
     
     return(
         <form className="profile_form">
-            <Profile_Entry labelText={"Nombre de tu tutor: "} fetchVal={tutorData.tutor} type={"text"}/>
-            <Profile_Entry labelText={"Contacto de tu tutor: "} fetchVal={tutorData.phone} type={"text"}/>
-           {<button type="button" className="btn-register-form" onClick={handleSubmit} ><Profile_Button text={"Dar de baja tutor"}/></button>}
+            <Profile_Entry labelText={"Nombre de tu tutorado: "} fetchVal={userData.usuario} type={"text"}/>
+            <Profile_Entry labelText={"Correo de tu tutorado: "} fetchVal={userData.correo} type={"text"}/>
+           {<button type="button" className="btn-register-form" onClick={handleSubmit} ><Profile_Button text={"Dar de baja usuario"}/></button>}
         </form>
     )
 }
 
-export default TutorForm
+export default TutoradoForm

@@ -653,6 +653,43 @@ app.get('/api/Pair/:idUser',(req,res)=> {
         }
     })
 })
+//Desasignar usuario
+app.get('/api/unPair/:idUser',(req,res)=> {
+    const {idUser} = req.params;
+    let Tutorado="";
+
+    console.log("Aqui desemparejamos")
+    console.log(idUser)
+    const querygetTutor ="SELECT Tutorado FROM usuario WHERE idUsuario = ? ";
+    const queryUpuser = "UPDATE usuario SET Tutorado = null WHERE idUsuario = ? ";
+    const queryUptutor = "UPDATE usuario SET Tutor = null WHERE idUsuario = ?  ";
+    db.query(querygetTutor,[idUser],(err,result) =>{
+        if(err){
+            console.log("Error ")
+            return res.status(500).json({ error: "Error en la primera consulta de get usuario" });
+        }else{
+            
+            Tutorado=result[0].Tutorado;
+            console.log(Tutorado)
+            db.query(queryUpuser,[idUser],(err,result) =>{
+                if(err){
+                    console.log("Error ")
+                    return res.status(500).json({ error: "Error en la primera consulta de update usuario" });
+                }else{
+                    console.log("IDETUTORADO")
+                    console.log(Tutorado)
+                    db.query(queryUptutor,[Tutorado],(err,result) =>{
+        
+                        if(err){
+                            console.log("Error en la primera consulta no se Actualizo el usuario usuario")
+                            return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
+                        } else return res.json({"status": "Exito"})
+                    })
+                } 
+            })
+        }
+    })
+})
 //Asignar el tutor
 app.get('/api/Pair/:idUser/:idTutor',(req,res) =>{
     const {idUser,idTutor} = req.params;
@@ -699,6 +736,39 @@ app.get('/api/verTutor/:User',(req,res) =>{
                     return res.json({
                         "Nombre":result[0].NombreUsuario,
                         "Telefono":result[0].Telefono
+                    }) 
+                } 
+
+            })
+
+        }
+    })
+})
+//Cargar Usuario
+app.get('/api/verUsuario/:User',(req,res) =>{
+    const{ User } = req.params
+    //console.log("Entro "+ User)
+    const query = "SELECT Tutorado FROM usuario WHERE idUsuario = ?"
+
+    const query2="SELECT Correo,NombreUsuario FROM usuario WHERE idUsuario= ?"
+
+    db.query(query,User,(err,result) =>{
+        if(err){
+            console.log("Error en la primera consulta no se encontro usuario")
+            return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
+        } 
+        if(result.length > 0){
+            const usuarioId =result[0].Tutorado
+            //console.log("Obtenido : " + tutorId)
+            db.query(query2,usuarioId,(err,result) =>{
+                if(err){
+                    //console.log("Error en la segunda consulta no se encontro  tutor")
+                    return res.status(500).json({ error: "Error en la segunda consulta no se encontro  tutor" });
+                }else{
+                    //console.log("Obtenido : " + result[0].NombreUsuario + " "+result[0].Telefono)
+                    return res.json({
+                        "Nombre":result[0].NombreUsuario,
+                        "Correo":result[0].Correo
                     }) 
                 } 
 
