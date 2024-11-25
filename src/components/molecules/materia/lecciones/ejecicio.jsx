@@ -41,7 +41,7 @@ export default function Ejercicio() {
     const showAlert = async (data) => {
         progreso.Puntaje=data.Puntuación
         const result = await Swal.fire({
-            title: `Puntuacion de lección :<p style="color: green; font-size: 30px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"><b > ${data.Puntuación}</b> </p>`,
+            title: `Puntuación de lección: <p style="color: green; font-size: 30px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"><b > ${data.Puntuación}</b> </p>`,
             text: `Resultados: P1 : ${data.Respuestas[0]} 
             P2 :  ${data.Respuestas[1]} 
             P3 :  ${data.Respuestas[2]}
@@ -56,7 +56,7 @@ export default function Ejercicio() {
             confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
             cancelButtonText: 'Cancelar',
             allowOutsideClick: false,
-            footer: 'Al aceptar guardaras tu progreso',
+            footer: 'Al aceptar, guardarás tu progreso.',
             didOpen: (popup) => {
                 // Aplicar estilos directamente al popup
                 popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
@@ -66,7 +66,7 @@ export default function Ejercicio() {
         if (result.isConfirmed) {
             Swal.fire({
                 title: 'Enviando datos...',
-                text: 'Por favor espera mientras se procesa tu solicitud.',
+                text: 'Por favor, espera mientras se procesa tu solicitud.',
                 background: '#811642',
                 color: '#f2ffeb',
                 allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
@@ -96,7 +96,7 @@ export default function Ejercicio() {
                 if(res1.maxIndex==1 && res2.status!="Existe"){
                     const result = await  Swal.fire({
                         title:"FELICIDADES!!! ",
-                        html:`Detectamos que  mediante tus respuestas tienes un rendimiento de: <p style="color: green; font-size: 30px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"><b > ${res1.prediccion}</b> </p> ¿Te gustaria apoyar a otros usuarios en este tema volviendote un tutor? `,
+                        html:`Detectamos que, mediante tus respuestas, tienes un rendimiento de: <p style="color: green; font-size: 30px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"><b > ${res1.prediccion}</b> </p> ¿Te gustaría apoyar a otros usuarios en este tema volviéndote un tutor? `,
                         background:'#811642',
                         color:'#f2ffeb',
                         allowOutsideClick: false,
@@ -109,7 +109,7 @@ export default function Ejercicio() {
                         cancelButtonColor: '#d33',
                         cancelButtonText: 'No',
                         showCancelButton: true,
-                        footer: 'Al aceptar es posible que necesitemos que ingreses tu número celular o de contacto',
+                        footer: 'Al aceptar, es posible que necesitemos que ingreses tu número celular o de contacto.',
                     })
                     if (result.isConfirmed){
                         try {
@@ -159,7 +159,7 @@ export default function Ejercicio() {
                                         console.log('Número de teléfono ingresado:', result.value);
                                          Swal.fire({
                                             title:"¡Número válido! ",
-                                            text:`Gracias por registrarte como tutor con el numero : ${result.value}`,
+                                            text:`Gracias por registrarte como tutor con el número: ${result.value}`,
                                             background:'#811642',
                                             color:'#f2ffeb',
                                             allowOutsideClick: false,
@@ -205,7 +205,7 @@ export default function Ejercicio() {
                 
                 }else if(res2.status=="Existe"){
                     Swal.fire({
-                        title: `La lección ya fue resuelta previamente`,
+                        title: `La lección ya fue resuelta previamente.`,
                         text: ``,
                         icon: 'error',
                         background: '#811642',
@@ -284,8 +284,8 @@ export default function Ejercicio() {
                                 if(respo.status=="Datos insertados correctamente" ){
                                     if(res.status=="Ya tiene un tutor asignado"){
                                         Swal.fire({
-                                            title:"Ya tienes un tutor asignado ",
-                                            html:"¿Deseeas reemplazar el tutor que tienes actualmente?",
+                                            title:"Ya tienes un tutor asignado. ",
+                                            html:"¿Deseas reemplazar el tutor que tienes actualmente?",
                                             background:'#811642',
                                             color:'#f2ffeb',
                                             icon:"info",
@@ -299,7 +299,7 @@ export default function Ejercicio() {
                                             cancelButtonColor: '#d33',
                                             cancelButtonText: 'Rechazar',
                                             showCancelButton: true,
-                                            footer:"Al Rechazar terminará con la lección.",
+                                            footer:"Al rechazar, terminará con la lección.",
                                         }).then(async (result) => {
                                             if(result.isConfirmed){
                                                 try {
@@ -308,7 +308,7 @@ export default function Ejercicio() {
                                                     if(res.status=="Exito"){
                                                         Swal.fire({
                                                             title: 'Emparejando...',
-                                                            text: 'Por favor espera mientras se procesa tu solicitud.',
+                                                            text: 'Por favor, espera mientras se procesa tu solicitud.',
                                                             background: '#811642',
                                                             color: '#f2ffeb',
                                                             allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
@@ -332,7 +332,7 @@ export default function Ejercicio() {
                                         })
                                     }else if (res.status=="No hay tutor disponible" ){
                                         Swal.fire({
-                                            title: 'No es posible emparejarte con un tutor en este momento',
+                                            title: 'No es posible emparejarte con un tutor en este momento.',
                                             text: 'Recomendamos que regreses más tarde a realizar la lección si es que deseas un tutor.',
                                             background: '#811642',
                                             color: '#f2ffeb',
@@ -341,7 +341,7 @@ export default function Ejercicio() {
                                             confirmButtonColor: '#f2ffeb',
                                             confirmButtonText: '<b style="color: black;" >Regresar</b> ',
                                             allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
-                                            footer: 'Si decides terminar no podras tener un tutor por lo que se dara por concluida la lección',
+                                            footer: 'Si decides terminar, no podrás tener un tutor, por lo que se dará por concluida la lección.',
                                             didOpen: (popup) => {
                                                 popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
                                                 popup.style.borderRadius = '15px';  // Mostrar indicador de carga
@@ -396,7 +396,7 @@ export default function Ejercicio() {
                                         Swal.fire({
                                             title:"El tutor que se te asignó es: ",
                                             html:`${data.item.NombreUsuario}`,
-                                            text:"Si estas de acuerdo da clic en Aceptar",
+                                            text:"Si estás de acuerdo, da clic en Aceptar.",
                                             background:'#811642',
                                             color:'#f2ffeb',
                                             icon:"info",
@@ -414,11 +414,11 @@ export default function Ejercicio() {
                                             confirmButtonColor: '#f2ffeb',
                                             confirmButtonText: '<b style="color: black;">Aceptar</b> ',
                                             showDenyButton: true,
-                                            denyButtonText: 'Cambiar tutor',
+                                            denyButtonText: 'Cambiar de tutor',
                                             cancelButtonColor: '#d33',
                                             cancelButtonText: 'Rechazar',
                                             showCancelButton: true,
-                                            footer:"Al aceptar guardarás los datos del tutor, los cuales podrás revisar en el perfil. Rechazar terminará con el proceso.",
+                                            footer:"Al aceptar, guardarás los datos del tutor, los cuales podrás revisar en el perfil. Rechazar terminará con el proceso.",
                                             preDeny: async () => {
                                                 try{
                                                     const response = await fetch(`/api/Pair/${iduser}/${progreso.Rendimiento}/${params.idLeccion}/${params.cursoID}`);
@@ -441,7 +441,7 @@ export default function Ejercicio() {
                                                     if(res.status=="Emparejamiento exitoso"){
                                                         Swal.fire({
                                                             title: `Datos Guardados`,
-                                                            text: `Datos guardados correctamente`,
+                                                            text: `Datos guardados correctamente.`,
                                                             icon: 'success',
                                                             background: '#811642',
                                                             color: '#f2ffeb',
@@ -473,8 +473,8 @@ export default function Ejercicio() {
 
     const endAlert = async (save)=>{
         Swal.fire({
-            title: `Terminaste la lección :D`,
-            text: `Haz terminado la lección por lo que tus datos se guardarán`,
+            title: `Terminaste la lección :D.`,
+            text: `Has terminado la lección, por lo que tus datos se guardarán.`,
             icon: 'success',
             background: '#811642',
             color: '#f2ffeb',
@@ -484,7 +484,7 @@ export default function Ejercicio() {
             confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
             cancelButtonText: 'Cancelar',
             allowOutsideClick: false,
-            footer: 'Al aceptar guardaras tu progreso',
+            footer: 'Al aceptar, guardarás tu progreso.',
             didOpen: (popup) => {
                 // Aplicar estilos directamente al popup
                 popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
@@ -511,7 +511,7 @@ export default function Ejercicio() {
                     const res = await response.json()
                     if(res.status=="Datos insertados correctamente"){
                         Swal.fire({
-                            title: `Progreso Guardado`,
+                            title: `Progreso guardado`,
                             text: `Datos guardados`,
                             icon: 'info',
                             background: '#811642',
@@ -533,7 +533,7 @@ export default function Ejercicio() {
                         })
                     }else{
                         Swal.fire({
-                            title: `La lección ya fue resuelta previamente`,
+                            title: `La lección ya fue resuelta previamente.`,
                             text: ``,
                             icon: 'error',
                             background: '#811642',
@@ -584,7 +584,7 @@ export default function Ejercicio() {
         if (preguntasSinResponder.length > 0) {
             Swal.fire({
                 title: 'Error',
-                text: 'Por favor responde todas las preguntas antes de enviar.',
+                text: 'Por favor, responde todas las preguntas antes de enviar.',
                 icon: 'error',
                 background: '#811642',
                 color: '#f2ffeb',

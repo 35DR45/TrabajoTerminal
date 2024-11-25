@@ -3,7 +3,7 @@ delete from Leccion where Materia=2 and Tipo=1;
 INSERT INTO Leccion VALUES(1211,"1.2.1E Ejercicios de aritmética en campos primos", 2, 1,
 '[
     {
-        "Enunciado": "Realiza las siguientes multiplicaciones en el campo ( \\\mathbb{Z}/5mathbb{Z} ) (campo de cinco elementos, con {0,1,2,3,4}): ( 4 times 4 = ? )",
+        "Enunciado": "Realiza las siguientes multiplicaciones en el campo (Z/5Z) (campo de cinco elementos, con {0, 1, 2, 3, 4}): (4 x 4 = ?)",
         "R_Correcta": "1",
         "R_Falsas": ["16", "3", "0"],
         "R_Truco": "4"

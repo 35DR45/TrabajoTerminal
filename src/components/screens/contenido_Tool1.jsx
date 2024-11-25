@@ -45,7 +45,7 @@ export default function Contenido_Tool1(){
                 <form className="form-container" onSubmit={handleSubmit}>
                     <label className="login-label"> Texto a cifrar: </label>
                     <input type="text" className="login-input" placeholder="Texto a cifrar por desplazamiento" onChange={(e) => setPlaintext(e.target.value)}/>
-                    <label className="login-label"> Cantidad a desplazar: </label><input type="number" className="login-input" placeholder="Posciciones a desplazar" onChange={(e) => setdisplacement(e.target.value)}/>
+                    <label className="login-label"> Cantidad a desplazar: </label><input type="number" className="login-input" placeholder="Posiciones a desplazar" onChange={(e) => setdisplacement(e.target.value)}/>
                     <button type="submit" className="btn-register-form">EJECUTAR</button>
                 </form>
             </div>

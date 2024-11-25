@@ -36,13 +36,14 @@ export default function Contenido_Tool4(){
     return(
         <>
             <Header/>
-            <h2 className="Courses_Section">Calcoladora algebra modular</h2>
+            <h2 className="Courses_Section">Calculadora algebra modular</h2>
             <div style={{ display: 'flex', justifyContent: 'center'}}>
                 <form className="form-container" onSubmit={handleSubmit}>
-                    <label className="login-label"> Operacion: </label>
-                    <input type="text" className="login-input" placeholder="Opreación:" onChange={(e) => setOperacion(e.target.value)}/>
-                    <label className="login-label"> Modulo: </label>
-                    <input type="number" className="login-input" placeholder="Opreación:" onChange={(e) => setModulo(e.target.value)}/>
+                    <label className="login-label"> Operación: </label>
+                    <input type="text" className="login-input" placeholder="Operación:" onChange={(e) => setOperacion(e.target.value)}/>
+                    <label className="login-label"> 
+: </label>
+                    <input type="number" className="login-input" placeholder="Operación:" onChange={(e) => setModulo(e.target.value)}/>
                     <button type="submit" className="btn-register-form">EJECUTAR</button>
                 </form>
             </div>

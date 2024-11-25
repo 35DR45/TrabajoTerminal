@@ -36,13 +36,13 @@ export default function Contenido_Tool2(){
     return(
         <>
             <Header/>
-            <h2 className="Courses_Section">Calcoladora de tendencias centrales</h2>
+            <h2 className="Courses_Section">Calculadora de tendencias centrales</h2>
             <div style={{ display: 'flex', justifyContent: 'center'}}>
                 <form className="form-container" onSubmit={handleSubmit}>
                     <label className="login-label"> Datos: </label>
                     <input type="text" className="login-input" placeholder="eg. 2,3,4,5" onChange={(e) => setDatos(e.target.value)}/>
-                    <label className="login-label"> Operacion: </label>
-                    <select className="login-input" placeholder="Opreación:" onChange={(e) => setOperacion(e.target.value)}>
+                    <label className="login-label"> Operación: </label>
+                    <select className="login-input" placeholder="Operación:" onChange={(e) => setOperacion(e.target.value)}>
                         <option value="median">Mediana</option>
                         <option value="mode">Moda</option>
                         <option value="average">Promedio</option>

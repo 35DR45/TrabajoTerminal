@@ -35,11 +35,11 @@ export default function Contenido_Tool3(){
     return(
         <>
             <Header/>
-            <h2 className="Courses_Section">Calcoladora general</h2>
+            <h2 className="Courses_Section">Calculadora general</h2>
             <div style={{ display: 'flex', justifyContent: 'center'}}>
                 <form className="form-container" onSubmit={handleSubmit}>
-                    <label className="login-label"> Operacion: </label>
-                    <input type="text" className="login-input" placeholder="Opreación:" onChange={(e) => setOperacion(e.target.value)}/>
+                    <label className="login-label"> Operación: </label>
+                    <input type="text" className="login-input" placeholder="Operación:" onChange={(e) => setOperacion(e.target.value)}/>
                     <button type="submit" className="btn-register-form">EJECUTAR</button>
                 </form>
             </div>
