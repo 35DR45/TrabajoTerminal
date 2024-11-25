@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 //const { APPID } = require('./apifile.js');
 //const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
 //const waApi = WolframAlphaAPI(APPID);
-//const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
+const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
 const {exec, spawn } = require('child_process');
 app.use(express.urlencoded({ extended: true }))
@@ -30,64 +30,57 @@ exec(`pip install ${pythonPackages.join(' ')}`, (error, stdout, stderr) => {
 });*/
 
 
-
-/*async function loadModel() {
-    // Construye la ruta completa con el prefijo `file://`
-        const modelPath = `file://${path.resolve(__dirname, 'CNNB169', 'model.json')}`;
-        // Crear un nuevo modelo con L2 aplicado en las capas deseadas
-        const model = await tf.loadLayersModel(modelPath)
-        //console.log("Estructura del modelo cargado:");
-        //model.layers.forEach((layer, index) => {
-        //console.log(`Capa ${index}: ${layer.name}, pesos esperados: ${layer.weights.length}`);
-    //});
-
-        const modelWithL2 = tf.sequential();
-     // Copiar la arquitectura y agregar L2
-     modelWithL2.add(tf.layers.dense({
-        units: 20,
-        activation: 'relu',
-        inputShape: [6],
-        kernelRegularizer: tf.regularizers.l2({ l2: 0.01 })
-    }));
-    modelWithL2.add(tf.layers.dropout({ rate: 0.2 }));
-
-    modelWithL2.add(tf.layers.dense({
-        units: 10,
-        activation: 'relu',
-        kernelRegularizer: tf.regularizers.l2({ l2: 0.01 })
-    }));
-    modelWithL2.add(tf.layers.dropout({ rate: 0.2 }));
-
-    modelWithL2.add(tf.layers.dense({
-        units: 3,
-        activation: 'softmax'
-    }));
-
-      // Copiar solo pesos en capas que tienen parámetros
-      for (let i = 0; i < modelWithL2.layers.length; i++) {
-        const originalLayer = model.layers[i];
-        const newLayer = modelWithL2.layers[i];
-
-        // Solo copiar pesos si ambos tienen parámetros entrenables
-        if (originalLayer.weights.length > 0 && newLayer.weights.length > 0) {
-            newLayer.setWeights(originalLayer.getWeights());
-            //console.log(`Pesos copiados en la capa ${newLayer.name}`);
-        } else {
-            //console.log(`No se copian pesos en la capa ${newLayer.name} porque no tiene parámetros.`);
-        }
+// Definir y registrar el regularizador L2
+// Definir y registrar el regularizador L2 manualmente
+/*class L2 {
+    constructor(config) {
+        this.l2 = config.l2; // Coeficiente L2 desde el JSON
     }
-    // Compilar el nuevo modelo con regularización L2
-    modelWithL2.compile({
-        optimizer: 'adam',
-        loss: 'categoricalCrossentropy',
-        metrics: ['accuracy']
-    });
 
-    console.log("Modelo cargado y modificado con regularización L2.");
-    return modelWithL2;
+    apply(x) {
+        return tf.mul(this.l2, tf.sum(tf.square(x))); // Regularización L2
+    }
+
+    getConfig() {
+        return { l2: this.l2 }; // Para serialización
+    }
+
+    static get className() {
+        return 'L2'; // Nombre del regularizador
+    }
 }
-*/
 
+// Registrar la clase en TensorFlow.js
+tf.serialization.registerClass(L2);
+
+async function loadAndUseModel() {
+    try {
+        // Ruta al archivo model.json
+        const modelPath = path.resolve(__dirname, './CNNB169/model.json');
+
+        // Cargar el modelo
+        const model = await tf.loadLayersModel(`file://${modelPath}`);
+        console.log('Modelo cargado exitosamente.');
+
+        
+        // Ver la arquitectura del modelo
+        model.summary();
+
+        // Crear un tensor de entrada (por ejemplo, un conjunto de datos ficticio con 6 características)
+        const input = tf.tensor2d([[5, 1, 1, 1, 1, 1]]); // Cambia según tus datos
+
+        // Realizar predicción
+        const output = model.predict(input);
+
+        // Mostrar resultados
+        output.print();
+    } catch (error) {
+        console.error('Error al cargar o usar el modelo:', error);
+    }
+}
+
+loadAndUseModel();
+*/
 app.use(cors({
     origin: 'http://127.0.0.1:5173',
     methods: ["GET","POST","DELETE","PUT"],
@@ -343,6 +336,42 @@ app.put('/api/UpdateU',async (req,res) =>{
     })
 });
 
+
+//Usuario Actualiza Usuario
+/*regresa un json{
+        "status":(Aqui te da el mensaje de lo que ocurrio)
+        }
+*/
+app.put('/api/UUpdateU',async (req,res) =>{
+    const{iduser,user,mail,aprendizaje}=req.body
+    console.log("Entro en actualizar usuario")
+    console.log("newuser: "+user)
+    console.log("mail: "+mail)
+    console.log("newlearning: "+aprendizaje)
+    const query = "UPDATE usuario SET NombreUsuario = ?,Correo = ?,Aprendizaje = ? WHERE idUsuario = ?";
+    db.query(query,[user,mail,aprendizaje,iduser],(err,result) =>{
+        if(err){
+            console.log(("Error al actualizar el usuario"))
+            console.log(err)
+            return res.send({"status":"Error"})
+        } 
+        else{ 
+            console.log(result.affectedRows)
+            if(result.affectedRows==0){
+                console.log("El usuario no existo por lo tanto no se modifico")
+                res.send({"status":" Usuario inexistente"})
+            }
+            else if (result.affectedRows==1){
+                console.log("Usuario modificado correctamente")
+                res.send({"status":"Usuario modificado correctamente"})
+            }else{
+                console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
+                return res.send({"status":"Se actualizaron varios usuarios? jajaja"})
+            }
+        
+        }
+    })
+});
 //TOUPDATE CRUD DE LECCIONES
 /*app.post('/api/CreateL',(req,res) =>{
     const query = "INSERT INTO Leccion(Titulo,Materia,Tipo,Contenido) values (?,?,?,?)";
