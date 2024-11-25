@@ -37,6 +37,9 @@ export default function Header(){
         // Redirigir a la página principal
         
     };
+    const handleGoBack = () => {
+        navigate(-1); // Navega hacia la página anterior
+    };
 
     const renderLogo = () =>{
 
@@ -46,7 +49,10 @@ export default function Header(){
             );
         }else{
             return (
+                <>
                 <Link to={"/"} className="btn-header" onClick={handleLogout}>Cerrar sesión</Link>
+                <Link to="#" className="btn-header" onClick={handleGoBack}>Regresar</Link>
+                </>
             );
         }
         
@@ -54,7 +60,7 @@ export default function Header(){
 
     return(
         <div className="header-container">
-            <div>
+            <div className="grouped-btns-container">
                 {renderLogo()}
             </div>
             <Grouped_btns/>
