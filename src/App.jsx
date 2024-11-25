@@ -3,6 +3,7 @@ import './App.css'
 import LandingPage from "./components/screens/landingPage";
 import Login_Form from "./components/screens/login_Form";
 import Register_Form from "./components/screens/register_Form";
+import Update_Form from "./components/screens/update_form";
 import Recover_Pass from "./components/screens/recover_Pass";
 import Tutor from "./components/screens/tutor";
 import Tutorado from "./components/screens/tutorado";
@@ -63,6 +64,11 @@ const App = () =>{
         <Route path="/profile/progress" element={
           <ProtectedRoute>
             <Progress/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/update/user" element={
+          <ProtectedRoute>
+            <Update_Form/>
           </ProtectedRoute>
         }/>
         <Route path="/tutor" element={
