@@ -532,9 +532,9 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
     const querygetUser = "SELECT NombreUsuario,Aprendizaje,Tutor FROM usuario WHERE idUsuario = ?"
     //Asignamos un tutor
     //Esta asigna un tutor considerando un rendimiento de Apoyo
-    const queryemparejar1 = "SELECT u.idUsuario,u.NombreUsuario,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ?  AND p.rendimiento = 1 AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 0 AND idUsuario = ? AND idLeccion = ? AND idMateria =?);";
+    const queryemparejar1 = "SELECT u.idUsuario,u.NombreUsuario,u.Reputacion,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ?  AND p.rendimiento = 1 AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 0 AND idUsuario = ? AND idLeccion = ? AND idMateria =?);";
     //Esta asigna un tutor considerando un rendimiento de Normal
-    const queryemparejar2 = "SELECT u.idUsuario,u.NombreUsuario,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ?  AND (p.rendimiento = 1 OR p.rendimiento = 2) AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 2 AND idUsuario = ? AND idLeccion = ? AND idMateria =?);";
+    const queryemparejar2 = "SELECT u.idUsuario,u.NombreUsuario,u.Reputacion,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ?  AND (p.rendimiento = 1 OR p.rendimiento = 2) AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 2 AND idUsuario = ? AND idLeccion = ? AND idMateria =?);";
     
     db.query(querygetUser,User,(err,result) =>{
 
@@ -562,10 +562,13 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
                         console.log("Error en la segunda consulta no se encontro usuario")
                         return res.status(500).json({ "status": "Error en la segunda consulta no se encontro usuario" });
                     }if(result.length> 0){
-                        
-                        tam=result.length
+                        const top3 = result
+                        .sort((a, b) => b.reputacion - a.reputacion) // Ordenar de mayor a menor
+                        .slice(0, 3); // Tomar los 3 primeros
+                        console.log(top3)
+                        tam=top3.length
                         random_index=Math.floor(Math.random()*tam)
-                        random_item =result[random_index]
+                        random_item =top3[random_index]
                         console.log(random_item)
                         return res.json({"status":"Emparejado","item":random_item})
                     }else{
@@ -782,8 +785,8 @@ app.post('/api/serTutor',(req,res)=>{
     const {Tipo,idUser} =req.body;
     console.log(Tipo)
     console.log(idUser)
-    query2 ="UPDATE usuario SET Tipo = ? WHERE idUsuario = ?"
-    query ="SELECT Telefono FROM usuario WHERE idUsuario = ?"
+    const query2 ="UPDATE usuario SET Tipo = ? WHERE idUsuario = ?"
+    const query ="SELECT Telefono FROM usuario WHERE idUsuario = ?"
     db.query(query,idUser,(err,result) =>{
         if(err){
             console.log("Error al obtener usuario")
@@ -817,7 +820,7 @@ app.post('/api/setTelefono',(req,res)=>{
     const {Telefono,idUser} =req.body;
     console.log(Telefono)
     console.log(idUser)
-    query ="UPDATE usuario SET Telefono = ? WHERE idUsuario = ?"
+    const query ="UPDATE usuario SET Telefono = ? WHERE idUsuario = ?"
     db.query(query,[Telefono,idUser],(err,result) =>{
         if(err){
             console.log("Error al actualizar el número de teléfono")
@@ -829,6 +832,47 @@ app.post('/api/setTelefono',(req,res)=>{
     })
 })
 
+//Valorar Tutor
+app.post('/api/Appreciate',(req,res)=>{
+    const {action,idUsuario} =req.body;
+    console.log(action)
+    console.log(idUsuario)
+    
+    const querygetTutor ="SELECT Tutor FROM usuario WHERE idUsuario = ?"
+    const query1 ="UPDATE usuario SET Reputacion=Reputacion+3 WHERE idUsuario = ?"
+    const query2 ="UPDATE usuario SET Reputacion=Reputacion-3 WHERE idUsuario = ?"
+    db.query(querygetTutor,[idUsuario],(err,result) =>{
+        if(err){
+            console.log("No se encontro Tutor")
+            return res.json({ error: "No se encontro Tutor" });
+        }else{
+            console.log("Tutor encontrado")
+            let Tutor =result[0].Tutor
+            if(action=="like"){
+                db.query(query1,[Tutor],(err,result) =>{
+                    if(err){
+                        console.log("No se cambio su reputacion")
+                        return res.json({ "error": "No se cambio su reputacion" });
+                    }else{
+                        console.log("Se cambio su reputacion like")
+                        return res.json({"status":"Se cambio su reputacion"})
+                        }
+                })
+            }else if(action=="dislike"){
+                db.query(query2,[Tutor],(err,result) =>{
+                    if(err){
+                        console.log("No se cambio su reputacion")
+                        return res.json({ "error": "No se cambio su reputacion" });
+                    }else{
+                        console.log("Se cambio su reputacion dislike ")
+                        return res.json({"status":"Se cambio su reputacion"})
+                        }
+                })
+            }
+        }
+    })
+    
+})
 
 //Resultado de ejercicios
 app.post('/api/Result',(req,res)=>{
