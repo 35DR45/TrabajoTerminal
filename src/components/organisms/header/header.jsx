@@ -43,7 +43,7 @@ export default function Header(){
 
     const renderLogo = () =>{
 
-        if (location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register"){
+        if (location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register" ||location.pathname === "/forgotten" ){
             return (
                 <Link to={"/"}>TT 2024-B169</Link>
             );
