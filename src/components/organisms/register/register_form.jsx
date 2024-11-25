@@ -12,15 +12,26 @@ export default function Register_form(){
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [learningStyle, setLearningStyle] = useState('');
     const [userError, setUserError] = useState('');
     const [passError, setPassError] = useState('');
+    const [passConfError, setPassConfError] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [envioError, setEnvioError] = useState('');
+    const [dropdownError, setDropdownError] = useState('');
 
     const navigate = useNavigate();
     const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&()=/?¿¡'|°,;.\-\+]).{8,}$/;
     const regexUser = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
     const regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    const validateDropdown = () => {
+        if (learningStyle === '' || learningStyle === 'selecciona') {
+            setDropdownError("Por favor, selecciona un estilo de aprendizaje.");
+            return false;
+        }
+        setDropdownError('');
+        return true;
+    };
 
     // Validar usuario en cada cambio
     const handleUsernameChange = (e) => {
@@ -43,6 +54,15 @@ export default function Register_form(){
             setPassError(''); // Limpia el mensaje cuando cumple con los criterios
         }
     };
+
+    const handlePasswordConfChange = (e) =>{
+        const value = e.target.value;
+        if (value != password) {
+            setPassConfError("Error: Las contraseñas no son idénticas.");
+        } else {
+            setPassConfError(''); // Limpia el mensaje cuando cumple con los criterios
+        }
+    }
     
     // Validar email en cada cambio
     const handleEmailChange = (e) => {
@@ -57,12 +77,15 @@ export default function Register_form(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(userError === '' && passError === '' && emailError === ''){
+        const isDropdownValid = validateDropdown();
+        if(userError === '' && passError === '' && emailError === '' && passConfError === '' && isDropdownValid){
             const FormData = {
                 user: username, 
                 pass: password,
                 mail: email,
-                phone: '12345'
+                phone: '12345',
+                style: learningStyle
+
             }
             try {
                 // Envía los datos del formulario al backend
@@ -92,7 +115,7 @@ export default function Register_form(){
                             // Aplicar estilos directamente al popup
                             popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
                             popup.style.borderRadius = '15px';       // Bordes redondeados
-                          },
+                        },
                     }).then(()=> {
                         navigate("/login");
                     })
@@ -142,11 +165,27 @@ export default function Register_form(){
             } catch (error) {
                 console.error('Error:', error);
             }
-        }else
-            if(userError !== '' || passError !== '' || emailError !== ''){
-                setEnvioError('No puede enviar el formulario sin corregir los errores');
-            }
-        
+        }else{
+            Swal.fire({
+                title:"Hay errores en tu formulario de registro",
+                text:"¡Corrige los errores y reintentalo!",
+                icon:'error',
+                background:'#811642',
+                color:'#f2ffeb',
+                showCancelButton: false,    
+                timer: 2000,
+                timerProgressBar:true,
+                footer:'Recuerda no compartir tus datos de acceso',
+                didOpen: (popup) => {
+                    Swal.showLoading();
+                    // Aplicar estilos directamente al popup
+                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                    popup.style.borderRadius = '15px';       // Bordes redondeados
+                  },
+            }).then(()=> {
+                navigate("/register");
+            })
+        }
     };
 
     return(
@@ -156,11 +195,27 @@ export default function Register_form(){
                 <UserName onChange={handleUsernameChange}/>
                 {userError && <p className="error">{userError}</p>} 
                 <Pass onChange={handlePasswordChange}/>
-                {passError && <p className="error">{passError}</p>} {/* Muestra el mensaje de error si hay */}
+                {passError && <p className="error">{passError}</p>}
+                <Pass text={"Confirmar contraseña"} onChange={handlePasswordConfChange}/>
+                {passConfError && <p className="error">{passConfError}</p>} 
                 <Email onChange={handleEmailChange}/>
-                {emailError && <p className="error">{emailError}</p>} {/* Muestra el mensaje de error si hay */}
+                {emailError && <p className="error">{emailError}</p>} 
+
+                <label htmlFor="learningStyle">Selecciona tu estilo de aprendizaje:</label>
+                <select
+                    id="learningStyle"
+                    value={learningStyle}
+                    onChange={(e) => setLearningStyle(e.target.value)}
+                >
+                        <option value="" disabled>Elige tu estilo</option>
+                        <option value="kinestesico">Kinestésico</option>
+                        <option value="visual">Visual</option>
+                        <option value="auditivo">Auditivo</option>
+                        <option value="lecto-escritor">Lecto-escritor</option>
+                </select>
+                {dropdownError && <p className="error">{dropdownError}</p>}
+
                 <button type="submit" className="btn-register-form"><Btn_Register/></button>
-                {envioError && <p className="error">{envioError}</p>} {/* Muestra el mensaje de error si hay */}
             </form>
         </div>
     )
