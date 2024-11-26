@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 //const { APPID } = require('./apifile.js');
 //const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
 //const waApi = WolframAlphaAPI(APPID);
-const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
+// const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
 const {exec, spawn } = require('child_process');
 app.use(express.urlencoded({ extended: true }))
@@ -171,8 +171,7 @@ app.post('/api/Login',async (req,res)=>{
         }
 */
 app.post('/api/Register',async (req,res) =>{
-    console.log("Entro registro")
-    const { user , mail , pass , phone } = req.body
+    const { user, mail, pass, style } = req.body
 
     const query = "INSERT INTO usuario(NombreUsuario,Correo,pass,Telefono,Tipo,Aprendizaje) values (?,?,?,?,?,?)";
     if( user == '' || mail == '' || pass == ''){
@@ -182,13 +181,12 @@ app.post('/api/Register',async (req,res) =>{
 
     const hashedPassword = await bcrypt.hash(pass, 10);
 
-    db.query(query,[user,mail,hashedPassword,phone,/*req.body.type*/1,/*req.body.learning*/1],(err,result) =>{
+    db.query(query,[user,mail,hashedPassword,0,/*req.body.type*/1,style],(err,result) =>{
 
         console.log("user: "+user)
         console.log("mail: "+mail)
-        console.log("pass: "+pass)
         console.log("hashedpass: "+hashedPassword)
-        console.log("phone: "+ phone)
+        console.log("style: "+ style)
 
         if(err){
             console.log("Usuario no creado :"+err)

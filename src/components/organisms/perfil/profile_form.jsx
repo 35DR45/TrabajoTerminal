@@ -10,7 +10,7 @@ export default function Profile_Form(){
 
     const [datos, setDatos] = useState({
         user: user, // Estado inicial como objeto con valores vacíos
-        phone: ''
+        email: ''
     });
     
     useEffect(() => {
@@ -19,10 +19,10 @@ export default function Profile_Form(){
         try {
             const response = await fetch(`/api/seeUser/${iduser}`); 
             const data = await response.json();
-            console.log(data[0].Telefono)
+            console.log(data)
             setDatos({
                 user: data[0].NombreUsuario,
-                phone: data[0].Telefono
+                email: data[0].Correo
             });
         } catch (error) {
             console.error("Error fetching tutor:", error);
@@ -34,7 +34,7 @@ export default function Profile_Form(){
     return(
         <form className="profile_form">
             <Profile_Entry labelText={"Nombre: "} placeText={"Nombre de usuario"} fetchVal={datos.user} type={"text"}/>
-            <Profile_Entry labelText={"Contacto:"} placeText={"Número telefonico"} fetchVal={datos.phone} type={"text"}/>
+            <Profile_Entry labelText={"Contacto:"} placeText={"Número telefonico"} fetchVal={datos.email} type={"text"}/>
             <Link to={"/update/user"} ><button type="submit" className="btn_profile_form"><Profile_Button text={"Actualizar datos"}/></button></Link>
             <Link to={"/profile/progress"} ><button type="button" className="btn_profile_form"><Profile_Button text={"Cambiar contraseña"}/></button></Link>
         </form>

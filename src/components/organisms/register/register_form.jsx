@@ -83,7 +83,6 @@ export default function Register_form(){
                 user: username, 
                 pass: password,
                 mail: email,
-                phone: '12345',
                 style: learningStyle
 
             }
@@ -208,11 +207,10 @@ export default function Register_form(){
                     onChange={(e) => setLearningStyle(e.target.value)}
                 >
                         <option value="" disabled>Elige tu estilo</option>
-                        <option value="kinestesico">Kinestésico</option>
-                        <option value="visual">Visual</option>
-                        <option value="auditivo">Auditivo</option>
-                        <option value="lecto-escritor">Lecto-escritor</option>
-                </select>
+                        <option value="1">Kinestésico</option>
+                        <option value="2">Visual</option>
+                        <option value="3">Auditivo</option>
+1                </select>
                 {dropdownError && <p className="error">{dropdownError}</p>}
 
                 <button type="submit" className="btn-register-form"><Btn_Register/></button>
