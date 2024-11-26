@@ -36,7 +36,7 @@ export default function Profile_Form(){
             <Profile_Entry labelText={"Nombre: "} placeText={"Nombre de usuario"} fetchVal={datos.user} type={"text"}/>
             <Profile_Entry labelText={"Contacto:"} placeText={"Número telefonico"} fetchVal={datos.email} type={"text"}/>
             <Link to={"/update/user"} ><button type="submit" className="btn_profile_form"><Profile_Button text={"Actualizar datos"}/></button></Link>
-            <Link to={"/profile/progress"} ><button type="button" className="btn_profile_form"><Profile_Button text={"Cambiar contraseña"}/></button></Link>
+            <Link to={"/update/pass"} ><button type="button" className="btn_profile_form"><Profile_Button text={"Cambiar contraseña"}/></button></Link>
         </form>
     )
 }
