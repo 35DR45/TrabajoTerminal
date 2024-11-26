@@ -1,13 +1,13 @@
 USE mydb;
 delete from Leccion where materia=2 && tipo=0;
 INSERT INTO Leccion VALUES(1000,"1. Fundamentos de criptografía", 2, 0,
-'{"contenido":
+'{"contenido":[
 "La criptografía es la disciplina que se encarga de proteger información mediante la codificación de datos, con el objetivo de que solo los usuarios autorizados puedan acceder a ella. La palabra criptografía proviene del griego criptos, que significa oculto, y graφh, que significa escritura"
-}');
+]}');
 INSERT INTO Leccion VALUES(1100,"1.1 Fundamentos e importancia de criptografía", 2, 0,
-'{"contenido":
+'{"contenido":[
 "La relevancia de la criptografía radica en sus objetivos, esta materia busca dar protección, confidencialidad, integridad y autenticidad a la información y los datos que día con día se encuentran siendo manipulados, enviados y almacenados en los diversos dispositivos de cómputo; precisamente por esta intención de brindar seguridad a través de diversas técnicas, es que la importancia de este campo aumenta conforme lo hace la digitalización y la conexión entre diversos sistemas, pues se necesita que toda aquella información de carácter sensible, sea protegida en caso de serlo, almacenada de manera que garantice cierto nivel de seguridad para los usuarios de los sistemas."
-}');
+]}');
 INSERT INTO Leccion VALUES(1200,"1.2 Aritmética en campos primos", 2, 0,
 '{"contenido":[
 "Los campos primos son un tema muy relevante para la criptografía pues estos son la base de diversas operaciones aritméticas implementadas en diversos algoritmos de cifrado y descifrado como lo es el RSA. Estos campos permiten la realización de operaciones como suma, resta, multiplicación y exponenciación modular.",
