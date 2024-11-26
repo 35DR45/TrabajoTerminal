@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 //const { APPID } = require('./apifile.js');
 //const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
 //const waApi = WolframAlphaAPI(APPID);
-// const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
+//const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
 const {exec, spawn } = require('child_process');
 app.use(express.urlencoded({ extended: true }))
@@ -171,7 +171,8 @@ app.post('/api/Login',async (req,res)=>{
         }
 */
 app.post('/api/Register',async (req,res) =>{
-    const { user, mail, pass, style } = req.body
+    console.log("Entro registro")
+    const { user , mail , pass , phone, style } = req.body
 
     const query = "INSERT INTO usuario(NombreUsuario,Correo,pass,Telefono,Tipo,Aprendizaje) values (?,?,?,?,?,?)";
     if( user == '' || mail == '' || pass == ''){
@@ -181,7 +182,7 @@ app.post('/api/Register',async (req,res) =>{
 
     const hashedPassword = await bcrypt.hash(pass, 10);
 
-    db.query(query,[user,mail,hashedPassword,0,/*req.body.type*/1,style],(err,result) =>{
+    db.query(query,[user,mail,hashedPassword,phone,/*req.body.type*/1,/*req.body.learning*/1],(err,result) =>{
 
         console.log("user: "+user)
         console.log("mail: "+mail)
@@ -334,6 +335,79 @@ app.put('/api/UpdateU',async (req,res) =>{
     })
 });
 
+
+//Usuario Actualiza contraseña
+/*regresa un json{
+        "status":(Aqui te da el mensaje de lo que ocurrio)
+        }
+*/
+app.put('/api/Updatepass',async (req,res) =>{
+    const{iduser,pass,newpass}=req.body
+    console.log("Entro en actualizar contraseña")
+    console.log("iduser: "+iduser)
+    console.log("pass: "+pass)
+    console.log("newpass: "+newpass)
+    if(pass == "" || newpass == ""){
+        console.log("Vacios");
+        return res.status(400).json({status:"Usuario o Contraseña vacios"})
+    }  
+    const check ="SELECT pass FROM usuario WHERE idUsuario = ?"
+    const query = "UPDATE usuario SET pass = ? WHERE idUsuario = ?";
+    db.query(check,iduser,(err,result)=>{
+        if(err){
+            console.log(("Error al obtener la contraseña del usuario"))
+            console.log(err)
+            return res.send({"status":"Error"})
+        }else{
+            const storedHash=result[0].pass
+            // Verificar si la contraseña coincide con el hash
+                bcrypt.compare(pass, storedHash, async (err, result) => {
+                    if (err) {
+                        console.error("Error al verificar el hash:", err);
+                        return res.json({"status":"Termino"})
+                    } else if (result) {
+
+                        console.log("¡La contraseña coincide!");
+                        const hashedPassword = await bcrypt.hash(newpass, 10);
+                        db.query(query,[hashedPassword,iduser],(err,result)=>{
+                            if (err) {
+                                console.error("Termino,no actualizo:", err);
+                                return res.json({"status":"Termino,no actualizo"})
+                            }else{
+                                return res.json({"status":"Pass actualiza"})
+                            }
+                        });
+                    } else {
+                        console.log("Contraseña incorrecta.");
+                        return res.json({"status":"No coincide"})
+                    }
+                });
+            
+        }
+    })
+   /* db.query(query,[user,mail,aprendizaje,iduser],(err,result) =>{
+        if(err){
+            console.log(("Error al actualizar el usuario"))
+            console.log(err)
+            return res.send({"status":"Error"})
+        } 
+        else{ 
+            console.log(result.affectedRows)
+            if(result.affectedRows==0){
+                console.log("El usuario no existo por lo tanto no se modifico")
+                res.send({"status":" Usuario inexistente"})
+            }
+            else if (result.affectedRows==1){
+                console.log("Usuario modificado correctamente")
+                res.send({"status":"Usuario modificado correctamente"})
+            }else{
+                console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
+                return res.send({"status":"Se actualizaron varios usuarios? jajaja"})
+            }
+        
+        }
+    })*/
+});
 
 //Usuario Actualiza Usuario
 /*regresa un json{
