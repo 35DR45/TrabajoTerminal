@@ -6,7 +6,7 @@ import Btn_Register from "../../atoms/header/btn_Register";
 import Email from "../../molecules/register/email";
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
-export default function Register_form(){
+export default function Register_form() {
 
 
     const [username, setUsername] = useState('');
@@ -55,7 +55,7 @@ export default function Register_form(){
         }
     };
 
-    const handlePasswordConfChange = (e) =>{
+    const handlePasswordConfChange = (e) => {
         const value = e.target.value;
         if (value != password) {
             setPassConfError("Error: Las contraseñas no son idénticas.");
@@ -63,7 +63,7 @@ export default function Register_form(){
             setPassConfError(''); // Limpia el mensaje cuando cumple con los criterios
         }
     }
-    
+
     // Validar email en cada cambio
     const handleEmailChange = (e) => {
         const value = e.target.value;
@@ -78,9 +78,9 @@ export default function Register_form(){
     const handleSubmit = async (e) => {
         e.preventDefault();
         const isDropdownValid = validateDropdown();
-        if(userError === '' && passError === '' && emailError === '' && passConfError === '' && isDropdownValid){
+        if (userError === '' && passError === '' && emailError === '' && passConfError === '' && isDropdownValid) {
             const FormData = {
-                user: username, 
+                user: username,
                 pass: password,
                 mail: email,
                 style: learningStyle
@@ -97,66 +97,66 @@ export default function Register_form(){
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    if(data.status=="Usuario Creado"){
-                    // Redirige al usuario a la URL /registrado
+                    if (data.status == "Usuario Creado") {
+                        // Redirige al usuario a la URL /registrado
+                        Swal.fire({
+                            title: "Gracias por registrarte",
+                            text: "Registro exitoso!",
+                            icon: 'success',
+                            background: '#811642',
+                            color: '#f2ffeb',
+                            showCancelButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            footer: 'Recuerda no compartir tus datos de acceso',
+                            didOpen: (popup) => {
+                                Swal.showLoading();
+                                // Aplicar estilos directamente al popup
+                                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                                popup.style.borderRadius = '15px';       // Bordes redondeados
+                            },
+                        }).then(() => {
+                            navigate("/login");
+                        })
+                    } else {
+                        Swal.fire({
+                            title: "Error en registrarte",
+                            text: "Reintentalo!",
+                            icon: 'error',
+                            background: '#811642',
+                            color: '#f2ffeb',
+                            showCancelButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            footer: 'Recuerda no compartir tus datos de acceso',
+                            didOpen: (popup) => {
+                                Swal.showLoading();
+                                // Aplicar estilos directamente al popup
+                                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                                popup.style.borderRadius = '15px';       // Bordes redondeados
+                            },
+                        }).then(() => {
+                            navigate("/register");
+                        })
+                    }
+                } else {
                     Swal.fire({
-                        title:"Gracias por registrarte",
-                        text:"Registro exitoso!",
-                        icon:'success',
-                        background:'#811642',
-                        color:'#f2ffeb',
-                        showCancelButton: false,    
+                        title: "Error en registrarte",
+                        text: "Reintentalo!",
+                        icon: 'error',
+                        background: '#811642',
+                        color: '#f2ffeb',
+                        showCancelButton: false,
                         timer: 2000,
-                        timerProgressBar:true,
-                        footer:'Recuerda no compartir tus datos de acceso',
+                        timerProgressBar: true,
+                        footer: 'Recuerda no compartir tus datos de acceso',
                         didOpen: (popup) => {
                             Swal.showLoading();
                             // Aplicar estilos directamente al popup
                             popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
                             popup.style.borderRadius = '15px';       // Bordes redondeados
                         },
-                    }).then(()=> {
-                        navigate("/login");
-                    })
-                }else{
-                    Swal.fire({
-                        title:"Error en registrarte",
-                        text:"Reintentalo!",
-                        icon:'error',
-                        background:'#811642',
-                        color:'#f2ffeb',
-                        showCancelButton: false,    
-                        timer: 2000,
-                        timerProgressBar:true,
-                        footer:'Recuerda no compartir tus datos de acceso',
-                        didOpen: (popup) => {
-                            Swal.showLoading();
-                            // Aplicar estilos directamente al popup
-                            popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
-                            popup.style.borderRadius = '15px';       // Bordes redondeados
-                          },
-                    }).then(()=> {
-                        navigate("/register");
-                    })
-                }   
-                } else {
-                    Swal.fire({
-                        title:"Error en registrarte",
-                        text:"Reintentalo!",
-                        icon:'error',
-                        background:'#811642',
-                        color:'#f2ffeb',
-                        showCancelButton: false,    
-                        timer: 2000,
-                        timerProgressBar:true,
-                        footer:'Recuerda no compartir tus datos de acceso',
-                        didOpen: (popup) => {
-                            Swal.showLoading();
-                            // Aplicar estilos directamente al popup
-                            popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
-                            popup.style.borderRadius = '15px';       // Bordes redondeados
-                          },
-                    }).then(()=> {
+                    }).then(() => {
                         navigate("/register");
                     })
                     console.error('Error al registrar usuario');
@@ -164,56 +164,57 @@ export default function Register_form(){
             } catch (error) {
                 console.error('Error:', error);
             }
-        }else{
+        } else {
             Swal.fire({
-                title:"Hay errores en tu formulario de registro",
-                text:"¡Corrige los errores y reintentalo!",
-                icon:'error',
-                background:'#811642',
-                color:'#f2ffeb',
-                showCancelButton: false,    
+                title: "Hay errores en tu formulario de registro",
+                text: "¡Corrige los errores y reintentalo!",
+                icon: 'error',
+                background: '#811642',
+                color: '#f2ffeb',
+                showCancelButton: false,
                 timer: 2000,
-                timerProgressBar:true,
-                footer:'Recuerda no compartir tus datos de acceso',
+                timerProgressBar: true,
+                footer: 'Recuerda no compartir tus datos de acceso',
                 didOpen: (popup) => {
                     Swal.showLoading();
                     // Aplicar estilos directamente al popup
                     popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
                     popup.style.borderRadius = '15px';       // Bordes redondeados
-                  },
-            }).then(()=> {
+                },
+            }).then(() => {
                 navigate("/register");
             })
         }
     };
 
-    return(
+    return (
         <div className="form-container">
-            <Btn_Register/>
+            <Btn_Register />
             <form className="reg-form-form" onSubmit={handleSubmit}>
-                <UserName onChange={handleUsernameChange}/>
-                {userError && <p className="error">{userError}</p>} 
-                <Pass onChange={handlePasswordChange}/>
+                <UserName onChange={handleUsernameChange} />
+                {userError && <p className="error">{userError}</p>}
+                <Pass onChange={handlePasswordChange} />
                 {passError && <p className="error">{passError}</p>}
-                <Pass text={"Confirmar contraseña"} onChange={handlePasswordConfChange}/>
-                {passConfError && <p className="error">{passConfError}</p>} 
-                <Email onChange={handleEmailChange}/>
-                {emailError && <p className="error">{emailError}</p>} 
+                <Pass text={"Confirmar contraseña"} onChange={handlePasswordConfChange} />
+                {passConfError && <p className="error">{passConfError}</p>}
+                <Email onChange={handleEmailChange} />
+                {emailError && <p className="error">{emailError}</p>}
 
                 <label htmlFor="learningStyle">Selecciona tu estilo de aprendizaje:</label>
                 <select
                     id="learningStyle"
+                    className='dropdown_register'
                     value={learningStyle}
                     onChange={(e) => setLearningStyle(e.target.value)}
                 >
-                        <option value="" disabled>Elige tu estilo</option>
-                        <option value="1">Kinestésico</option>
-                        <option value="2">Visual</option>
-                        <option value="3">Auditivo</option>
-1                </select>
+                    <option value="" disabled>Elige tu estilo</option>
+                    <option className='dropdown_opt' value="1">Kinestésico</option>
+                    <option className='dropdown_opt' value="2">Visual</option>
+                    <option className='dropdown_opt' value="3">Auditivo</option>
+                    1                </select>
                 {dropdownError && <p className="error">{dropdownError}</p>}
 
-                <button type="submit" className="btn-register-form"><Btn_Register/></button>
+                <button type="submit" className="btn-register-form"><Btn_Register /></button>
             </form>
         </div>
     )

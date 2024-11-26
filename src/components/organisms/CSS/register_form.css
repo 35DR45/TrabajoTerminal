@@ -53,3 +53,9 @@
     font-size: 15px;
     font-weight: bold;
 }
+
+.dropdown_register{
+    border-radius: 10px;
+    font-size: large;
+    margin-bottom: 20px;
+}
