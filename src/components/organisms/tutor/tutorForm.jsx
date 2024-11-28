@@ -10,7 +10,7 @@ const TutorForm = () =>{
     const navigate = useNavigate();
     const [tutorData, setTutorData] = useState({
         tutor: '',
-        phone: ''
+        correo: ''
     });
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const TutorForm = () =>{
 
             setTutorData({
                 tutor: data.Nombre,
-                phone: data.Telefono
+                correo: data.Tutor
             });
 
             console.log(tutorData)
@@ -73,7 +73,7 @@ const TutorForm = () =>{
     return(
         <form className="profile_form">
             <Profile_Entry labelText={"Nombre de tu tutor: "} fetchVal={tutorData.tutor} type={"text"}/>
-            <Profile_Entry labelText={"Contacto de tu tutor: "} fetchVal={tutorData.phone} type={"text"}/>
+            <Profile_Entry labelText={"Contacto de tu tutor: "} fetchVal={tutorData.correo} type={"text"}/>
            {<button type="button" className="btn-register-form" onClick={handleSubmit} ><Profile_Button text={"Dar de baja tutor"}/></button>}
         </form>
     )

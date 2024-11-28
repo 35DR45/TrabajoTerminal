@@ -208,9 +208,9 @@ export default function Register_form() {
                     onChange={(e) => setLearningStyle(e.target.value)}
                 >
                     <option value="" disabled>Elige tu estilo</option>
-                    <option className='dropdown_opt' value="1">Kinestésico</option>
-                    <option className='dropdown_opt' value="2">Visual</option>
-                    <option className='dropdown_opt' value="3">Auditivo</option>
+                    <option className='dropdown_opt' value="1">Visual</option>
+                    <option className='dropdown_opt' value="2">Auditivo</option>
+                    <option className='dropdown_opt' value="3">Kinestésico</option>
                     1                </select>
                 {dropdownError && <p className="error">{dropdownError}</p>}
 

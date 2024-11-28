@@ -110,7 +110,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Progreso` (
   `Leccion_Tipo` TINYINT NOT NULL, -- 0 Teorico, 1 Ejercicico
   `Completado` TINYINT NOT NULL DEFAULT 0,
   `Puntaje` INT NULL,
-  `Rendimiento` INT(2), -- 0 Requiere apoyo, 1 NO requiere apoyo, 2 Puede dar apoyo
+  `Rendimiento` INT(2), -- 0 Requiere apoyo, 1 puede dar apoyo, 2  No requiere dar apoyo
+  `AcTutor` TINYINT NOT NULL DEFAULT 0, -- 0 No Acepta ser tutor, 1 Acepta ser tutor
   PRIMARY KEY (`idUsuario`, `idLeccion`, `idMateria`, `Leccion_Tipo`),
   CONSTRAINT `fk_Progreso_Usuario1`
     FOREIGN KEY (`idUsuario`)

@@ -11,7 +11,7 @@ export default function Profile(){
             <h2 className="Courses_Section">Perfil</h2>
             <form className="profile_container">
                 <Profile_Form/>
-                <Profile_Info_Buttons text1={"Tu progreso"} text2={"Buscar/Ver tutor"} text3={"Ver tutorado"}/>
+                <Profile_Info_Buttons text1={"Tu progreso"} text2={"Ver tutor"} text3={"Ver tutorado"}/>
             </form>
             <Footer/>
         </>

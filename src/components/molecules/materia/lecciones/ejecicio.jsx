@@ -20,7 +20,7 @@ export default function Ejercicio() {
     }
     const actionCancel= async() => {
         Swal.fire({
-            title: 'Finalizando...',
+            title: 'Finalizando lección...',
             text: 'Por favor espera.',
             background: '#811642',
             color: '#f2ffeb',
@@ -36,6 +36,53 @@ export default function Ejercicio() {
             if (result.dismiss === Swal.DismissReason.timer) {
                 navigate(-1)
             }
+        })
+    }
+    const emprFailed = async() => {
+        Swal.fire({
+            title: 'No es posible emparejarte con un tutor en este momento.',
+            text: 'Recomendamos que regreses más tarde a realizar la lección si es que deseas un tutor.',
+            background: '#811642',
+            color: '#f2ffeb',
+            cancelButtonText: 'Terminar',
+            showCancelButton: true,
+            confirmButtonColor: '#f2ffeb',
+            confirmButtonText: '<b style="color: black;" >Regresar</b> ',
+            allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+            footer: 'Si decides terminar, no podrás tener un tutor, por lo que se dará por concluida la lección.',
+            didOpen: (popup) => {
+                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+            },
+        }).then(async (result) =>{
+            if (result.isDismissed){
+                actionCancel()
+            }
+                
+            try{
+                    if(result.isConfirmed){
+                        console.log(iduser)
+                        const responses = await fetch('/api/DeleteProgress', {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                "idUser": iduser,
+                                "idLeccion": params.idLeccion,
+                                "idMateria":params.cursoID,
+                            })
+                        });
+                        const respo = await responses.json()
+                        if(respo.status=="progreso Eliminado Correctamente"){
+                            actionCancel()
+                        }
+                        
+                    }
+                }catch(error){
+
+                }
+            
         })
     }
     const showAlert = async (data) => {
@@ -109,10 +156,25 @@ export default function Ejercicio() {
                         cancelButtonColor: '#d33',
                         cancelButtonText: 'No',
                         showCancelButton: true,
-                        footer: 'Al aceptar, es posible que necesitemos que ingreses tu número celular o de contacto.',
+                        footer: 'Al aceptar, Finalizaras la lección y serás registrado como un posible tutor en el tema.',
                     })
                     if (result.isConfirmed){
                         try {
+                            const responses = await fetch('/api/insertProgress', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    "idUser": iduser,
+                                    "idLeccion": params.idLeccion,
+                                    "idMateria":params.cursoID,
+                                    "Leccion_Tipo":1,
+                                    "Completado":1,
+                                    "Puntaje":progreso.Puntaje,
+                                    "Rendimiento":progreso.Rendimiento
+                                })
+                            });
                             const response = await fetch('/api/serTutor', {
                                 method: 'POST',
                                 headers: {
@@ -121,11 +183,15 @@ export default function Ejercicio() {
                                 body: JSON.stringify({
                                     "idUser": iduser,
                                     "Tipo": 2,
+                                    "idLeccion":params.idLeccion,
+                                    "idMateria":params.cursoID,
+                                    
                                 })
                             });
                             const res = await response.json()
-                            console.log(res.Telefono)
-                            if(res.Telefono=="Sin telefono"){
+                            
+                            actionCancel()
+                            /*if(res.Telefono=="Sin telefono"){
                                 Swal.fire({
                                     title:"Contacto ",
                                     text:"Ingrese su número de teléfono para poder ser contactado por otros usuarios:",
@@ -192,10 +258,10 @@ export default function Ejercicio() {
                                         })
                                     }
                                 })
-                            }else{
-                                endAlert()
+                            }*/
+                                
                             }
-                        }catch(error){
+                        catch(error){
                             console.log("Error: ", error);
                         }
 
@@ -278,10 +344,10 @@ export default function Ejercicio() {
                                 console.log(iduser)
                                 console.log(progreso.Rendimiento)
                                 console.log(params.idLeccion)
-                                console.log(params.idMateria)
                                 const response = await fetch(`/api/Pair/${iduser}/${progreso.Rendimiento}/${params.idLeccion}/${params.cursoID}`);
                                 const res = await response.json()
-                                if(respo.status=="Datos insertados correctamente" ){
+                                console.log(respo.status)
+                                if(respo.status=="Datos insertados correctamente" ){ 
                                     if(res.status=="Ya tiene un tutor asignado"){
                                         Swal.fire({
                                             title:"Ya tienes un tutor asignado. ",
@@ -320,7 +386,13 @@ export default function Ejercicio() {
                                                         });
                                                         const response = await fetch(`/api/Pair/${iduser}/${progreso.Rendimiento}/${params.idLeccion}/${params.cursoID}`);
                                                         const res = await response.json()
-                                                        emparejarAlerta(res)
+                                                        console.log(res)
+                                                        if(res.status == "No hay tutor disponible"){
+                                                            emprFailed()
+                                                        }else{
+                                                            emparejarAlerta(res)
+                                                        }
+                                                        
                                                     }
                                                 }catch(error){
     
@@ -331,51 +403,13 @@ export default function Ejercicio() {
                                             }
                                         })
                                     }else if (res.status=="No hay tutor disponible" ){
-                                        Swal.fire({
-                                            title: 'No es posible emparejarte con un tutor en este momento.',
-                                            text: 'Recomendamos que regreses más tarde a realizar la lección si es que deseas un tutor.',
-                                            background: '#811642',
-                                            color: '#f2ffeb',
-                                            cancelButtonText: 'Terminar',
-                                            showCancelButton: true,
-                                            confirmButtonColor: '#f2ffeb',
-                                            confirmButtonText: '<b style="color: black;" >Regresar</b> ',
-                                            allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
-                                            footer: 'Si decides terminar, no podrás tener un tutor, por lo que se dará por concluida la lección.',
-                                            didOpen: (popup) => {
-                                                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
-                                                popup.style.borderRadius = '15px';  // Mostrar indicador de carga
-                                            },
-                                        }).then(async (result) =>{
-                                            if (result.isDismissed){
-                                                endAlert()
-                                            }
-                                        })
+                                        emprFailed()
+                                    
                                     }else if (res.status=="Emparejado"){
                                         emparejarAlerta(res)
                                     }
                                 }else{
-
-                                    Swal.fire({
-                                        title: 'No es posible emparejarte con un tutor en este momento',
-                                        text: 'Recomendamos que regreses más tarde a realizar la lección si es que deseas un tutor.',
-                                        background: '#811642',
-                                        color: '#f2ffeb',
-                                        cancelButtonText: 'Terminar',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#f2ffeb',
-                                        confirmButtonText: '<b style="color: black;" >Regresar</b> ',
-                                        allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
-                                        footer: 'Si decides terminar no podras tener un tutor por lo que se dara por concluida la lección',
-                                        didOpen: (popup) => {
-                                            popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
-                                            popup.style.borderRadius = '15px';  // Mostrar indicador de carga
-                                        },
-                                    }).then(async (result) =>{
-                                        if (result.isDismissed){
-                                            endAlert()
-                                        }
-                                    })
+                                    emprFailed()
                                 }
                             }catch(error){
                                 console.log(error)
@@ -390,85 +424,88 @@ export default function Ejercicio() {
             }
         }
     }
-    const emparejarAlerta= async (data)=> {
-                        console.log(data)
-                                 let idtutor=data.item.idUsuario
-                                        Swal.fire({
-                                            title:"El tutor que se te asignó es: ",
-                                            html:`${data.item.NombreUsuario}`,
-                                            text:"Si estás de acuerdo, da clic en Aceptar.",
-                                            background:'#811642',
-                                            color:'#f2ffeb',
-                                            icon:"info",
-                                            allowOutsideClick: false,
-                                            didOpen: (popup) => {
-                                                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
-                                                popup.style.borderRadius = '15px';  // Mostrar indicador de carga
-                                                // Cambiar el estilo del botón "Deny"
-                                                const denyButton = document.querySelector('.swal2-deny');
-                                                if (denyButton) {
-                                                    denyButton.style.backgroundColor = '#f2ffeb'; // Color del fondo
-                                                    denyButton.style.color = '#000'; // Color del texto
-                                                }
-                                            },
-                                            confirmButtonColor: '#f2ffeb',
-                                            confirmButtonText: '<b style="color: black;">Aceptar</b> ',
-                                            showDenyButton: true,
-                                            denyButtonText: 'Cambiar de tutor',
-                                            cancelButtonColor: '#d33',
-                                            cancelButtonText: 'Rechazar',
-                                            showCancelButton: true,
-                                            footer:"Al aceptar, guardarás los datos del tutor, los cuales podrás revisar en el perfil. Rechazar terminará con el proceso.",
-                                            preDeny: async () => {
-                                                try{
-                                                    const response = await fetch(`/api/Pair/${iduser}/${progreso.Rendimiento}/${params.idLeccion}/${params.cursoID}`);
-                                                    const res = await response.json()
-                                                    idtutor=res.item.idUsuario
-                                                    Swal.update({
-                                                        html: `<p>El tutor ha sido cambiado a: ${res.item.NombreUsuario}</p>`,
-                                                    });
-                                                }catch(error){
 
-                                                }
-                                                return false
-                                            }
-                                        }).then(async (result) => {
-                                            if(result.isConfirmed){
-                                                try{
-                                                    console.log(idtutor)
-                                                    const response = await fetch(`/api/Pair/${iduser}/${idtutor}`);
-                                                    const res = await response.json()
-                                                    if(res.status=="Emparejamiento exitoso"){
-                                                        Swal.fire({
-                                                            title: `Datos Guardados`,
-                                                            text: `Datos guardados correctamente.`,
-                                                            icon: 'success',
-                                                            background: '#811642',
-                                                            color: '#f2ffeb',
-                                                           // showCancelButton: true,
-                                                            confirmButtonColor: '#f2ffeb',
-                                                            cancelButtonColor: '#d33',
-                                                            confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
-                                                            cancelButtonText: 'Cancelar',
-                                                            allowOutsideClick: false,
-                                                            didOpen: (popup) => {
-                                                                // Aplicar estilos directamente al popup
-                                                                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
-                                                                popup.style.borderRadius = '15px';       // Bordes redondeados
-                                                            },
-                                                        }).then(async (result) => {
-                                                            if(result.isConfirmed) navigate(-1);
-                                                            
-                                                        })
-                                                    }
-                                                }catch(error){
-                                                    console.log(error)
-                                                }
-                                            }
-                                            if(result.isDismissed){
-                                                actionCancel()
-                                            }
-                                        })
+    const emparejarAlerta= async (data)=> {
+                            let idtutor=data.item.idUsuario
+                            Swal.fire({
+                                title:"El tutor que se te asignó es: ",
+                                html:`${data.item.NombreUsuario}`,
+                                text:"Si estás de acuerdo, da clic en Aceptar.",
+                                background:'#811642',
+                                color:'#f2ffeb',
+                                icon:"info",
+                                allowOutsideClick: false,
+                                didOpen: (popup) => {
+                                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                                    popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+                                    // Cambiar el estilo del botón "Deny"
+                                    const denyButton = document.querySelector('.swal2-deny');
+                                    if (denyButton) {
+                                        denyButton.style.backgroundColor = '#f2ffeb'; // Color del fondo
+                                        denyButton.style.color = '#000'; // Color del texto
+                                    }
+                                },
+                                confirmButtonColor: '#f2ffeb',
+                                confirmButtonText: '<b style="color: black;">Aceptar</b> ',
+                                showDenyButton: true,
+                                denyButtonText: 'Cambiar de tutor',
+                                cancelButtonColor: '#d33',
+                                cancelButtonText: 'Rechazar',
+                                showCancelButton: true,
+                                footer:"Al aceptar, guardarás los datos del tutor, los cuales podrás revisar en el perfil. Rechazar terminará con el proceso.",
+                                preDeny: async () => {
+                                    try{
+                                        const response = await fetch(`/api/Pair/${iduser}/${progreso.Rendimiento}/${params.idLeccion}/${params.cursoID}`);
+                                        const res = await response.json()
+                                        idtutor=res.item.idUsuario
+                                        Swal.update({
+                                            html: `<p>El tutor ha sido cambiado a: ${res.item.NombreUsuario}</p>`,
+                                        });
+                                    }catch(error){
+
+                                    }
+                                    return false
+                                }
+                            }).then(async (result) => {
+                                if(result.isConfirmed){
+                                    try{
+                                        console.log(idtutor)
+                                        const response = await fetch(`/api/Pair/${iduser}/${idtutor}`);
+                                        const res = await response.json()
+                                        if(res.status=="Emparejamiento exitoso"){
+                                            Swal.fire({
+                                                title: `Datos Guardados`,
+                                                text: `Datos guardados correctamente.`,
+                                                icon: 'success',
+                                                background: '#811642',
+                                                color: '#f2ffeb',
+                                               // showCancelButton: true,
+                                                confirmButtonColor: '#f2ffeb',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
+                                                cancelButtonText: 'Cancelar',
+                                                allowOutsideClick: false,
+                                                didOpen: (popup) => {
+                                                    // Aplicar estilos directamente al popup
+                                                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                                                    popup.style.borderRadius = '15px';       // Bordes redondeados
+                                                },
+                                            }).then(async (result) => {
+                                                if(result.isConfirmed) navigate(-1);
+                                                
+                                            })
+                                        }
+                                    }catch(error){
+                                        console.log(error)
+                                    }
+                                }
+                                if(result.isDismissed){
+                                    actionCancel()
+                                }
+                            })
+                        
+                                
+                                        
     }
 
     const endAlert = async (save)=>{
