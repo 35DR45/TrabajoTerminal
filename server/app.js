@@ -3,9 +3,9 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const app = express();
 const bcrypt = require('bcrypt');
-//const { APPID } = require('./apifile.js');
-//const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
-//const waApi = WolframAlphaAPI(APPID);
+const { APPID } = require('./apifile.js');
+const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
+const waApi = WolframAlphaAPI(APPID);
 //const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
 const {exec, spawn } = require('child_process');
@@ -82,13 +82,15 @@ async function loadAndUseModel() {
 loadAndUseModel();
 */
 app.use(cors({
-    origin: 'http://127.0.0.1:5173',
+    //origin: 'http://127.0.0.1:5173',
+    origin: 'http://13.59.72.188:80',
     methods: ["GET","POST","DELETE","PUT"],
     credentials: true,
 }));
 
 const db=mysql.createConnection({
-    host:"localhost",
+    //host:"localhost",
+    host:"13.59.72.188",
     user: "root",
     password: "PaS$R4z32",
     password: "1234",
@@ -97,7 +99,7 @@ const db=mysql.createConnection({
 
 db.connect(function(err) {
     if (err) throw err;
-    console.log("Connected!");
+    //console.log("Connected!");
   });
 //TODO Agregar la BD y modificar los campos
 app.get('/',(req,res)=>{
@@ -116,42 +118,41 @@ app.post('/api/Login',async (req,res)=>{
         console.log("Vacios");
         return res.status(400).json({status:"Usuario o Contraseña vacios"})
     }    
-    const query = "SELECT * FROM usuario WHERE NombreUsuario = ?";
+    const query = "SELECT * FROM Usuario WHERE NombreUsuario = ?";
 
     db.query(query,[user],async (err,result) =>{
 
-        console.log("recibido usuario:"+ user);
-        console.log("recibido contrasena:"+ pass); 
-        console.log(result);
+        //console.log("recibido usuario:"+ user);
+        //console.log("recibido contrasena:"+ pass); 
+        //console.log(result);
         
 
         if(err){
-            console.log("Error en el login, es: ", err);
+           // console.log("Error en el login, es: ", err);
             return res.send("Error al iniciar sesion");
 
         } 
 
         if(result.length >= 0){
             for(const user of result){
-                console.log
                 if(user == undefined){
-                    console.log("No encontro datos asi que es undefined")
+                   // console.log("No encontro datos asi que es undefined")
                     return res.status(400).json({error:"Usuario o Contraseña no definidos"})
 
                 }
                 const contraseñaAlmacenada =  user.pass;
                 const match = await bcrypt.compare(pass,contraseñaAlmacenada);
                     if(match){
-                        console.log("Inicio de Sesión Exitoso")
+                        //console.log("Inicio de Sesión Exitoso")
                         return res.json({status:"Inicio de Sesión Exitoso",
                                 idUsuario:user.idUsuario
                         });
                     }
             }
-            console.log("Inicio de Sesión Fallido")
+            //console.log("Inicio de Sesión Fallido")
             return res.json({status:"Inicio de Sesión Fallido"});
         }else{
-            console.log("Sin coincidencias");
+            //console.log("Sin coincidencias");
             
             return res.json({status:"No se encontro coincidencia"})
         }
@@ -187,8 +188,8 @@ app.post('/api/Change', async(req, res) => {
     }
     
     try{
-        const queryFind = "SELECT * FROM usuario WHERE NombreUsuario = ?";
-        const queryUpdate = "UPDATE usuario SET pass = ? WHERE NombreUsuario = ? AND Correo = ?";
+        const queryFind = "SELECT * FROM Usuario WHERE NombreUsuario = ?";
+        const queryUpdate = "UPDATE Usuario SET pass = ? WHERE NombreUsuario = ? AND Correo = ?";
 
         const [rows] = await db.promise().query(queryFind, [user]);
         if (rows.length === 0) {
@@ -242,31 +243,31 @@ app.post('/api/Change', async(req, res) => {
 })
 
 app.post('/api/Register',async (req,res) =>{
-    console.log("Entro registro")
+    //console.log("Entro registro")
     const { user , mail , pass , phone, style } = req.body
 
-    const query = "INSERT INTO usuario(NombreUsuario,Correo,pass,Telefono,Tipo,Aprendizaje) values (?,?,?,?,?,?)";
+    const query = "INSERT INTO Usuario(NombreUsuario,Correo,pass,Telefono,Tipo,Aprendizaje) values (?,?,?,?,?,?)";
     if( user == '' || mail == '' || pass == ''){
-            console.log(" Registro Vacios");
+            //console.log(" Registro Vacios");
             return res.status(400).json({status:"Usuario o Contraseña vacios"})
     }
 
     const hashedPassword = await bcrypt.hash(pass, 10);
 
-    db.query(query,[user,mail,hashedPassword,phone,/*req.body.type*/1,/*req.body.learning*/1],(err,result) =>{
+    db.query(query,[user,mail,hashedPassword,phone,/*req.body.type*/1,style],(err,result) =>{
 
-        console.log("user: "+user)
-        console.log("mail: "+mail)
-        console.log("hashedpass: "+hashedPassword)
-        console.log("style: "+ style)
+        //console.log("user: "+user)
+        //console.log("mail: "+mail)
+       // console.log("hashedpass: "+hashedPassword)
+        //console.log("style: "+ style)
 
         if(err){
-            console.log("Usuario no creado :"+err)
+            //console.log("Usuario no creado :"+err)
             return res.send({status:"Error Usuario no creado"})
         } 
         else{
-            console.log("Usuario creado ") 
-            console.log(result) 
+            //console.log("Usuario creado ") 
+            //console.log(result) 
             return res.send({status:"Usuario Creado"})
         } 
         
@@ -286,16 +287,16 @@ app.post('/api/Register',async (req,res) =>{
         
 */
 app.get('/api/SeeUsers',(req,res) =>{
-    console.log("Entro ver usuarios")
-    const query = "SELECT * FROM usuario";
+    //console.log("Entro ver usuarios")
+    const query = "SELECT * FROM Usuario";
     db.query(query,(err,result) =>{
         if(err){
-            console.log("Usuarios no enviados")
+            //console.log("Usuarios no enviados")
             return res.send({status:"Usuarios no recibidos"})
         } 
         else{
-            console.log("Usuarios enviados:")
-            console.log(result)
+           // console.log("Usuarios enviados:")
+           // console.log(result)
             return res.send(result)
         } 
         
@@ -317,16 +318,16 @@ app.get('/api/SeeUsers',(req,res) =>{
 // TODO: cambiar los gets para que no pidan el body y pidan params
 app.get('/api/SeeUser/:idUser',(req,res) =>{
     const {idUser} = req.params
-    console.log("Entro ver usuario")
-    const query = "SELECT * FROM usuario WHERE idUsuario = ?";
+    //console.log("Entro ver usuario")
+    const query = "SELECT * FROM Usuario WHERE idUsuario = ?";
     db.query(query,idUser,(err,result) =>{
         if(err){
-            console.log("Usuario no enviado")
+            //console.log("Usuario no enviado")
             return res.send({status:"No enviado"})
         } 
         else{
-            console.log("Usuario enviado:")
-            console.log(result)
+           // console.log("Usuario enviado:")
+           // console.log(result)
             return res.send(result)
         }
         
@@ -339,17 +340,17 @@ app.get('/api/SeeUser/:idUser',(req,res) =>{
         }
 */
 app.delete('/api/DeleteU',(req,res) =>{
-    console.log("Entro borrar usuario")
-    const query = "DELETE FROM usuario WHERE Correo = ?";
+    //console.log("Entro borrar usuario")
+    const query = "DELETE FROM Usuario WHERE Correo = ?";
     db.query(query,req.body.mail,(err,result) =>{
         if(err){
-            console.log("Error al eliminar el usuario")
+           // console.log("Error al eliminar el usuario")
             return res.send({status:"Error al consultar "})
         }
         else{ 
-            console.log(result.affectedRows)
+           // console.log(result.affectedRows)
             if(result.affectedRows==0){
-                console.log("El usuario no existo por lo tanto no se borro")
+                //console.log("El usuario no existo por lo tanto no se borro")
                 res.send({status:" Usuario inexistente"})
             }
             else if (result.affectedRows==1){
@@ -371,7 +372,7 @@ app.delete('/api/DeleteU',(req,res) =>{
 */
 app.put('/api/UpdateU',async (req,res) =>{
     console.log("Entro en actualizar usuario")
-    const query = "UPDATE usuario SET NombreUsuario = ?,Correo = ?,pass = ?,Telefono = ?,Tipo = ?,Tutor = ?,Aprendizaje = ? WHERE Correo = ?";
+    const query = "UPDATE Usuario SET NombreUsuario = ?,Correo = ?,pass = ?,Telefono = ?,Tipo = ?,Tutor = ?,Aprendizaje = ? WHERE Correo = ?";
     const hashedPassword = await bcrypt.hash(req.body.newpass, 10);
     db.query(query,[req.body.newuser,req.body.newmail,hashedPassword,req.body.newphone,req.body.newtype,req.body.newtutor,req.body.newlearning,req.body.mail],(err,result) =>{
         console.log("newuser: "+req.body.newuser)
@@ -422,8 +423,8 @@ app.put('/api/Updatepass',async (req,res) =>{
         console.log("Vacios");
         return res.status(400).json({status:"Usuario o Contraseña vacios"})
     }  
-    const check ="SELECT pass FROM usuario WHERE idUsuario = ?"
-    const query = "UPDATE usuario SET pass = ? WHERE idUsuario = ?";
+    const check ="SELECT pass FROM Usuario WHERE idUsuario = ?"
+    const query = "UPDATE Usuario SET pass = ? WHERE idUsuario = ?";
     db.query(check,iduser,(err,result)=>{
         if(err){
             console.log(("Error al obtener la contraseña del usuario"))
@@ -491,7 +492,7 @@ app.put('/api/UUpdateU',async (req,res) =>{
     console.log("newuser: "+user)
     console.log("mail: "+mail)
     console.log("newlearning: "+aprendizaje)
-    const query = "UPDATE usuario SET NombreUsuario = ?,Correo = ?,Aprendizaje = ? WHERE idUsuario = ?";
+    const query = "UPDATE Usuario SET NombreUsuario = ?,Correo = ?,Aprendizaje = ? WHERE idUsuario = ?";
     db.query(query,[user,mail,aprendizaje,iduser],(err,result) =>{
         if(err){
             console.log(("Error al actualizar el usuario"))
@@ -556,7 +557,7 @@ app.get('/api/SeeLC',(req,res) =>{
 */
 app.get('/api/SeeLC/:Materia',(req,res) =>{
     const {Materia} = req.params
-    const query = "Select idLeccion,Titulo from leccion where Materia=?";
+    const query = "Select idLeccion,Titulo from Leccion where Materia=?";
     db.query(query,Materia,(err,result) =>{
         console.log("materia: "+ Materia)
         if(err){
@@ -588,7 +589,7 @@ app.get('/api/ContentLC/:IdLeccion/:Materia/:Tipo',(req,res) =>{
     console.log(req.params);
     const {IdLeccion, Materia, Tipo} = req.params;
     
-    const query = "Select * from leccion where idLeccion= ? and Materia = ? and Tipo = ?";
+    const query = "Select * from Leccion where idLeccion= ? and Materia = ? and Tipo = ?";
     db.query(query, [IdLeccion, Materia, Tipo],(err,result) =>{
         console.log("idLeccion: "+ IdLeccion)
         console.log("Materia: "+ Materia)
@@ -613,7 +614,7 @@ app.get('/api/ContentLC/:IdLeccion/:Materia/:Tipo',(req,res) =>{
         }
 */
 app.get('/api/Cursos',(req,res) =>{
-    const query = "Select * from materia";
+    const query = "Select * from Materia";
     db.query(query,(err,result) =>{
         if(err){
             return res.send("Error no se pudo obtener el numero de materias")
@@ -645,7 +646,7 @@ app.post('/api/Progreso',(req,res) =>{
 app.post('/api/insertProgress',(req,res)=>{
     const{idUser,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento}=req.body;
     console.log("ENTRO EN INSERTAR PROGRESO")
-    const query ="INSERT INTO PROGRESO(idusuario,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento) values (?,?,?,?,?,?,?)"
+    const query ="INSERT INTO Progreso(idusuario,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento) values (?,?,?,?,?,?,?)"
 
             db.query(query,[idUser,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento],(err,result) =>{
                 if(err){
@@ -701,7 +702,7 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
     console.log(idMateria)
     
     //Primero recuperamos los datos del usuario actual del sistema
-    const querygetUser = "SELECT NombreUsuario,Aprendizaje,Tutor FROM usuario WHERE idUsuario = ?"
+    const querygetUser = "SELECT NombreUsuario,Aprendizaje,Tutor FROM Usuario WHERE idUsuario = ?"
     //Asignamos un tutor
     //Esta asigna un tutor considerando un rendimiento de Apoyo
     const queryemparejar1 = "SELECT u.idUsuario,u.NombreUsuario,u.Reputacion,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ?  AND p.AcTutor = 1 AND p.rendimiento = 1 AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 0 AND idUsuario = ? AND idLeccion = ? AND idMateria =? );";
@@ -776,7 +777,7 @@ app.get('/api/LecFinished/:User/:idLeccion/:idMateria',(req,res) => {
     console.log(User)
     console.log(idLeccion)
     console.log(idMateria)
-    query = "SELECT * FROM progreso WHERE idUsuario = ? AND idLeccion = ? AND idMateria = ? "
+    query = "SELECT * FROM Progreso WHERE idUsuario = ? AND idLeccion = ? AND idMateria = ? "
     db.query(query,[User,idLeccion,idMateria],(err,result) =>{
 
         if(err){
@@ -798,7 +799,7 @@ app.delete('/api/DeleteProgress',(req,res) =>{
     console.log(idUser)
     console.log(idLeccion)
     console.log(idMateria)
-    const query = "DELETE FROM progreso WHERE idUsuario = ? AND idLeccion = ? AND idMateria = ?";
+    const query = "DELETE FROM Progreso WHERE idUsuario = ? AND idLeccion = ? AND idMateria = ?";
     db.query(query,[idUser,idLeccion,idMateria],(err,result) =>{
         if(err){
             console.log("Error al eliminar el progreso")
@@ -829,9 +830,9 @@ app.get('/api/Pair/:idUser',(req,res)=> {
 
     console.log("Aqui desemparejamos")
     console.log(idUser)
-    const querygetTutor ="SELECT Tutor FROM usuario WHERE idUsuario = ? ";
-    const queryUpuser = "UPDATE usuario SET Tutor = null WHERE idUsuario = ? ";
-    const queryUptutor = "UPDATE usuario SET Tutorado = null WHERE idUsuario = ?  ";
+    const querygetTutor ="SELECT Tutor FROM Usuario WHERE idUsuario = ? ";
+    const queryUpuser = "UPDATE Usuario SET Tutor = null WHERE idUsuario = ? ";
+    const queryUptutor = "UPDATE Usuario SET Tutorado = null WHERE idUsuario = ?  ";
     db.query(querygetTutor,[idUser],(err,result) =>{
         if(err){
             console.log("Error ")
@@ -866,9 +867,9 @@ app.get('/api/unPair/:idUser',(req,res)=> {
 
     console.log("Aqui desemparejamos")
     console.log(idUser)
-    const querygetTutor ="SELECT Tutorado FROM usuario WHERE idUsuario = ? ";
-    const queryUpuser = "UPDATE usuario SET Tutorado = null WHERE idUsuario = ? ";
-    const queryUptutor = "UPDATE usuario SET Tutor = null WHERE idUsuario = ?  ";
+    const querygetTutor ="SELECT Tutorado FROM Usuario WHERE idUsuario = ? ";
+    const queryUpuser = "UPDATE Usuario SET Tutorado = null WHERE idUsuario = ? ";
+    const queryUptutor = "UPDATE Usuario SET Tutor = null WHERE idUsuario = ?  ";
     db.query(querygetTutor,[idUser],(err,result) =>{
         if(err){
             console.log("Error ")
@@ -900,8 +901,8 @@ app.get('/api/unPair/:idUser',(req,res)=> {
 app.get('/api/Pair/:idUser/:idTutor',(req,res) =>{
     const {idUser,idTutor} = req.params;
     //Posteriormente de asignar el tutor actualizamos los datos del tutor y el usuario
-    const queryUpuser = "UPDATE usuario SET Tutor = ? WHERE idUsuario = ?  ";
-    const queryUptutor = "UPDATE usuario SET Tutorado = ? WHERE idUsuario = ?  ";
+    const queryUpuser = "UPDATE Usuario SET Tutor = ? WHERE idUsuario = ?  ";
+    const queryUptutor = "UPDATE Usuario SET Tutorado = ? WHERE idUsuario = ?  ";
     db.query(queryUpuser,[idTutor,idUser],(err,result) =>{
         if(err){
             console.log("Error ")
@@ -921,9 +922,9 @@ app.get('/api/Pair/:idUser/:idTutor',(req,res) =>{
 app.get('/api/verTutor/:User',(req,res) =>{
     const{ User } = req.params
     //console.log("Entro "+ User)
-    const query = "SELECT Tutor FROM usuario WHERE idUsuario = ?"
+    const query = "SELECT Tutor FROM Usuario WHERE idUsuario = ?"
 
-    const query2="SELECT Correo,NombreUsuario FROM usuario WHERE idUsuario= ?"
+    const query2="SELECT Correo,NombreUsuario FROM Usuario WHERE idUsuario= ?"
 
     db.query(query,User,(err,result) =>{
         if(err){
@@ -954,9 +955,9 @@ app.get('/api/verTutor/:User',(req,res) =>{
 app.get('/api/verUsuario/:User',(req,res) =>{
     const{ User } = req.params
     //console.log("Entro "+ User)
-    const query = "SELECT Tutorado FROM usuario WHERE idUsuario = ?"
+    const query = "SELECT Tutorado FROM Usuario WHERE idUsuario = ?"
 
-    const query2="SELECT Correo,NombreUsuario FROM usuario WHERE idUsuario= ?"
+    const query2="SELECT Correo,NombreUsuario FROM Usuario WHERE idUsuario= ?"
 
     db.query(query,User,(err,result) =>{
         if(err){
@@ -990,8 +991,8 @@ app.post('/api/serTutor',(req,res)=>{
     console.log(idUser)
     console.log(idLeccion)
     console.log(idMateria)
-    const query3 ="UPDATE progreso SET AcTutor = 1 WHERE idUsuario = ? AND idLeccion = ? AND idMateria = ?"
-    const query2 ="UPDATE usuario SET Tipo = ? WHERE idUsuario = ?"
+    const query3 ="UPDATE Progreso SET AcTutor = 1 WHERE idUsuario = ? AND idLeccion = ? AND idMateria = ?"
+    const query2 ="UPDATE Usuario SET Tipo = ? WHERE idUsuario = ?"
     db.query(query3,[idUser,idLeccion,idMateria],(err,result) =>{
         if(err){
             console.log("Error al actualizar la leccion a posible tutoria")
@@ -1019,7 +1020,7 @@ app.post('/api/setTelefono',(req,res)=>{
     const {Telefono,idUser} =req.body;
     console.log(Telefono)
     console.log(idUser)
-    const query ="UPDATE usuario SET Telefono = ? WHERE idUsuario = ?"
+    const query ="UPDATE Usuario SET Telefono = ? WHERE idUsuario = ?"
     db.query(query,[Telefono,idUser],(err,result) =>{
         if(err){
             console.log("Error al actualizar el número de teléfono")
@@ -1037,9 +1038,9 @@ app.post('/api/Appreciate',(req,res)=>{
     console.log(action)
     console.log(idUsuario)
     
-    const querygetTutor ="SELECT Tutor FROM usuario WHERE idUsuario = ?"
-    const query1 ="UPDATE usuario SET Reputacion=Reputacion+3 WHERE idUsuario = ?"
-    const query2 ="UPDATE usuario SET Reputacion=Reputacion-3 WHERE idUsuario = ?"
+    const querygetTutor ="SELECT Tutor FROM Usuario WHERE idUsuario = ?"
+    const query1 ="UPDATE Usuario SET Reputacion=Reputacion+3 WHERE idUsuario = ?"
+    const query2 ="UPDATE Usuario SET Reputacion=Reputacion-3 WHERE idUsuario = ?"
     db.query(querygetTutor,[idUsuario],(err,result) =>{
         if(err){
             console.log("No se encontro Tutor")
@@ -1081,7 +1082,7 @@ app.post('/api/Result',(req,res)=>{
     //const answers={R1,R2,R3,R4,R5}
     let score = 0
     const results ={}
-    const query = "SELECT Contenido FROM leccion WHERE idLeccion = ? AND Materia = ? ";
+    const query = "SELECT Contenido FROM Leccion WHERE idLeccion = ? AND Materia = ? ";
 
     db.query(query,[idLeccion,Materia],async (err,result) =>{
         if(err) return res.send("Error obteniendo los datos")
@@ -1174,8 +1175,8 @@ function minMaxNormalize(value, min, max) {
 app.post('/api/Predpy', async (req,res) =>{
     const { user,idLeccion,idMateria,inputData } = req.body; 
 
-    query1="SELECT Aprendizaje FROM usuario WHERE idUsuario = ? "
-    query2= "SELECT Completado FROM progreso WHERE idUsuario= ? AND idLeccion = ? AND idMateria = ?"
+    query1="SELECT Aprendizaje FROM Usuario WHERE idUsuario = ? "
+    query2= "SELECT Completado FROM Progreso WHERE idUsuario= ? AND idLeccion = ? AND idMateria = ?"
     console.log("ENTRA PREDPY")
     console.log(inputData)
     console.log(user)
@@ -1214,7 +1215,7 @@ app.post('/api/Predpy', async (req,res) =>{
         return value; // Sin normalizar para otros índices
     });
     
-    const pythonProcess = spawn('python', ['CNNB169/NN.py', JSON.stringify(pred)]);
+    const pythonProcess = spawn('python3', ['CNNB169/NN.py', JSON.stringify(pred)]);
 
     let result = '';
 
