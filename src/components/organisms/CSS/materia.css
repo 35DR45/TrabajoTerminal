@@ -95,6 +95,7 @@ input[type="radio"] {
     justify-content: center;
 }
 
+
 .btn_submit_ex{
     background-color: #FFFFFF;
     border: 5px solid #9D1B51;
@@ -108,6 +109,12 @@ input[type="radio"] {
     font-size: larger;
     font-weight: 700;
 }
+
+.btn_submit_ex:hover{
+    cursor: pointer;
+    background-color: #cecdcd;
+}
+
 
 .textoTemario{
     color: #FFFFFF;

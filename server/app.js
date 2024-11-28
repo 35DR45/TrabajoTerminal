@@ -170,6 +170,42 @@ app.post('/api/Login',async (req,res)=>{
         "status":(Aqui te da el mensaje de lo que ocurrio)
         }
 */
+app.post('/api/Change', async(req, res) => {
+    const { user, mail, pass, } = req.body
+    
+    const queryFind = "SELECT * FROM usuario WHERE NombreUsuario = ?";
+    const queryInsert = "UPDATE usuario SET pass = ? WHERE NombreUsuario = ? AND Correo ?";
+
+    db.query(queryFind,[user],async (err,result) =>{
+        if(err) return res.send("Error al buscar el usuario")
+            if(result.length >= 0){
+                for(const user of result){
+                    console.log(user)
+                    if(user == undefined){
+                        console.log("No encontro datos asi que es undefined")
+                        return res.status(400).json({error:"Usuario o Contraseña no definidos"})
+    
+                    }
+                    console.log(user.Correo);
+                    
+                    if (user.Correo === mail) {
+                        console.log("Correos iguales");
+                        const hashedPassword = await bcrypt.hash(pass, 10);
+                        db.query(queryInsert, [hashedPassword, user, mail])
+                        return res.json({status:"Cambio de contraseña exitoso"});
+                        
+                    }else{
+                        console.log("Correos diferentes registrados");
+                        return res.json({status:"Los correos no coinciden"});
+                        
+                    }
+                }
+            }else{
+                return res.json({status:"No se encontro coincidencia"})
+            }
+    })
+})
+
 app.post('/api/Register',async (req,res) =>{
     console.log("Entro registro")
     const { user , mail , pass , phone, style } = req.body

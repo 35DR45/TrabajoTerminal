@@ -33,12 +33,10 @@ export default function Login_form(){
                 // Redirige al usuario a la URL /registrado
                 const data = await response.json();
                 
-                //console.log(data.status)
-                //console.log(data.idUsuario)
                 if (data.status=="Inicio de Sesión Exitoso") {
                     Swal.fire({
-                        title:"Bienvenido!",
-                        text:"Inicio de sesión exitoso!",
+                        title:"¡Bienvenido!",
+                        text:"¡Inicio de sesión exitoso!",
                         icon:'success',
                         background:'#811642',
                         color:'#f2ffeb',
