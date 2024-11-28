@@ -4,15 +4,15 @@ INSERT INTO Leccion VALUES(1000,"1. Estadistica descriptiva e inferencial", 1,0,
 '{"contenido":[
 "<p>La estadística se utiliza para la recolección, presentación, organización y análisis de datos, con la cual se pueden obtener conclusiones que nos permiten tomar decisiones basado en un análisis previo.</p>"
 ]}');
-INSERT INTO Leccion VALUES(1100,"1.1 Estadística desctiptiva", 1,0,
+INSERT INTO Leccion VALUES(1100,"1.1 Estadística descriptiva", 1,0,
 '{"contenido":[
-"<p>Cuando se examina un grupo a este se le conoce como población o universo mientras que, si se examina un grupo derivado del anterior, a este se le llama muestra.</p>"
+"<p>Cuando se examina un grupo, a este se le conoce como población o universo mientras que, si se examina un grupo derivado del anterior, a este se le llama muestra.</p>"
 ]}');
 INSERT INTO Leccion VALUES(1110,"1.1.1 Medidas de tendencia central para datos agrupados y no agrupados", 1, 0,
 '{"contenido":[
 "<p>El promedio es un valor que tiende a encontrarse en el centro de los conjuntos de datos, al promedio también se le conoce como medidas de tendencia central.</p>", 
 "<p>Las medidas de tendencia central más utilizadas son: la media, mediana, moda.</p>", 
-"<p>MEDIA ARITMETICA</p>",
+"<p>MEDIA ARITMÉTICA</p>",
 "<p>La media aritmética se considera la medida de localización más importante ya que nos proporciona una localización central en una muestra de datos, la forma en la que se representa depende de si son datos de una muestra o una población</p>",
 "<img src= \\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAAA9CAIAAACIixgYAAAAAXNSR0IArs4c6QAAA4JJREFUaIHtmTtP6zAUx0+u7hdwy4QQi7swoA5YYqATS4rEiBR2hsp8AVBYAREGBiYzMKeIhQWEGJvA0AGlAgmWRIjZIeIT5A6WqqqPPEogJje/Le7Jsf/14xyfKGEYQtH5k/cAfoJSZFEoRRaFUmRRKEUWhVJkUShFFoVS5DdzdnamRHJ8fJxJR3mKbLVahBAAYIyFA3DOKaVZ9hTmiuM4AIAQcl13sJ1zDgCGYWTSS857sl6v67oeBMH29vZge7Va1TQts24y+au+AuccYzy6aMfiOA7GGCFkWZZ4V1VVjHH0W/mLDMPQsqyxi3YUSinnnBCiaVoYhpqmOY4T618KkWL0AKCqahJjwzAwxoyx6+vrJPayiOScI4QAwDTNWGMx85TShM5lSQaq1eru7i4ALCwsxBrPzs4CwPr6ekLnsoj0ff/o6IgxVq/XY43Pz88xxs/Pz0PtvV5PURTf94faFUmKy81mEwBub29jLW3bfnh4eHt78zwviT3IEELCMGSMIYQ457GWjuOIw4kxBgAiNxIvGoYxKX/IX6RIepKck4QQQoiQJA4qhNDgQQUAIn4Okb9IQsjYc1LX9YQRReC67qSFGSNSVdWh5Z2q41h0XccYjy5U13URQqlyV9M0J43tb/SOTbqzp8K27cPDQwCYmZn5urdOp7O6utput+fm5hqNxuBPeYaQ/f39DL0hhHZ2dp6enoYUShRCvpWJM9lutyuVSq1WE7G11+vVarWhC9GvYexO7ccfcQMSN5okcUxO4k9XSimlNPoSNHoIDzE2fP0YMSINw0AIJbnOTtP3Ty3SmBAyPz8fBMHGxsY3DeI73I4SE0Kurq4A4OXlJdqs2WxGFxdt28502CmJXquWZWGMs6qa5UVUCPn8/Gw0GoSQy8tL3/d/a/wYO5MicvSTZlFrwBgnKRnJyf+d8RSJUmSu+L6/t7enKMrm5mY/l65UKjc3N2ldySvy5ORkbW3NMIyLiwtx1H98fGCMT09P07qSV+TBwYG4GSKE3t/fW62WKM9O4UpekYLHx0cA2NraEo/dbndpaSmtE9lF3t3dUUrFBHqeFwTByspKWidSixSqFhcXxWO32wWA5eXltH6kFvn6+jr4daTT6RBCptiWUou8v79HCPW/jnieJ0KLCCopyDuvjEJV1cFSqmmaovCbNosuc9eiUIosCqXIovBfiPwHkYjVxVVXCScAAAAASUVORK5CYII=\\"/>",
 "<p>MEDIANA</p>",

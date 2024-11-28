@@ -1,5 +1,4 @@
 import { useParams,useNavigate } from "react-router-dom";
-
 import { useEffect, useState, useContext } from "react";
 import axios from 'axios';
 import Swal from 'sweetalert2'
@@ -251,7 +250,8 @@ export default function Ejercicio() {
                                                     const res = await response.json()
                                                     endAlert()
                                                 }catch(error){
-
+                                                    console.log(error);
+                                                    
                                                 }
 
                                             } 
@@ -395,7 +395,8 @@ export default function Ejercicio() {
                                                         
                                                     }
                                                 }catch(error){
-    
+                                                    console.log(error);
+                                                    
                                                 }
                                             }
                                             if(result.isDismissed){
@@ -593,7 +594,8 @@ export default function Ejercicio() {
                         })
                     }
                 }catch(error){
-    
+                    console.log(error);
+                    
                 }
             }else{
                 navigate(-1);

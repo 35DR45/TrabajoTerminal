@@ -23,7 +23,7 @@ export default function Header(){
             showCancelButton: false,    
             timer: 2000,
             timerProgressBar:true,
-            footer:'Hasta pronto!!',
+            footer:'¡¡Hasta pronto!!',
             didOpen: (popup) => {
                 Swal.showLoading();
                 // Aplicar estilos directamente al popup
