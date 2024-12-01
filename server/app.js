@@ -26,7 +26,7 @@ exec(`pip install ${pythonPackages.join(' ')}`, (error, stdout, stderr) => {
         console.error(`Error: ${stderr}`);
         return;
     }
-    console.log(`Bibliotecas instaladas correctamente:\n${stdout}`);
+    //console.log(`Bibliotecas instaladas correctamente:\n${stdout}`);
 });*/
 
 
@@ -60,7 +60,7 @@ async function loadAndUseModel() {
 
         // Cargar el modelo
         const model = await tf.loadLayersModel(`file://${modelPath}`);
-        console.log('Modelo cargado exitosamente.');
+        //console.log('Modelo cargado exitosamente.');
 
         
         // Ver la arquitectura del modelo
@@ -99,7 +99,7 @@ const db=mysql.createConnection({
 
 db.connect(function(err) {
     if (err) throw err;
-    //console.log("Connected!");
+    ////console.log("Connected!");
   });
 //TODO Agregar la BD y modificar los campos
 app.get('/',(req,res)=>{
@@ -115,20 +115,20 @@ app.post('/api/Login',async (req,res)=>{
     const {user,pass} =req.body;
     
     if(user == "" || pass == ""){
-        console.log("Vacios");
+        //console.log("Vacios");
         return res.status(400).json({status:"Usuario o Contraseña vacios"})
     }    
     const query = "SELECT * FROM Usuario WHERE NombreUsuario = ?";
 
     db.query(query,[user],async (err,result) =>{
 
-        //console.log("recibido usuario:"+ user);
-        //console.log("recibido contrasena:"+ pass); 
-        //console.log(result);
+        ////console.log("recibido usuario:"+ user);
+        ////console.log("recibido contrasena:"+ pass); 
+        ////console.log(result);
         
 
         if(err){
-           // console.log("Error en el login, es: ", err);
+           // //console.log("Error en el login, es: ", err);
             return res.send("Error al iniciar sesion");
 
         } 
@@ -136,23 +136,23 @@ app.post('/api/Login',async (req,res)=>{
         if(result.length >= 0){
             for(const user of result){
                 if(user == undefined){
-                   // console.log("No encontro datos asi que es undefined")
+                   // //console.log("No encontro datos asi que es undefined")
                     return res.status(400).json({error:"Usuario o Contraseña no definidos"})
 
                 }
                 const contraseñaAlmacenada =  user.pass;
                 const match = await bcrypt.compare(pass,contraseñaAlmacenada);
                     if(match){
-                        //console.log("Inicio de Sesión Exitoso")
+                        ////console.log("Inicio de Sesión Exitoso")
                         return res.json({status:"Inicio de Sesión Exitoso",
                                 idUsuario:user.idUsuario
                         });
                     }
             }
-            //console.log("Inicio de Sesión Fallido")
+            ////console.log("Inicio de Sesión Fallido")
             return res.json({status:"Inicio de Sesión Fallido"});
         }else{
-            //console.log("Sin coincidencias");
+            ////console.log("Sin coincidencias");
             
             return res.json({status:"No se encontro coincidencia"})
         }
@@ -216,22 +216,22 @@ app.post('/api/Change', async(req, res) => {
     //     if(err) return res.send("Error al buscar el usuario")
     //         if(result.length >= 0){
     //             for(const user of result){
-    //                 console.log(user)
+    //                 //console.log(user)
     //                 if(user == undefined){
-    //                     console.log("No encontro datos asi que es undefined")
+    //                     //console.log("No encontro datos asi que es undefined")
     //                     return res.status(400).json({error:"Usuario o Contraseña no definidos"})
     
     //                 }
-    //                 console.log(user.Correo);
+    //                 //console.log(user.Correo);
                     
     //                 if (user.Correo === mail) {
-    //                     console.log("Correos iguales");
+    //                     //console.log("Correos iguales");
     //                     const hashedPassword = await bcrypt.hash(pass, 10);
     //                     db.query(queryInsert, [hashedPassword, user, mail])
     //                     return res.json({status:"Cambio de contraseña exitoso"});
                         
     //                 }else{
-    //                     console.log("Correos diferentes registrados");
+    //                     //console.log("Correos diferentes registrados");
     //                     return res.json({status:"Los correos no coinciden"});
                         
     //                 }
@@ -243,12 +243,12 @@ app.post('/api/Change', async(req, res) => {
 })
 
 app.post('/api/Register',async (req,res) =>{
-    //console.log("Entro registro")
+    ////console.log("Entro registro")
     const { user , mail , pass , phone, style } = req.body
 
     const query = "INSERT INTO Usuario(NombreUsuario,Correo,pass,Telefono,Tipo,Aprendizaje) values (?,?,?,?,?,?)";
     if( user == '' || mail == '' || pass == ''){
-            //console.log(" Registro Vacios");
+            ////console.log(" Registro Vacios");
             return res.status(400).json({status:"Usuario o Contraseña vacios"})
     }
 
@@ -256,18 +256,18 @@ app.post('/api/Register',async (req,res) =>{
 
     db.query(query,[user,mail,hashedPassword,phone,/*req.body.type*/1,style],(err,result) =>{
 
-        //console.log("user: "+user)
-        //console.log("mail: "+mail)
-       // console.log("hashedpass: "+hashedPassword)
-        //console.log("style: "+ style)
+        ////console.log("user: "+user)
+        ////console.log("mail: "+mail)
+       // //console.log("hashedpass: "+hashedPassword)
+        ////console.log("style: "+ style)
 
         if(err){
-            //console.log("Usuario no creado :"+err)
+            ////console.log("Usuario no creado :"+err)
             return res.send({status:"Error Usuario no creado"})
         } 
         else{
-            //console.log("Usuario creado ") 
-            //console.log(result) 
+            ////console.log("Usuario creado ") 
+            ////console.log(result) 
             return res.send({status:"Usuario Creado"})
         } 
         
@@ -287,16 +287,16 @@ app.post('/api/Register',async (req,res) =>{
         
 */
 app.get('/api/SeeUsers',(req,res) =>{
-    //console.log("Entro ver usuarios")
+    ////console.log("Entro ver usuarios")
     const query = "SELECT * FROM Usuario";
     db.query(query,(err,result) =>{
         if(err){
-            //console.log("Usuarios no enviados")
+            ////console.log("Usuarios no enviados")
             return res.send({status:"Usuarios no recibidos"})
         } 
         else{
-           // console.log("Usuarios enviados:")
-           // console.log(result)
+           // //console.log("Usuarios enviados:")
+           // //console.log(result)
             return res.send(result)
         } 
         
@@ -318,16 +318,16 @@ app.get('/api/SeeUsers',(req,res) =>{
 // TODO: cambiar los gets para que no pidan el body y pidan params
 app.get('/api/SeeUser/:idUser',(req,res) =>{
     const {idUser} = req.params
-    //console.log("Entro ver usuario")
+    ////console.log("Entro ver usuario")
     const query = "SELECT * FROM Usuario WHERE idUsuario = ?";
     db.query(query,idUser,(err,result) =>{
         if(err){
-            //console.log("Usuario no enviado")
+            ////console.log("Usuario no enviado")
             return res.send({status:"No enviado"})
         } 
         else{
-           // console.log("Usuario enviado:")
-           // console.log(result)
+           // //console.log("Usuario enviado:")
+           // //console.log(result)
             return res.send(result)
         }
         
@@ -340,24 +340,24 @@ app.get('/api/SeeUser/:idUser',(req,res) =>{
         }
 */
 app.delete('/api/DeleteU',(req,res) =>{
-    //console.log("Entro borrar usuario")
+    ////console.log("Entro borrar usuario")
     const query = "DELETE FROM Usuario WHERE Correo = ?";
     db.query(query,req.body.mail,(err,result) =>{
         if(err){
-           // console.log("Error al eliminar el usuario")
+           // //console.log("Error al eliminar el usuario")
             return res.send({status:"Error al consultar "})
         }
         else{ 
-           // console.log(result.affectedRows)
+           // //console.log(result.affectedRows)
             if(result.affectedRows==0){
-                //console.log("El usuario no existo por lo tanto no se borro")
+                ////console.log("El usuario no existo por lo tanto no se borro")
                 res.send({status:" Usuario inexistente"})
             }
             else if (result.affectedRows==1){
-                console.log("Usuario eliminado correctamente")
+                //console.log("Usuario eliminado correctamente")
                 res.send({status:" Usuario Eliminado Correctamente"})
             }else{
-                console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
+                //console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
                 res.send({status:" Varios usuarios eliminados? jajaja"})
             }
 
@@ -371,35 +371,35 @@ app.delete('/api/DeleteU',(req,res) =>{
         }
 */
 app.put('/api/UpdateU',async (req,res) =>{
-    console.log("Entro en actualizar usuario")
+    //console.log("Entro en actualizar usuario")
     const query = "UPDATE Usuario SET NombreUsuario = ?,Correo = ?,pass = ?,Telefono = ?,Tipo = ?,Tutor = ?,Aprendizaje = ? WHERE Correo = ?";
     const hashedPassword = await bcrypt.hash(req.body.newpass, 10);
     db.query(query,[req.body.newuser,req.body.newmail,hashedPassword,req.body.newphone,req.body.newtype,req.body.newtutor,req.body.newlearning,req.body.mail],(err,result) =>{
-        console.log("newuser: "+req.body.newuser)
-        console.log("mail: "+req.body.mail)
-        console.log("newmail: "+req.body.newmail)
-        console.log("newpass: "+req.body.newpass)
-        console.log("newTutor: "+req.body.newtutor)
-        console.log("newlearning: "+req.body.newlearning)
-        console.log("newType: "+req.body.newtype)
-        console.log("newhashedpass: "+hashedPassword)
-        console.log("newphone: "+req.body.newphone)
+        //console.log("newuser: "+req.body.newuser)
+        //console.log("mail: "+req.body.mail)
+        //console.log("newmail: "+req.body.newmail)
+        //console.log("newpass: "+req.body.newpass)
+        //console.log("newTutor: "+req.body.newtutor)
+        //console.log("newlearning: "+req.body.newlearning)
+        //console.log("newType: "+req.body.newtype)
+        //console.log("newhashedpass: "+hashedPassword)
+        //console.log("newphone: "+req.body.newphone)
         if(err){
-            console.log(("Error al actualizar el usuario"))
-            console.log(err)
+            //console.log(("Error al actualizar el usuario"))
+            //console.log(err)
             return res.send({status:"Error"})
         } 
         else{ 
-            console.log(result.affectedRows)
+            //console.log(result.affectedRows)
             if(result.affectedRows==0){
-                console.log("El usuario no existo por lo tanto no se modifico")
+                //console.log("El usuario no existo por lo tanto no se modifico")
                 res.send({status:" Usuario inexistente"})
             }
             else if (result.affectedRows==1){
-                console.log("Usuario modificado correctamente")
+                //console.log("Usuario modificado correctamente")
                 res.send({status:" Usuario modificado correctamente"})
             }else{
-                console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
+                //console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
                 return res.send({status:"Se actualizaron varios usuarios? jajaja"})
             }
         
@@ -415,20 +415,20 @@ app.put('/api/UpdateU',async (req,res) =>{
 */
 app.put('/api/Updatepass',async (req,res) =>{
     const{iduser,pass,newpass}=req.body
-    console.log("Entro en actualizar contraseña")
-    console.log("iduser: "+iduser)
-    console.log("pass: "+pass)
-    console.log("newpass: "+newpass)
+    //console.log("Entro en actualizar contraseña")
+    //console.log("iduser: "+iduser)
+    //console.log("pass: "+pass)
+    //console.log("newpass: "+newpass)
     if(pass == "" || newpass == ""){
-        console.log("Vacios");
+        //console.log("Vacios");
         return res.status(400).json({status:"Usuario o Contraseña vacios"})
     }  
     const check ="SELECT pass FROM Usuario WHERE idUsuario = ?"
     const query = "UPDATE Usuario SET pass = ? WHERE idUsuario = ?";
     db.query(check,iduser,(err,result)=>{
         if(err){
-            console.log(("Error al obtener la contraseña del usuario"))
-            console.log(err)
+            //console.log(("Error al obtener la contraseña del usuario"))
+            //console.log(err)
             return res.send({"status":"Error"})
         }else{
             const storedHash=result[0].pass
@@ -439,7 +439,7 @@ app.put('/api/Updatepass',async (req,res) =>{
                         return res.json({"status":"Termino"})
                     } else if (result) {
 
-                        console.log("¡La contraseña coincide!");
+                        //console.log("¡La contraseña coincide!");
                         const hashedPassword = await bcrypt.hash(newpass, 10);
                         db.query(query,[hashedPassword,iduser],(err,result)=>{
                             if (err) {
@@ -450,7 +450,7 @@ app.put('/api/Updatepass',async (req,res) =>{
                             }
                         });
                     } else {
-                        console.log("Contraseña incorrecta.");
+                        //console.log("Contraseña incorrecta.");
                         return res.json({"status":"No coincide"})
                     }
                 });
@@ -459,21 +459,21 @@ app.put('/api/Updatepass',async (req,res) =>{
     })
    /* db.query(query,[user,mail,aprendizaje,iduser],(err,result) =>{
         if(err){
-            console.log(("Error al actualizar el usuario"))
-            console.log(err)
+            //console.log(("Error al actualizar el usuario"))
+            //console.log(err)
             return res.send({"status":"Error"})
         } 
         else{ 
-            console.log(result.affectedRows)
+            //console.log(result.affectedRows)
             if(result.affectedRows==0){
-                console.log("El usuario no existo por lo tanto no se modifico")
+                //console.log("El usuario no existo por lo tanto no se modifico")
                 res.send({"status":" Usuario inexistente"})
             }
             else if (result.affectedRows==1){
-                console.log("Usuario modificado correctamente")
+                //console.log("Usuario modificado correctamente")
                 res.send({"status":"Usuario modificado correctamente"})
             }else{
-                console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
+                //console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
                 return res.send({"status":"Se actualizaron varios usuarios? jajaja"})
             }
         
@@ -488,28 +488,28 @@ app.put('/api/Updatepass',async (req,res) =>{
 */
 app.put('/api/UUpdateU',async (req,res) =>{
     const{iduser,user,mail,aprendizaje}=req.body
-    console.log("Entro en actualizar usuario")
-    console.log("newuser: "+user)
-    console.log("mail: "+mail)
-    console.log("newlearning: "+aprendizaje)
+    //console.log("Entro en actualizar usuario")
+    //console.log("newuser: "+user)
+    //console.log("mail: "+mail)
+    //console.log("newlearning: "+aprendizaje)
     const query = "UPDATE Usuario SET NombreUsuario = ?,Correo = ?,Aprendizaje = ? WHERE idUsuario = ?";
     db.query(query,[user,mail,aprendizaje,iduser],(err,result) =>{
         if(err){
-            console.log(("Error al actualizar el usuario"))
-            console.log(err)
+            //console.log(("Error al actualizar el usuario"))
+            //console.log(err)
             return res.send({"status":"Error"})
         } 
         else{ 
-            console.log(result.affectedRows)
+            //console.log(result.affectedRows)
             if(result.affectedRows==0){
-                console.log("El usuario no existo por lo tanto no se modifico")
+                //console.log("El usuario no existo por lo tanto no se modifico")
                 res.send({"status":" Usuario inexistente"})
             }
             else if (result.affectedRows==1){
-                console.log("Usuario modificado correctamente")
+                //console.log("Usuario modificado correctamente")
                 res.send({"status":"Usuario modificado correctamente"})
             }else{
-                console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
+                //console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
                 return res.send({"status":"Se actualizaron varios usuarios? jajaja"})
             }
         
@@ -538,7 +538,7 @@ app.get('/api/SeeLC',(req,res) =>{
             return res.send("Error al enviar Lecciones")
         } 
         else {
-            console.log(result)
+            //console.log(result)
             return res.send(result)
         }
     })
@@ -559,12 +559,12 @@ app.get('/api/SeeLC/:Materia',(req,res) =>{
     const {Materia} = req.params
     const query = "Select idLeccion,Titulo from Leccion where Materia=?";
     db.query(query,Materia,(err,result) =>{
-        console.log("materia: "+ Materia)
+        //console.log("materia: "+ Materia)
         if(err){
             return res.send("Error al enviar Lecciones")
         } 
         else {
-            console.log(result)
+            //console.log(result)
             return res.send(result)
         }
     })
@@ -586,22 +586,22 @@ app.get('/api/SeeLC/:Materia',(req,res) =>{
     }
 */
 app.get('/api/ContentLC/:IdLeccion/:Materia/:Tipo',(req,res) =>{
-    console.log(req.params);
+    //console.log(req.params);
     const {IdLeccion, Materia, Tipo} = req.params;
     
     const query = "Select * from Leccion where idLeccion= ? and Materia = ? and Tipo = ?";
     db.query(query, [IdLeccion, Materia, Tipo],(err,result) =>{
-        console.log("idLeccion: "+ IdLeccion)
-        console.log("Materia: "+ Materia)
-        console.log("Tipo: "+ Tipo)
+        //console.log("idLeccion: "+ IdLeccion)
+        //console.log("Materia: "+ Materia)
+        //console.log("Tipo: "+ Tipo)
 
         if(err){
-            console.log(err);
+            //console.log(err);
             
             return res.send("Error al enviar Lecciones")
         } 
         else {
-            console.log(result)
+            //console.log(result)
             return res.send(result)
         }
     })
@@ -620,7 +620,7 @@ app.get('/api/Cursos',(req,res) =>{
             return res.send("Error no se pudo obtener el numero de materias")
         } 
         else {
-            console.log(result)
+            //console.log(result)
             return res.send(result)
         }
     })
@@ -629,14 +629,14 @@ app.get('/api/Cursos',(req,res) =>{
 //Recuperar progreso
 app.post('/api/Progreso',(req,res) =>{
     const query = "SELECT 	m.idMateria AS id, m.NombreMateria AS Materia, IFNULL((COUNT(CASE WHEN l.Tipo = 0 THEN p.idLeccion END) / COUNT(CASE WHEN l.Tipo = 0 THEN l.idLeccion END) * 100), 0) AS `PTeo`, IFNULL((COUNT(CASE WHEN l.Tipo = 1 THEN p.idLeccion END) / COUNT(CASE WHEN l.Tipo = 1 THEN l.idLeccion END) * 100), 0) AS `PPra`, IFNULL((COUNT(p.idLeccion) / COUNT(l.idLeccion) * 100), 0) AS `PTot` FROM Materia m LEFT JOIN Leccion l ON m.idMateria = l.Materia LEFT JOIN Progreso p ON l.idLeccion = p.idLeccion AND p.idUsuario IN (select idUsuario from Usuario where NombreUsuario=?) GROUP BY m.idMateria, m.NombreMateria";
-    console.log("materia: "+ req.body.materia, "usuario: ",req.body.usuario);
+    //console.log("materia: "+ req.body.materia, "usuario: ",req.body.usuario);
     db.query(query,[req.body.usuario],(err,result) =>{
         if(err){
-            console.log(err)
+            //console.log(err)
             return res.send("Error al calcular progreso")
         } 
         else {
-            console.log(result)
+            //console.log(result)
             res.send(result)
         }
     })
@@ -645,12 +645,12 @@ app.post('/api/Progreso',(req,res) =>{
 //insertar progreso
 app.post('/api/insertProgress',(req,res)=>{
     const{idUser,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento}=req.body;
-    console.log("ENTRO EN INSERTAR PROGRESO")
+    //console.log("ENTRO EN INSERTAR PROGRESO")
     const query ="INSERT INTO Progreso(idusuario,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento) values (?,?,?,?,?,?,?)"
 
             db.query(query,[idUser,idLeccion,idMateria,Leccion_Tipo,Completado,Puntaje,Rendimiento],(err,result) =>{
                 if(err){
-                    console.log("No se insertaron los datos o ya existian")
+                    //console.log("No se insertaron los datos o ya existian")
                     return res.json({ "error": "No se insertaron los datos o ya existian" });
                 } else return res.json({"status": "Datos insertados correctamente"})
             })
@@ -658,7 +658,7 @@ app.post('/api/insertProgress',(req,res)=>{
 //ops
 /*app.get('/api/Pair/:User',(req,res) => {
     const { User } =req.params
-    console.log("Entro "+ User)
+    //console.log("Entro "+ User)
     //Primero recuperamos los datos del usuario actual del sistema
     const querygetUser = "SELECT idUsuario,Aprendizaje FROM usuario WHERE NombreUsuario = ?"
     //Despues asignamos otro Tutor
@@ -673,20 +673,20 @@ app.post('/api/insertProgress',(req,res)=>{
     db.query(query,User,(err,result) =>{
 
         if(err){
-            console.log("Error en la primera consulta no se encontro usuario")
+            //console.log("Error en la primera consulta no se encontro usuario")
             return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
         } 
         if(result.length > 0){
             const idUser =result[0].idUsuario
             db.query(query2,idUser,(err,result) =>{
                 if(err){
-                    console.log("Error en la primera consulta no se encontro usuario")
+                    //console.log("Error en la primera consulta no se encontro usuario")
                     return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
                 }else{
 
                 }  
             })
-            console.log(result)
+            //console.log(result)
             return res.send(result)
         }
     })
@@ -695,11 +695,11 @@ app.post('/api/insertProgress',(req,res)=>{
 //Emparejar
 app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
     const { User,Rendimiento,idLeccion,idMateria } =req.params
-    console.log("Entra a buscar tutor")
-    console.log(User)
-    console.log(Rendimiento)
-    console.log(idLeccion)
-    console.log(idMateria)
+    //console.log("Entra a buscar tutor")
+    //console.log(User)
+    //console.log(Rendimiento)
+    //console.log(idLeccion)
+    //console.log(idMateria)
     
     //Primero recuperamos los datos del usuario actual del sistema
     const querygetUser = "SELECT NombreUsuario,Aprendizaje,Tutor FROM Usuario WHERE idUsuario = ?"
@@ -712,37 +712,37 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
     db.query(querygetUser,User,(err,result) =>{
 
         if(err){
-            console.log("Error en la primera consulta no se encontro usuario")
+            //console.log("Error en la primera consulta no se encontro usuario")
             return res.json({ "status": "Error en la primera consulta no se encontro usuario" });
         } 
         
         if(result.length > 0){
             const Aprendizaje = result[0].Aprendizaje
             const Tutor = result[0].Tutor
-            //console.log(User)
-            //console.log(Aprendizaje)
-            console.log("Aqui ID TUTOR")
-            console.log(Tutor)
+            ////console.log(User)
+            ////console.log(Aprendizaje)
+            //console.log("Aqui ID TUTOR")
+            //console.log(Tutor)
             let random_index 
             let random_item = [] 
             if(Tutor != null) return res.json({"status":"Ya tiene un tutor asignado",
                                                 "Tutor":Tutor
             })
             if (Rendimiento == 0){
-                console.log("Entro a rend 0")
+                //console.log("Entro a rend 0")
                 db.query(queryemparejar1,[User,Aprendizaje,idLeccion,User,idLeccion,idMateria],(err,result) =>{
                     if(err){
-                        console.log("Error en la segunda consulta no se encontro usuario")
+                        //console.log("Error en la segunda consulta no se encontro usuario")
                         return res.json({ "status": "Error en la segunda consulta no se encontro usuario" });
                     }if(result.length> 0){
                         const top3 = result
                         .sort((a, b) => b.reputacion - a.reputacion) // Ordenar de mayor a menor
                         .slice(0, 3); // Tomar los 3 primeros
-                        console.log(top3)
+                        //console.log(top3)
                         tam=top3.length
                         random_index=Math.floor(Math.random()*tam)
                         random_item =top3[random_index]
-                        console.log(random_item)
+                        //console.log(random_item)
                         return res.json({"status":"Emparejado","item":random_item})
                     }else{
                         return res.json({ "status": "No hay tutor disponible" });
@@ -751,16 +751,16 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
                 })
 
             }else if (Rendimiento == 2){
-                console.log("Entro a rend 2")
+                //console.log("Entro a rend 2")
                 db.query(queryemparejar2,[User,Aprendizaje,idLeccion,User,idLeccion,idMateria],(err,result) =>{
                     if(err){
-                        console.log("Error en la segunda consulta no se encontro usuario")
+                        //console.log("Error en la segunda consulta no se encontro usuario")
                         return resjson({ "status": "Error en la segunda consulta no se encontro usuario" });
                     }if(result.length> 0){
                         tam=result.length
                         random_index=Math.floor(Math.random()*tam)
                         random_item =result[random_index]
-                        console.log(random_item)
+                        //console.log(random_item)
                         return res.json({"status":"Emparejado","item":random_item})
                     } else{
                         return res.json({ "status": "Error en la segunda consulta no se encontro tutor" });
@@ -774,17 +774,17 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
 //Ya hizo la leccion
 app.get('/api/LecFinished/:User/:idLeccion/:idMateria',(req,res) => {
     const{User,idLeccion,idMateria} =req.params;
-    console.log(User)
-    console.log(idLeccion)
-    console.log(idMateria)
+    //console.log(User)
+    //console.log(idLeccion)
+    //console.log(idMateria)
     query = "SELECT * FROM Progreso WHERE idUsuario = ? AND idLeccion = ? AND idMateria = ? "
     db.query(query,[User,idLeccion,idMateria],(err,result) =>{
 
         if(err){
-            console.log("Algo fallo en la consulta")
+            //console.log("Algo fallo en la consulta")
             return res.status(500).json({ "status": "Algo fallo en la consulta" });
         } if(result.length > 0){
-            console.log(result[0])
+            //console.log(result[0])
             return res.json({"status":"Existe"})
         }else{
             return res.json({"status":"NoExiste"})
@@ -795,28 +795,28 @@ app.get('/api/LecFinished/:User/:idLeccion/:idMateria',(req,res) => {
 //Eliminar progreso
 app.delete('/api/DeleteProgress',(req,res) =>{
     const {idUser,idLeccion,idMateria} =req.body
-    console.log("Entro borrar progreso")
-    console.log(idUser)
-    console.log(idLeccion)
-    console.log(idMateria)
+    //console.log("Entro borrar progreso")
+    //console.log(idUser)
+    //console.log(idLeccion)
+    //console.log(idMateria)
     const query = "DELETE FROM Progreso WHERE idUsuario = ? AND idLeccion = ? AND idMateria = ?";
     db.query(query,[idUser,idLeccion,idMateria],(err,result) =>{
         if(err){
-            console.log("Error al eliminar el progreso")
+            //console.log("Error al eliminar el progreso")
             return res.send({status:"Error al eliminar "})
         }
         else{ 
-            console.log(result)
-            console.log(result.affectedRows)
+            //console.log(result)
+            //console.log(result.affectedRows)
             if(result.affectedRows==0){
-                console.log("El progreso no existe por lo tanto no se borro")
+                //console.log("El progreso no existe por lo tanto no se borro")
                return res.send({status:" progreso inexistente"})
             }
             else if (result.affectedRows==1){
-                console.log("progreso eliminado correctamente")
+                //console.log("progreso eliminado correctamente")
                 return res.send({status:"progreso Eliminado Correctamente"})
             }else{
-                console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
+                //console.log("Se afectaron : "+result.affectedRows+" elementos en bd, Algo anda mal")
                return res.send({status:" Varios progresos eliminados? jajaja"})
             }
 
@@ -828,30 +828,30 @@ app.get('/api/Pair/:idUser',(req,res)=> {
     const {idUser} = req.params;
     let Tutor="";
 
-    console.log("Aqui desemparejamos")
-    console.log(idUser)
+    //console.log("Aqui desemparejamos")
+    //console.log(idUser)
     const querygetTutor ="SELECT Tutor FROM Usuario WHERE idUsuario = ? ";
     const queryUpuser = "UPDATE Usuario SET Tutor = null WHERE idUsuario = ? ";
     const queryUptutor = "UPDATE Usuario SET Tutorado = null WHERE idUsuario = ?  ";
     db.query(querygetTutor,[idUser],(err,result) =>{
         if(err){
-            console.log("Error ")
+            //console.log("Error ")
             return res.status(500).json({ error: "Error en la primera consulta de get usuario" });
         }else{
             
             Tutor=result[0].Tutor;
-            console.log(Tutor)
+            //console.log(Tutor)
             db.query(queryUpuser,[idUser],(err,result) =>{
                 if(err){
-                    console.log("Error ")
+                    //console.log("Error ")
                     return res.status(500).json({ error: "Error en la primera consulta de update usuario" });
                 }else{
-                    console.log("IDETUTOR")
-                    console.log(Tutor)
+                    //console.log("IDETUTOR")
+                    //console.log(Tutor)
                     db.query(queryUptutor,[Tutor],(err,result) =>{
         
                         if(err){
-                            console.log("Error en la primera consulta no se Actualizo el usuario usuario")
+                            //console.log("Error en la primera consulta no se Actualizo el usuario usuario")
                             return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
                         } else return res.json({"status": "Exito"})
                     })
@@ -865,30 +865,30 @@ app.get('/api/unPair/:idUser',(req,res)=> {
     const {idUser} = req.params;
     let Tutorado="";
 
-    console.log("Aqui desemparejamos")
-    console.log(idUser)
+    //console.log("Aqui desemparejamos")
+    //console.log(idUser)
     const querygetTutor ="SELECT Tutorado FROM Usuario WHERE idUsuario = ? ";
     const queryUpuser = "UPDATE Usuario SET Tutorado = null WHERE idUsuario = ? ";
     const queryUptutor = "UPDATE Usuario SET Tutor = null WHERE idUsuario = ?  ";
     db.query(querygetTutor,[idUser],(err,result) =>{
         if(err){
-            console.log("Error ")
+            //console.log("Error ")
             return res.status(500).json({ error: "Error en la primera consulta de get usuario" });
         }else{
             
             Tutorado=result[0].Tutorado;
-            console.log(Tutorado)
+            //console.log(Tutorado)
             db.query(queryUpuser,[idUser],(err,result) =>{
                 if(err){
-                    console.log("Error ")
+                    //console.log("Error ")
                     return res.status(500).json({ error: "Error en la primera consulta de update usuario" });
                 }else{
-                    console.log("IDETUTORADO")
-                    console.log(Tutorado)
+                    //console.log("IDETUTORADO")
+                    //console.log(Tutorado)
                     db.query(queryUptutor,[Tutorado],(err,result) =>{
         
                         if(err){
-                            console.log("Error en la primera consulta no se Actualizo el usuario usuario")
+                            //console.log("Error en la primera consulta no se Actualizo el usuario usuario")
                             return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
                         } else return res.json({"status": "Exito"})
                     })
@@ -905,13 +905,13 @@ app.get('/api/Pair/:idUser/:idTutor',(req,res) =>{
     const queryUptutor = "UPDATE Usuario SET Tutorado = ? WHERE idUsuario = ?  ";
     db.query(queryUpuser,[idTutor,idUser],(err,result) =>{
         if(err){
-            console.log("Error ")
+            //console.log("Error ")
             return res.status(500).json({ error: "Error en la primera consulta de update usuario" });
         }else{
             db.query(queryUptutor,[idUser,idTutor],(err,result) =>{
 
                 if(err){
-                    console.log("Error en la primera consulta no se encontro usuario")
+                    //console.log("Error en la primera consulta no se encontro usuario")
                     return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
                 } else return res.json({"status": "Emparejamiento exitoso"})
             })
@@ -921,25 +921,25 @@ app.get('/api/Pair/:idUser/:idTutor',(req,res) =>{
 //Cargar tutor
 app.get('/api/verTutor/:User',(req,res) =>{
     const{ User } = req.params
-    //console.log("Entro "+ User)
+    ////console.log("Entro "+ User)
     const query = "SELECT Tutor FROM Usuario WHERE idUsuario = ?"
 
     const query2="SELECT Correo,NombreUsuario FROM Usuario WHERE idUsuario= ?"
 
     db.query(query,User,(err,result) =>{
         if(err){
-            console.log("Error en la primera consulta no se encontro usuario")
+            //console.log("Error en la primera consulta no se encontro usuario")
             return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
         } 
         if(result.length > 0){
             const tutorId =result[0].Tutor
-            //console.log("Obtenido : " + tutorId)
+            ////console.log("Obtenido : " + tutorId)
             db.query(query2,tutorId,(err,result) =>{
                 if(err){
-                    //console.log("Error en la segunda consulta no se encontro  tutor")
+                    ////console.log("Error en la segunda consulta no se encontro  tutor")
                     return res.status(500).json({ error: "Error en la segunda consulta no se encontro  tutor" });
                 }else{
-                    //console.log("Obtenido : " + result[0].NombreUsuario + " "+result[0].Telefono)
+                    ////console.log("Obtenido : " + result[0].NombreUsuario + " "+result[0].Telefono)
                     return res.json({
                         "Nombre":result[0].NombreUsuario,
                         "Tutor":result[0].Correo
@@ -954,25 +954,25 @@ app.get('/api/verTutor/:User',(req,res) =>{
 //Cargar Usuario
 app.get('/api/verUsuario/:User',(req,res) =>{
     const{ User } = req.params
-    //console.log("Entro "+ User)
+    ////console.log("Entro "+ User)
     const query = "SELECT Tutorado FROM Usuario WHERE idUsuario = ?"
 
     const query2="SELECT Correo,NombreUsuario FROM Usuario WHERE idUsuario= ?"
 
     db.query(query,User,(err,result) =>{
         if(err){
-            console.log("Error en la primera consulta no se encontro usuario")
+            //console.log("Error en la primera consulta no se encontro usuario")
             return res.status(500).json({ error: "Error en la primera consulta no se encontro usuario" });
         } 
         if(result.length > 0){
             const usuarioId =result[0].Tutorado
-            //console.log("Obtenido : " + tutorId)
+            ////console.log("Obtenido : " + tutorId)
             db.query(query2,usuarioId,(err,result) =>{
                 if(err){
-                    //console.log("Error en la segunda consulta no se encontro  tutor")
+                    ////console.log("Error en la segunda consulta no se encontro  tutor")
                     return res.status(500).json({ error: "Error en la segunda consulta no se encontro  tutor" });
                 }else{
-                    //console.log("Obtenido : " + result[0].NombreUsuario + " "+result[0].Telefono)
+                    ////console.log("Obtenido : " + result[0].NombreUsuario + " "+result[0].Telefono)
                     return res.json({
                         "Nombre":result[0].NombreUsuario,
                         "Correo":result[0].Correo
@@ -987,27 +987,27 @@ app.get('/api/verUsuario/:User',(req,res) =>{
 //Consulta para volver un usuario tutor
 app.post('/api/serTutor',(req,res)=>{
     const {Tipo,idUser,idLeccion,idMateria} =req.body;
-    console.log(Tipo)
-    console.log(idUser)
-    console.log(idLeccion)
-    console.log(idMateria)
+    //console.log(Tipo)
+    //console.log(idUser)
+    //console.log(idLeccion)
+    //console.log(idMateria)
     const query3 ="UPDATE Progreso SET AcTutor = 1 WHERE idUsuario = ? AND idLeccion = ? AND idMateria = ?"
     const query2 ="UPDATE Usuario SET Tipo = ? WHERE idUsuario = ?"
     db.query(query3,[idUser,idLeccion,idMateria],(err,result) =>{
         if(err){
-            console.log("Error al actualizar la leccion a posible tutoria")
+            //console.log("Error al actualizar la leccion a posible tutoria")
             return res.status(500).json({ error: "Error al actualizar la leccion a posible tutoria" });
         }else{
 
             db.query(query2,[Tipo,idUser],(err,result) =>{
                 if(err){
                     
-                    console.log("Error al asignar tutor")
+                    //console.log("Error al asignar tutor")
                     return res.status(500).json({ error: "Error al convertirlo en tutor" });
 
                 } else{
                     
-                    console.log("Nuevo Tutor creado")
+                    //console.log("Nuevo Tutor creado")
                     return res.status(200).json({Status:"Tutor Agregado"})
                 }  
             })
@@ -1018,15 +1018,15 @@ app.post('/api/serTutor',(req,res)=>{
 //Consulta para asignar numero de telefono
 app.post('/api/setTelefono',(req,res)=>{
     const {Telefono,idUser} =req.body;
-    console.log(Telefono)
-    console.log(idUser)
+    //console.log(Telefono)
+    //console.log(idUser)
     const query ="UPDATE Usuario SET Telefono = ? WHERE idUsuario = ?"
     db.query(query,[Telefono,idUser],(err,result) =>{
         if(err){
-            console.log("Error al actualizar el número de teléfono")
+            //console.log("Error al actualizar el número de teléfono")
             return res.status(500).json({ error: "Error al actualizar el número de teléfono" });
         }else{
-            console.log("Teléfono celular actualizado")
+            //console.log("Teléfono celular actualizado")
             return res.status(200).json({Status:"Telefono modificado"})
             }
     })
@@ -1035,36 +1035,36 @@ app.post('/api/setTelefono',(req,res)=>{
 //Valorar Tutor
 app.post('/api/Appreciate',(req,res)=>{
     const {action,idUsuario} =req.body;
-    console.log(action)
-    console.log(idUsuario)
+    //console.log(action)
+    //console.log(idUsuario)
     
     const querygetTutor ="SELECT Tutor FROM Usuario WHERE idUsuario = ?"
     const query1 ="UPDATE Usuario SET Reputacion=Reputacion+3 WHERE idUsuario = ?"
     const query2 ="UPDATE Usuario SET Reputacion=Reputacion-3 WHERE idUsuario = ?"
     db.query(querygetTutor,[idUsuario],(err,result) =>{
         if(err){
-            console.log("No se encontro Tutor")
+            //console.log("No se encontro Tutor")
             return res.json({ error: "No se encontro Tutor" });
         }else{
-            console.log("Tutor encontrado")
+            //console.log("Tutor encontrado")
             let Tutor =result[0].Tutor
             if(action=="like"){
                 db.query(query1,[Tutor],(err,result) =>{
                     if(err){
-                        console.log("No se cambio su reputacion")
+                        //console.log("No se cambio su reputacion")
                         return res.json({ "error": "No se cambio su reputacion" });
                     }else{
-                        console.log("Se cambio su reputacion like")
+                        //console.log("Se cambio su reputacion like")
                         return res.json({"status":"Se cambio su reputacion"})
                         }
                 })
             }else if(action=="dislike"){
                 db.query(query2,[Tutor],(err,result) =>{
                     if(err){
-                        console.log("No se cambio su reputacion")
+                        //console.log("No se cambio su reputacion")
                         return res.json({ "error": "No se cambio su reputacion" });
                     }else{
-                        console.log("Se cambio su reputacion dislike ")
+                        //console.log("Se cambio su reputacion dislike ")
                         return res.json({"status":"Se cambio su reputacion"})
                         }
                 })
@@ -1077,8 +1077,8 @@ app.post('/api/Appreciate',(req,res)=>{
 //Resultado de ejercicios
 app.post('/api/Result',(req,res)=>{
     const {idLeccion,Materia,Respuestas} =req.body;
-    console.log(idLeccion)
-    console.log(Respuestas)
+    //console.log(idLeccion)
+    //console.log(Respuestas)
     //const answers={R1,R2,R3,R4,R5}
     let score = 0
     const results ={}
@@ -1088,12 +1088,12 @@ app.post('/api/Result',(req,res)=>{
         if(err) return res.send("Error obteniendo los datos")
         if(result.length >= 0){
             data = result[0]
-            console.log( "PREGUNTAS OBTENIDAS :\n")
-            console.log(data)
+            //console.log( "PREGUNTAS OBTENIDAS :\n")
+            //console.log(data)
             for(const pregunta in Respuestas){
                 data.Contenido.forEach((elemento,index) =>{
                     if(pregunta == elemento.Enunciado){
-                         //console.log(answers[`R${pos}`])
+                         ////console.log(answers[`R${pos}`])
                     pos=index+1;
                     if (Respuestas[pregunta]==elemento.R_Correcta){
                         score= score + 1;
@@ -1106,9 +1106,9 @@ app.post('/api/Result',(req,res)=>{
                     }
                 })
             }
-           // console.log(answers)
-            console.log(score)
-            console.log(results)
+           // //console.log(answers)
+            //console.log(score)
+            //console.log(results)
             const resultado={
                 "Puntuación":score,
                 "Respuestas":results
@@ -1139,11 +1139,11 @@ app.post('/api/Result',(req,res)=>{
             const inputTensor = tf.tensor2d([data], [1, data.length]);
             const prediction = model.predict(inputTensor, { training: true });
             const predictionArray = prediction.dataSync();
-            console.log(predictionArray)
+            //console.log(predictionArray)
             // Enviar el resultado promedio de la predicción como respuesta
             // Obtener el índice del valor más alto
             const maxIndex = predictionArray.indexOf(Math.max(...predictionArray));
-            console.log('Clase predicha:', maxIndex);
+            //console.log('Clase predicha:', maxIndex);
             var prediccion;
             if(maxIndex===0){
                 prediccion="Apoyo"
@@ -1177,30 +1177,30 @@ app.post('/api/Predpy', async (req,res) =>{
 
     query1="SELECT Aprendizaje FROM Usuario WHERE idUsuario = ? "
     query2= "SELECT Completado FROM Progreso WHERE idUsuario= ? AND idLeccion = ? AND idMateria = ?"
-    console.log("ENTRA PREDPY")
-    console.log(inputData)
-    console.log(user)
-    console.log(idLeccion)
-    console.log(parseInt(idLeccion)+1)
-    console.log(idMateria)
+    //console.log("ENTRA PREDPY")
+    //console.log(inputData)
+    //console.log(user)
+    //console.log(idLeccion)
+    //console.log(parseInt(idLeccion)+1)
+    //console.log(idMateria)
     db.query(query1,[user],async (err,result) =>{
         if(err){
-            console.log("Error al obtener aprendizaje de  usuario")
+            //console.log("Error al obtener aprendizaje de  usuario")
         }else{
-            console.log(result[0].Aprendizaje)
+            //console.log(result[0].Aprendizaje)
             inputData[2] =result[0].Aprendizaje
-            console.log(inputData[2])
-            console.log(inputData)
+            //console.log(inputData[2])
+            //console.log(inputData)
             db.query(query2,[user,parseInt(idLeccion)-1,idMateria,],async (err,result) =>{
-                console.log(result)
+                //console.log(result)
                 if(err){
-                    console.log("Aun no ha revisado la teoria")
+                    //console.log("Aun no ha revisado la teoria")
                         inputData[4] = 0
                 }else if(result.length > 0 ) {
                     inputData[4] = 1
                 }else inputData[4] = 0
-                console.log(inputData)
-                console.log(inputData[4])
+                //console.log(inputData)
+                //console.log(inputData[4])
             })
         
          }
@@ -1223,7 +1223,7 @@ app.post('/api/Predpy', async (req,res) =>{
     pythonProcess.stdout.on('data', (data) => {
         result += data.toString();
         result =JSON.parse(result)
-        console.log(result)
+        ////console.log(result)
     });
     // Cuando el proceso termina, envía el resultado al cliente
     pythonProcess.on('close', (code) => {
@@ -1238,8 +1238,8 @@ app.post('/api/Predpy', async (req,res) =>{
                 const maxPrediction = Math.max(...predictions);
                 const maxIndex = predictions.indexOf(maxPrediction);
     
-                console.log("Valor más alto:", maxPrediction);
-                console.log("Índice del valor más alto:", maxIndex);
+                ////console.log("Valor más alto:", maxPrediction);
+                //console.log("Índice del valor más alto:", maxIndex);
                 let prediccion;
                 if(maxIndex===0){
                     prediccion="Apoyo"
@@ -1268,12 +1268,12 @@ app.post('/api/Predpy', async (req,res) =>{
 app.get('/api/PointV',(req,res) =>{
     const query = "select IFNULL(Puntaje, 0) as Puntaje,Titulo from Progreso right Join Leccion on idMateria=Materia where idUsuario=? and Materia=? and Tipo=0;";
     db.query(query,req.body.usuario,req.body.materia,(err,result) =>{
-        console.log("materia: "+req.body.materia)
+        //console.log("materia: "+req.body.materia)
         if(err){
             return res.send("Error al calcular progreso")
         } 
         else {
-            console.log(result)
+            //console.log(result)
             return res.send(result+"%")
         }
     })
@@ -1301,32 +1301,32 @@ app.put('/api/UpdateL',(req,res) =>{
 //Test Wolfram API
 app.post('/api/Wolfram',(req,res) => {
     const {op} =req.body;
-    console.log(op);
+    //console.log(op);
     let  imagesrc= "";
     let alttext="";
     waApi.getFull(op).then((queryresult) => {
         const pods = queryresult.pods;
-        console.log(pods);
+        //console.log(pods);
         pods.forEach((pod)=>{
             if(pod.title=="Result"||pod.title=="Exact result"){
-                //console.log(pod);
-                //console.log(pod.subpods[0]);
+                ////console.log(pod);
+                ////console.log(pod.subpods[0]);
                 imagesrc = pod.subpods[0].img.src;
                 alttext = pod.subpods[0].img.alt;
             }
         });
-        console.log(imagesrc);
-        console.log(alttext);
+        //console.log(imagesrc);
+        //console.log(alttext);
         res.json({"imagesrc": imagesrc, "alttext": alttext});
       }).catch(console.error);
 });
 
 app.post('/api/Cesar',(req,res) => {
     const {Ptext,displ} =req.body;
-    console.log(Ptext + ", " + displ)
+    //console.log(Ptext + ", " + displ)
     result = Ptext.split('').map(char => {
         let code = char.charCodeAt(0);
-        console.log(code);
+        //console.log(code);
         // Si es una letra mayúscula (A-Z)
         if (code >= 65 && code <= 90) {
             return String.fromCharCode(((code - 65 + parseInt(displ)) % 26) + 65);
@@ -1338,13 +1338,13 @@ app.post('/api/Cesar',(req,res) => {
         // Si no es una letra, dejar el carácter tal como está
         return char;
     }).join('');
-    console.log(result);
+    //console.log(result);
     res.json({"result": result});
 });
 
 app.post('/api/Vigenere',(req,res) => {
     const {Ptext,key} =req.body;
-    console.log(Ptext + ", " + key)
+    //console.log(Ptext + ", " + key)
     let keyIndex = 0;
     let keyLength = key.length;
     result = Ptext.split('').map(char => {
@@ -1368,7 +1368,7 @@ app.post('/api/Vigenere',(req,res) => {
         // Si no es una letra, dejar el carácter tal como está
         return char;
     }).join('');
-    console.log(result);
+    //console.log(result);
     res.json({"result": result});
 });
 
