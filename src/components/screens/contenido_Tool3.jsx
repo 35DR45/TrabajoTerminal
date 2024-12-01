@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Footer from "../organisms/footer/footer";
 import Header from "../organisms/header/header";
-
+import Swal from 'sweetalert2'
+import { useNavigate} from "react-router-dom";
 
 export default function Contenido_Tool3(){
     const [Operacion, setOperacion] = useState('');
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         const FormData = {
@@ -30,8 +32,30 @@ export default function Contenido_Tool3(){
             container.alt = data.alttext;
         }catch(error){
             console.log('Error: ', error);
+            servErrorAlert(error)
         }
     };
+    const servErrorAlert = async (error)=>{
+        Swal.fire({
+            title: 'Ocurrió un error en el servidor, regresando al inicio.',
+            text: `${error}`,
+            icon: 'error',
+            background: '#811642',
+            color: '#f2ffeb',
+            timer:3000,
+            allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+            timerProgressBar: true,
+            didOpen: (popup) => {
+                Swal.showLoading();
+                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+            },
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                navigate('/')
+            }
+        })
+    }
     return(
         <>
             <Header/>

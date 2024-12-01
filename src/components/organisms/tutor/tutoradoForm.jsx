@@ -29,12 +29,34 @@ const TutoradoForm = () =>{
             console.log(tutorData)
         } catch (error) {
             console.error("Error fetching tutor:", error);
+            servErrorAlert(error)
         }
         };
 
         fetchTutor();
     }, []); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
-    
+    const servErrorAlert = async (error)=>{
+        Swal.fire({
+            title: 'Ocurrio un error en el servidor',
+            text: `${error}`,
+            icon: 'error',
+            background: '#811642',
+            color: '#f2ffeb',
+            timer:3000,
+            allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+            timerProgressBar: true,
+            didOpen: (popup) => {
+                Swal.showLoading();
+                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+            },
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                navigate('/')
+            }
+        })
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("HOLAAAAA")
@@ -67,6 +89,7 @@ const TutoradoForm = () =>{
             }
         }catch(error){
             console.log('Error: ', error);
+            servErrorAlert(error)
         }
     };
     
