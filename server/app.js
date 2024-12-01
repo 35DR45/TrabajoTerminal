@@ -3,9 +3,12 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const app = express();
 const bcrypt = require('bcrypt');
-const { APPID } = require('./apifile.js');
+const {keys} = require('./apifile.js');
+//const { APPID } = require('./apifile.js');
 const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
-const waApi = WolframAlphaAPI(APPID);
+const waApi = WolframAlphaAPI(keys.APPID);
+const nodemailer = require('nodemailer');
+//const { MAILAPI } = require('./apifile.js');
 //const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
 const {exec, spawn } = require('child_process');
@@ -88,11 +91,22 @@ app.use(cors({
     credentials: true,
 }));
 
+var transporter = nodemailer.createTransport({
+    host: "smtp.sendgrid.net",
+    port: 587,
+    secure: false,
+    auth: {
+        user: 'apikey',
+        pass: keys.MAILAPI
+    }
+});
+
+
 const db=mysql.createConnection({
-    //host:"localhost",
-    host:"13.59.72.188",
+    host:"localhost",
+    //host:"13.59.72.188",
     user: "root",
-    password: "PaS$R4z32",
+    //password: "PaS$R4z32",
     password: "1234",
     database: "mydb",
 });
@@ -105,12 +119,29 @@ db.connect(function(err) {
 app.get('/',(req,res)=>{
     res.json({status: "INICIO"});
 });
-
+app.get('/api/mail',(req,res)=>{
+    var mailOptions = {
+        from: 'soprote.tt2024b169@gmail.com',
+        to: 'angeliyoxd@gmail.com',
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!'
+    };
+      
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+            res.send("no")
+        } else {
+            console.log('Email sent: ' + info.response);
+            res.send("yes")
+        }
+    });
+});
 //LOGIN DE USUARIO 
 /*regresa un json{
         "status":(Aqui te da el mensaje de lo que ocurrio)
         }
-*/
+    */
 app.post('/api/Login',async (req,res)=>{
     const {user,pass} =req.body;
     
@@ -135,6 +166,7 @@ app.post('/api/Login',async (req,res)=>{
 
         if(result.length >= 0){
             for(const user of result){
+                console.log
                 if(user == undefined){
                    // console.log("No encontro datos asi que es undefined")
                     return res.status(400).json({error:"Usuario o Contraseña no definidos"})
