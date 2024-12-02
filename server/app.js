@@ -9,6 +9,7 @@ const WolframAlphaAPI = require('@wolfram-alpha/wolfram-alpha-api');
 const waApi = WolframAlphaAPI(keys.APPID);
 const nodemailer = require('nodemailer');
 const { MAILAPI } = require('./apifile.js');
+const session = require('express-session');
 //const tf = require('@tensorflow/tfjs-node'); // Importa TensorFlow.js para Node.js
 const path = require('path');
 const {exec, spawn } = require('child_process');
@@ -84,6 +85,18 @@ async function loadAndUseModel() {
 
 loadAndUseModel();
 */
+// Configurar el middleware de sesión
+app.use(session({
+    name:'user',
+    secret: 'clave_secreta_cookie', // Clave secreta para firmar las cookies de la sesión
+    resave: false,               // No volver a guardar la sesión si no hay cambios
+    saveUninitialized: false,    // No guardar sesiones no inicializadas
+    cookie: { 
+        secure: false,           // Debe ser `true` si usas HTTPS
+        maxAge: 60000*60            // Tiempo de expiración en milisegundos (1 minuto)
+    }
+}));
+
 app.use(cors({
     //origin: 'http://127.0.0.1:5173',
     origin: 'http://13.59.72.188:80',
@@ -166,7 +179,7 @@ app.post('/api/Login',async (req,res)=>{
 
         if(result.length >= 0){
             for(const user of result){
-                console.log
+                
                 if(user == undefined){
                    // //console.log("No encontro datos asi que es undefined")
                     return res.status(400).json({error:"Usuario o Contraseña no definidos"})
@@ -175,6 +188,9 @@ app.post('/api/Login',async (req,res)=>{
                 const contraseñaAlmacenada =  user.pass;
                 const match = await bcrypt.compare(pass,contraseñaAlmacenada);
                     if(match){
+                        req.session.usuario={id:user.idUsuario,name:user.NombreUsuario,tipo:user.Tipo}
+
+                        console.log(req.session.usuario)
                         ////console.log("Inicio de Sesión Exitoso")
                         return res.json({status:"Inicio de Sesión Exitoso",
                                 idUsuario:user.idUsuario
@@ -189,6 +205,18 @@ app.post('/api/Login',async (req,res)=>{
             return res.json({status:"No se encontro coincidencia"})
         }
     })
+
+});
+app.get('/api/LogOut',async (req,res)=>{
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error al destruir la sesión:', err);
+            res.status(500).send('No se pudo destruir la sesión.');
+        } else {
+            res.clearCookie('user'); // Borra la cookie de sesión del navegador
+            res.send('Sesión destruida exitosamente.');
+        }
+    });
 
 });
 
