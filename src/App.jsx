@@ -37,84 +37,84 @@ const App = () =>{
         <Route path="/admin" element={<Tutor/>}/>
         {/* TODO: admin screen */}
         <Route path="/student" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Student/>
           </ProtectedRoute>
         }/>
         <Route path="/curso/:cursoID" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Contenido_Curso/>
           </ProtectedRoute>
         }/>
         <Route path="/leccion/:idLeccion/:cursoID/:tipo" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Contenido_Leccion/>
           </ProtectedRoute>
         }/>
         <Route path="/ejercicio/:idLeccion/:cursoID/:tipo" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Contenido_Ejercicio/>
           </ProtectedRoute>
         }/>
         {/* Perfiles */}
         <Route path="/profile" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Profile/>
           </ProtectedRoute>
         }/>
         <Route path="/profile/progress" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Progress/>
           </ProtectedRoute>
         }/>
         <Route path="/update/user" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Update_Form/>
           </ProtectedRoute>
         }/>
         <Route path="/update/pass" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Updatepass_Form/>
           </ProtectedRoute>
         }/>
         <Route path="/tutor" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Tutor/>
           </ProtectedRoute>
         }/>
         <Route path="/tutorado" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Tutorado/>
           </ProtectedRoute>
         }/>
         {/* Herramientas*/}
         <Route path="/tools" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Tools/>
           </ProtectedRoute>
         }/>
         <Route path="/tools/1" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Contenido_Tool1/>
           </ProtectedRoute>
         }/>
         <Route path="/tools/2" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Contenido_Tool2/>
           </ProtectedRoute>
         }/>
         <Route path="/tools/3" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Contenido_Tool3/>
           </ProtectedRoute>
         }/>
         <Route path="/tools/4" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Contenido_Tool4/>
           </ProtectedRoute>
         }/>
         <Route path="/tools/5" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[0,1,2]}>
             <Contenido_Tool5/>
           </ProtectedRoute>
         }/>

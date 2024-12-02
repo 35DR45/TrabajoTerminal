@@ -28,8 +28,54 @@ export default function Leccion(){
                 })
             });
             const respo = await response.json()
-            if(respo.error=="No se insertaron los datos o ya existian") navigate(-1)
-            else navigate(-1)
+            
+            if(respo.error=="No se insertaron los datos o ya existian"){
+                Swal.fire({
+                    title: `Lección previamente finalizada`,
+                    text: `Datos guardados`,
+                    icon: 'info',
+                    background: '#811642',
+                    color: '#f2ffeb',
+                   // showCancelButton: true,
+                    confirmButtonColor: '#f2ffeb',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
+                    cancelButtonText: 'Cancelar',
+                    allowOutsideClick: false,
+                    didOpen: (popup) => {
+                        // Aplicar estilos directamente al popup
+                        popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                        popup.style.borderRadius = '15px';       // Bordes redondeados
+                    },
+                }).then(async (result) => {
+                    if(result.isConfirmed) navigate(-1);
+                    
+                })
+                
+            } 
+            else{
+                Swal.fire({
+                    title: `Progreso guardado`,
+                    text: `Datos guardados`,
+                    icon: 'success',
+                    background: '#811642',
+                    color: '#f2ffeb',
+                   // showCancelButton: true,
+                    confirmButtonColor: '#f2ffeb',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '<b style="color: black;" >Aceptar</b> ',
+                    cancelButtonText: 'Cancelar',
+                    allowOutsideClick: false,
+                    didOpen: (popup) => {
+                        // Aplicar estilos directamente al popup
+                        popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                        popup.style.borderRadius = '15px';       // Bordes redondeados
+                    },
+                }).then(async (result) => {
+                    if(result.isConfirmed) navigate(-1);
+                    
+                })
+            } 
                 
             
        }catch(error){

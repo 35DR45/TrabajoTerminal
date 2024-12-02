@@ -26,7 +26,11 @@ const TutoradoForm = () =>{
                 correo: data.Correo
             });
 
-            console.log(tutorData)
+
+            
+            if(data.Nombre === undefined){
+                servErrorAlert()
+            }
         } catch (error) {
             console.error("Error fetching tutor:", error);
             servErrorAlert(error)
@@ -37,8 +41,8 @@ const TutoradoForm = () =>{
     }, []); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
     const servErrorAlert = async (error)=>{
         Swal.fire({
-            title: 'Ocurrio un error en el servidor',
-            text: `${error}`,
+            title: 'Tutorado no disponible',
+            text: `Regresando`,
             icon: 'error',
             background: '#811642',
             color: '#f2ffeb',
@@ -52,7 +56,7 @@ const TutoradoForm = () =>{
             },
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
-                navigate('/')
+                navigate(-1)
             }
         })
     }

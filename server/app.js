@@ -219,7 +219,11 @@ app.get('/api/LogOut',async (req,res)=>{
     });
 
 });
-
+// Ruta para validar el rol del usuario
+app.get('/api/validate-role', (req, res) => {
+    console.log(req.session.usuario.tipo)
+    res.json({ role: req.session.usuario.tipo }); // Devuelve el rol del usuario
+});
 //TODO PASSWORD RECOVERY
 /*app.get('/api/Recovery',(req,res)=>{
     const query = "SELECT usuario FROM usuario WHERE correo = ?";

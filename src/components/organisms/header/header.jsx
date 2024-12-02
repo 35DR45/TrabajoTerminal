@@ -72,7 +72,7 @@ export default function Header(){
             return (
                 <>
                 <Link to={"/"} className="btn-header" onClick={handleLogout}>Cerrar sesión</Link>
-                <Link to="#" className="btn-header" onClick={handleGoBack}>Regresar</Link>
+                
                 </>
             );
         }

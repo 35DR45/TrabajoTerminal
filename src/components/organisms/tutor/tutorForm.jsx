@@ -15,7 +15,7 @@ const TutorForm = () =>{
 
     const servErrorAlert = async (error)=>{
         Swal.fire({
-            title: 'Ocurrió un error en el servidor, regresando al inicio.',
+            title: 'Tutor no disponible',
             text: `${error}`,
             icon: 'error',
             background: '#811642',
@@ -30,7 +30,7 @@ const TutorForm = () =>{
             },
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
-                navigate('/')
+                navigate(-1)
             }
         })
     }
@@ -40,14 +40,17 @@ const TutorForm = () =>{
         try {
             const response = await fetch(`/api/verTutor/${iduser}`); 
             const data = await response.json();
-           
+            
 
             setTutorData({
                 tutor: data.Nombre,
                 correo: data.Tutor
             });
-
-            console.log(tutorData)
+           
+            
+            if(data.Nombre===undefined){
+              servErrorAlert()
+            }
         } catch (error) {
             servErrorAlert(error)
             console.error("Error fetching tutor:", error);
