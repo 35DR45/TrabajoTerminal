@@ -92,12 +92,12 @@ app.use(cors({
 }));
 
 var transporter = nodemailer.createTransport({
-    host: "smtp.sendgrid.net",
+    host: "email-smtp.us-east-2.amazonaws.com",
     port: 587,
     secure: false,
     auth: {
-        user: 'apikey',
-        pass: keys.MAILAPI
+        user: keys.MAILAPIN,
+        pass: keys.MAILAPIP
     }
 });
 
@@ -119,14 +119,18 @@ db.connect(function(err) {
 app.get('/',(req,res)=>{
     res.json({status: "INICIO"});
 });
-app.get('/api/mail',(req,res)=>{
+app.post('/api/mail',async(req,res)=>{
+    const { user , mail , pass , phone, style } = req.body
+
+    console.log("Usuario: "+user+" Mail: "+mail+" Pass: "+pass+" Telefono: "+phone+" Tipo de  ap: "+style)
+    const hashedPassword = await bcrypt.hash(pass, 10);
+    console.log(hashedPassword)
     var mailOptions = {
         from: 'soprote.tt2024b169@gmail.com',
-        to: 'angeliyoxd@gmail.com',
-        subject: 'Sending Email using Node.js',
-        text: 'That was easy!'
+        to: mail,
+        subject: 'Verficacion aplicacion TT2024-B169',
+        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para verificar tu correo</p><a href="http://13.59.72.188/api/SeeLC/'+user+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
     };
-      
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
             console.log(error);
@@ -274,17 +278,17 @@ app.post('/api/Change', async(req, res) => {
     // })
 })
 
-app.post('/api/Register',async (req,res) =>{
+app.get('/api/Register/:user/:mail/:pass/:phone/:style',async (req,res) =>{
     //console.log("Entro registro")
-    const { user , mail , pass , phone, style } = req.body
-
+    const { user , mail , pass , phone, style } = req.params
+    console.log("Usuario: "+user+" Mail: "+mail+" Pass: "+pass+" Telefono: "+phone+" Tipo de  ap: "+style)
     const query = "INSERT INTO Usuario(NombreUsuario,Correo,pass,Telefono,Tipo,Aprendizaje) values (?,?,?,?,?,?)";
     if( user == '' || mail == '' || pass == ''){
             //console.log(" Registro Vacios");
             return res.status(400).json({status:"Usuario o Contraseña vacios"})
     }
 
-    const hashedPassword = await bcrypt.hash(pass, 10);
+    
 
     db.query(query,[user,mail,hashedPassword,phone,/*req.body.type*/1,style],(err,result) =>{
 

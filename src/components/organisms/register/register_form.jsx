@@ -88,7 +88,7 @@ export default function Register_form() {
             }
             try {
                 // Envía los datos del formulario al backend
-                const response = await fetch('/api/Register', {
+                const response = await fetch('/api/mail', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -97,11 +97,11 @@ export default function Register_form() {
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    if (data.status == "Usuario Creado") {
+                    if (data.status == "yes") {
                         // Redirige al usuario a la URL /registrado
                         Swal.fire({
                             title: "Gracias por registrarte",
-                            text: "Registro exitoso!",
+                            text: "Checa tu correo para terminar tu registro",
                             icon: 'success',
                             background: '#811642',
                             color: '#f2ffeb',
