@@ -1,8 +1,10 @@
 use mydb;
 -- id, nombre, correo, pass, telefono, tipo, tutor, tutorado, aprendizaje, reputacion;
 delete from usuario;
+insert into Usuario values (null, "Andres0!", "dove41@driftz.net", "$2b$10$aRBHBybjgdI4Oc0IBdAcwe/FCiL7WGecFKTPQL3eDKlPWVcCjLt3y", "000", 0, null, null, 1, 5000);
 #Usuario 1 Andres1! pass Andres1!
-insert into usuario values (null, "Andres1!", "dove41@driftz.net", "$2b$10$aRBHBybjgdI4Oc0IBdAcwe/FCiL7WGecFKTPQL3eDKlPWVcCjLt3y", "000", 2, null, null, 1, 5000);
+insert into usuario values (null, "Andres1!", "dove41@driftz.net", "$2b$10$aRBHBybjgdI4Oc0IBdAcwe/FCiL7WGecFKTPQL3eDKlPWVcCjLt3y", "000", 0, null, null, 1, 5000);
+
 #Usuario 2 Andres2! pass Andres2!
 insert into usuario values (null, "Andres2!", "orangutan50@mixzu.net", "$2b$10$.OP11HMTnj71CF2ErsMCM.0D1Ev4nMGLairL2MsPjI5V4fZhOG8TW", "000", 2, null, null, 1, 4500);
 #Usuario 3 Andres3! pass Andres3!
