@@ -39,6 +39,18 @@ export default function Grouped_btns(){
                     <Link to={"/profile"} className="btn-header">Perfil</Link>
                 </>
             );
+        }else if(location.pathname === "/adminad"){
+            return (
+                <>
+                    
+                </>
+            );
+        }else if(location.pathname === "/adminad/1" || location.pathname === "/adminad/2" ){
+            return (
+                <>
+                    <Link to="#" className="btn-header" onClick={handleGoBack}>Regresar</Link>
+                </>
+            );
         }else{
             return (
                 <>

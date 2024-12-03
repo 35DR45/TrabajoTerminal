@@ -50,10 +50,28 @@ export default function Login_form() {
                             popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
                             popup.style.borderRadius = '15px';       // Bordes redondeados
                         },
-                    }).then(() => {
+                    }).then(async () => {
                         setUser(username)
                         setidUser(data.idUsuario)
-                        navigate("/student");
+                        try{
+                            const response = await fetch('/api/validate-role');
+
+                            if (!response.ok) {
+                                throw new Error('No autorizado');
+                            }
+
+                            const data = await response.json(); // Ejemplo de respuesta: { role: 'admin', id: 'user123' }
+                            if(data.role===0){
+                                console.log(data.role)
+                                navigate("/adminad")
+                            }else{
+                                navigate("/student");
+                            }
+                        }catch(error){
+                            servErrorAlert(error)
+                        }
+                        
+                        
                     })
 
                 } else if (data.status == "Inicio de Sesión Fallido") {

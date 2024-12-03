@@ -23,6 +23,9 @@ import Tools from "./components/screens/tools";
 import ProtectedRoute from "./components/screens/ProtectedRoute";
 import Contenido_Leccion from "./components/screens/contenido_Leccion";
 import Contenido_Ejercicio from "./components/screens/Contenido_Ejercicio";
+import Admin  from "./components/screens/admin_main"
+import CRUDUser  from "./components/screens/CRUD_user"
+import CRUDCurso  from "./components/screens/CRUD_curso"
 
 const App = () =>{
   return (
@@ -35,9 +38,25 @@ const App = () =>{
         <Route path="/forgotten" element={<Recover_Pass/>}/>
         <Route path="/forgotten/sent" element={<Recovery_sent/>}/>
         <Route path="/admin" element={<Tutor/>}/>
+
         {/* TODO: admin screen */}
+        <Route path="/adminad" element={
+          <ProtectedRoute allowedRoles={[0]}>
+            <Admin/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/adminad/1" element={
+          <ProtectedRoute allowedRoles={[0]}>
+            <CRUDUser/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/adminad/2" element={
+          <ProtectedRoute allowedRoles={[0]}>
+            <CRUDCurso/>
+          </ProtectedRoute>
+        }/>
         <Route path="/student" element={
-          <ProtectedRoute allowedRoles={[0,1,2]}>
+          <ProtectedRoute allowedRoles={[1,2]}>
             <Student/>
           </ProtectedRoute>
         }/>
