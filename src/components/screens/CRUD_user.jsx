@@ -1,14 +1,14 @@
-import Ejercicio from "../molecules/materia/lecciones/ejecicio";
+import CRUDU from "../molecules/admin/CRUDu";
 import Footer from "../organisms/footer/footer";
 import Header from "../organisms/header/header";
 
 
-export default function Contenido_Ejercicio(){
+export default function CRUDUsuario(){
 
     return(
         <>
             <Header/>
-            <Ejercicio  />
+            <CRUDU  />
             <Footer/>
         </>
     )

@@ -14,7 +14,7 @@ const Admin = () => {
             </h2>
             <div className="Course_Container">
             <Card_Admin  courseName={"Usuarios"} img={"usuario"} id={1}/>
-            <Card_Admin  courseName={"Cursos"} img={""} id={2}/>
+            {/*<Card_Admin  courseName={"Cursos"} img={""} id={2}/>*/}
             </div>
           
             <Footer />

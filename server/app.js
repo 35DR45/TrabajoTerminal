@@ -403,10 +403,11 @@ app.get('/api/SeeUser/:idUser',(req,res) =>{
         "status":(Aqui te da el mensaje de lo que ocurrio)
         }
 */
-app.delete('/api/DeleteU',(req,res) =>{
+app.delete('/api/DeleteU/:idUsuario',(req,res) =>{
+    const {idUsuario} =req.params
     ////console.log("Entro borrar usuario")
-    const query = "DELETE FROM Usuario WHERE Correo = ?";
-    db.query(query,req.body.mail,(err,result) =>{
+    const query = "DELETE FROM Usuario WHERE idUsuario = ?";
+    db.query(query,idUsuario,(err,result) =>{
         if(err){
            // //console.log("Error al eliminar el usuario")
             return res.send({status:"Error al consultar "})
@@ -434,11 +435,12 @@ app.delete('/api/DeleteU',(req,res) =>{
         "status":(Aqui te da el mensaje de lo que ocurrio)
         }
 */
-app.put('/api/UpdateU',async (req,res) =>{
+app.put('/api/UpdateU/:idUsuario',async (req,res) =>{
+    const {idUsuario} =req.params
+    const {NombreUsuario,Correo,Tipo,Aprendizaje,Reputacion} =req.body
     //console.log("Entro en actualizar usuario")
-    const query = "UPDATE Usuario SET NombreUsuario = ?,Correo = ?,pass = ?,Telefono = ?,Tipo = ?,Tutor = ?,Aprendizaje = ? WHERE Correo = ?";
-    const hashedPassword = await bcrypt.hash(req.body.newpass, 10);
-    db.query(query,[req.body.newuser,req.body.newmail,hashedPassword,req.body.newphone,req.body.newtype,req.body.newtutor,req.body.newlearning,req.body.mail],(err,result) =>{
+    const query = "UPDATE Usuario SET NombreUsuario = ? , Correo = ? , Tipo = ? , Aprendizaje = ? , Reputacion = ? WHERE  idUsuario= ?";
+    db.query(query,[NombreUsuario,Correo,Tipo,Aprendizaje,Reputacion,idUsuario],(err,result) =>{
         //console.log("newuser: "+req.body.newuser)
         //console.log("mail: "+req.body.mail)
         //console.log("newmail: "+req.body.newmail)

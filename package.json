@@ -13,7 +13,8 @@
   "dependencies": {
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
-    "@mui/material": "^6.1.8",
+    "@mui/icons-material": "^6.1.9",
+    "@mui/material": "^6.1.9",
     "@mui/x-charts": "^7.22.3",
     "@wolfram-alpha/wolfram-alpha-api": "^23.1004.144821-RELEASE",
     "axios": "^1.7.7",
