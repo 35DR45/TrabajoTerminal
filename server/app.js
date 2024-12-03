@@ -85,7 +85,20 @@ async function loadAndUseModel() {
 
 loadAndUseModel();
 */
+
+// Ruta absoluta a la carpeta dist
+const distPath = path.join(__dirname, '../dist');
+
+// Servir archivos estáticos de la carpeta dist
+app.use(express.static(distPath));
+
+// Redirigir todas las rutas al archivo index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
+});
+
 // Configurar el middleware de sesión
+
 app.use(session({
     name:'user',
     secret: 'clave_secreta_cookie', // Clave secreta para firmar las cookies de la sesión
