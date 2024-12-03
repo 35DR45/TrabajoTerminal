@@ -132,17 +132,15 @@ db.connect(function(err) {
 app.get('/',(req,res)=>{
     res.json({status: "INICIO"});
 });
-app.post('/api/mail',async(req,res)=>{
+app.post('/api/MailR',async(req,res)=>{
+    console.log("Mail solicitado")
     const { user , mail , pass , phone, style } = req.body
-
     console.log("Usuario: "+user+" Mail: "+mail+" Pass: "+pass+" Telefono: "+phone+" Tipo de  ap: "+style)
-    const hashedPassword = await bcrypt.hash(pass, 10);
-    console.log(hashedPassword)
     var mailOptions = {
         from: 'soprote.tt2024b169@gmail.com',
         to: mail,
         subject: 'Verficacion aplicacion TT2024-B169',
-        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para verificar tu correo</p><a href="http://13.59.72.188/api/SeeLC/'+user+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
+        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para verificar tu correo</p><a href="http://13.59.72.188/api/Register/'+user+'/'+mail+'/'+pass+'/null/'+style+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
@@ -313,7 +311,8 @@ app.post('/api/Change', async(req, res) => {
 app.get('/api/Register/:user/:mail/:pass/:phone/:style',async (req,res) =>{
     //console.log("Entro registro")
     const { user , mail , pass , phone, style } = req.params
-    console.log("Usuario: "+user+" Mail: "+mail+" Pass: "+pass+" Telefono: "+phone+" Tipo de  ap: "+style)
+    const hashedPassword = await bcrypt.hash(pass, 10);
+    console.log("Usuario: "+user+" Mail: "+mail+" Pass: "+hashedPassword+" Telefono: "+phone+" Tipo de  ap: "+style)
     const query = "INSERT INTO Usuario(NombreUsuario,Correo,pass,Telefono,Tipo,Aprendizaje) values (?,?,?,?,?,?)";
     if( user == '' || mail == '' || pass == ''){
             ////console.log(" Registro Vacios");
@@ -629,7 +628,7 @@ app.get('/api/SeeLC/:Materia',(req,res) =>{
     const {Materia} = req.params
     const query = "Select idLeccion,Titulo from Leccion where Materia=?";
     db.query(query,Materia,(err,result) =>{
-        //console.log("materia: "+ Materia)
+        console.log("materia: "+ Materia)
         if(err){
             return res.send("Error al enviar Lecciones")
         } 
@@ -684,6 +683,7 @@ app.get('/api/ContentLC/:IdLeccion/:Materia/:Tipo',(req,res) =>{
         }
 */
 app.get('/api/Cursos',(req,res) =>{
+    //console.log("cursos solicitados")
     const query = "Select * from Materia";
     db.query(query,(err,result) =>{
         if(err){
