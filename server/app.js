@@ -145,10 +145,10 @@ app.post('/api/MailR',async(req,res)=>{
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
             console.log(error);
-            res.send("no")
+            res.send({status:"no"})
         } else {
             console.log('Email sent: ' + info.response);
-            res.send("yes")
+            res.send({status:"yes"})
         }
     });
 });
