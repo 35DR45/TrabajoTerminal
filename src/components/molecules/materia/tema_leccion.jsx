@@ -1,14 +1,14 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams , useNavigate} from "react-router-dom";
 // import Leccion from "../../atoms/materia/leccion";
 import "../../organisms/CSS/materia.css"
 import { useEffect, useState } from "react";
-
+import Swal from 'sweetalert2'
 export default function Tema_Leccion(){
 
     const params = useParams();
 
     const [temario, setTemario] = useState([]);
-
+    const navigate = useNavigate();
     console.log(params);
     
 
@@ -21,6 +21,7 @@ export default function Tema_Leccion(){
             setTemario(data); 
         } catch (error) {
             console.error("Error fetching the temario:", error);
+            servErrorAlert(error)
         }
         };
 
@@ -28,7 +29,27 @@ export default function Tema_Leccion(){
     }, [params.cursoID]); // El array vacío [] asegura que solo se ejecute una vez cuando el componente se monta
     
     console.log(temario);
-
+    const servErrorAlert = async (error)=>{
+        Swal.fire({
+            title: 'Ocurrió un error en el servidor, regresando al inicio.',
+            text: `${error}`,
+            icon: 'error',
+            background: '#811642',
+            color: '#f2ffeb',
+            timer:3000,
+            allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+            timerProgressBar: true,
+            didOpen: (popup) => {
+                Swal.showLoading();
+                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+            },
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                navigate('/')
+            }
+        })
+    }
 
     // Estructuramos el temario en un árbol de capítulos, temas y secciones
     const estructurarTemario = (temario) => {

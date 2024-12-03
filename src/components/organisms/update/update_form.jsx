@@ -37,6 +37,7 @@ export default function Update_form(){
                 setEmail(data[0].Correo); // Actualizar las opciones con los datos obtenidos
                 setAprendizaje(data[0].Aprendizaje)
             } catch (error) {
+                servErrorAlert(error)
                 console.error('Error al cargar datos:', error);
             }
         };
@@ -79,7 +80,27 @@ export default function Update_form(){
             setEmailError(''); // Limpia el mensaje cuando cumple con los criterios
         }
     };
-
+    const servErrorAlert = async (error)=>{
+        Swal.fire({
+            title: 'Ocurrió un error en el servidor, regresando al inicio.',
+            text: `${error}`,
+            icon: 'error',
+            background: '#811642',
+            color: '#f2ffeb',
+            timer:3000,
+            allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+            timerProgressBar: true,
+            didOpen: (popup) => {
+                Swal.showLoading();
+                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+            },
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                navigate('/')
+            }
+        })
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(userError === ''  && emailError === ''){
@@ -163,6 +184,7 @@ export default function Update_form(){
                     console.error('Error al actualizar usuario');
                 }
             } catch (error) {
+                servErrorAlert(error)
                 console.error('Error:', error);
             }
         }else

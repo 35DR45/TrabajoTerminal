@@ -13,21 +13,46 @@ const TutorForm = () =>{
         correo: ''
     });
 
+    const servErrorAlert = async (error)=>{
+        Swal.fire({
+            title: 'Tutor no disponible',
+            text: `${error}`,
+            icon: 'error',
+            background: '#811642',
+            color: '#f2ffeb',
+            timer:3000,
+            allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+            timerProgressBar: true,
+            didOpen: (popup) => {
+                Swal.showLoading();
+                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+            },
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                navigate(-1)
+            }
+        })
+    }
     useEffect(() => {
         // Función para obtener los datos de la API
         const fetchTutor = async () => {
         try {
             const response = await fetch(`/api/verTutor/${iduser}`); 
             const data = await response.json();
-           
+            
 
             setTutorData({
                 tutor: data.Nombre,
                 correo: data.Tutor
             });
-
-            console.log(tutorData)
+           
+            
+            if(data.Nombre===undefined){
+              servErrorAlert()
+            }
         } catch (error) {
+            servErrorAlert(error)
             console.error("Error fetching tutor:", error);
         }
         };
@@ -66,6 +91,7 @@ const TutorForm = () =>{
                 
             }
         }catch(error){
+            servErrorAlert(error)
             console.log('Error: ', error);
         }
     };

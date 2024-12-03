@@ -50,10 +50,28 @@ export default function Login_form() {
                             popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
                             popup.style.borderRadius = '15px';       // Bordes redondeados
                         },
-                    }).then(() => {
+                    }).then(async () => {
                         setUser(username)
                         setidUser(data.idUsuario)
-                        navigate("/student");
+                        try{
+                            const response = await fetch('/api/validate-role');
+
+                            if (!response.ok) {
+                                throw new Error('No autorizado');
+                            }
+
+                            const data = await response.json(); // Ejemplo de respuesta: { role: 'admin', id: 'user123' }
+                            if(data.role===0){
+                                console.log(data.role)
+                                navigate("/adminad")
+                            }else{
+                                navigate("/student");
+                            }
+                        }catch(error){
+                            servErrorAlert(error)
+                        }
+                        
+                        
                     })
 
                 } else if (data.status == "Inicio de Sesión Fallido") {
@@ -96,11 +114,33 @@ export default function Login_form() {
                 console.error('Usuario no registrado');
             }
         } catch (error) {
+            
             console.log('Error: ', error);
+            servErrorAlert(error)
         }
     };
 
-
+    const servErrorAlert = async (error)=>{
+        Swal.fire({
+            title: 'Ocurrió un error en el servidor, regresando al inicio.',
+            text: `${error}`,
+            icon: 'error',
+            background: '#811642',
+            color: '#f2ffeb',
+            timer:3000,
+            allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+            timerProgressBar: true,
+            didOpen: (popup) => {
+                Swal.showLoading();
+                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+            },
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                navigate('/')
+            }
+        })
+    }
 
     return (
         <form className="form-container" onSubmit={handleSubmit}>

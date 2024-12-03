@@ -74,6 +74,27 @@ export default function Register_form() {
             setEmailError(''); // Limpia el mensaje cuando cumple con los criterios
         }
     };
+    const servErrorAlert = async (error)=>{
+        Swal.fire({
+            title: 'Ocurrió un error en el servidor, regresando al inicio.',
+            text: `${error}`,
+            icon: 'error',
+            background: '#811642',
+            color: '#f2ffeb',
+            timer:3000,
+            allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+            timerProgressBar: true,
+            didOpen: (popup) => {
+                Swal.showLoading();
+                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+            },
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                navigate('/')
+            }
+        })
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -163,6 +184,7 @@ export default function Register_form() {
                 }
             } catch (error) {
                 console.error('Error:', error);
+                servErrorAlert(error)
             }
         } else {
             Swal.fire({

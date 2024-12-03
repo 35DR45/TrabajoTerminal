@@ -79,7 +79,7 @@ export default function Ejercicio() {
                         
                     }
                 }catch(error){
-
+                    servErrorAlert(error)
                 }
             
         })
@@ -263,6 +263,7 @@ export default function Ejercicio() {
                             }
                         catch(error){
                             console.log("Error: ", error);
+                            servErrorAlert(error)
                         }
 
                     }else{
@@ -396,6 +397,7 @@ export default function Ejercicio() {
                                                     }
                                                 }catch(error){
                                                     console.log(error);
+                                                    servErrorAlert(error)
                                                     
                                                 }
                                             }
@@ -414,6 +416,7 @@ export default function Ejercicio() {
                                 }
                             }catch(error){
                                 console.log(error)
+                                servErrorAlert(error)
                             }    
 
                         }
@@ -421,7 +424,7 @@ export default function Ejercicio() {
                 }
             }catch(error){
                 console.log("Error: ", error);
-                
+                servErrorAlert(error)
             }
         }
     }
@@ -463,7 +466,7 @@ export default function Ejercicio() {
                                             html: `<p>El tutor ha sido cambiado a: ${res.item.NombreUsuario}</p>`,
                                         });
                                     }catch(error){
-
+                                        servErrorAlert(error)
                                     }
                                     return false
                                 }
@@ -498,6 +501,7 @@ export default function Ejercicio() {
                                         }
                                     }catch(error){
                                         console.log(error)
+                                        servErrorAlert(error)
                                     }
                                 }
                                 if(result.isDismissed){
@@ -595,10 +599,31 @@ export default function Ejercicio() {
                     }
                 }catch(error){
                     console.log(error);
-                    
+                    servErrorAlert(error)
                 }
             }else{
                 navigate(-1);
+            }
+        })
+    }
+    const servErrorAlert = async (error)=>{
+        Swal.fire({
+            title: 'Ocurrió un error en el servidor, regresando al inicio.',
+            text: `${error}`,
+            icon: 'error',
+            background: '#811642',
+            color: '#f2ffeb',
+            timer:3000,
+            allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+            timerProgressBar: true,
+            didOpen: (popup) => {
+                Swal.showLoading();
+                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                popup.style.borderRadius = '15px';  // Mostrar indicador de carga
+            },
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                navigate('/')
             }
         })
     }
@@ -663,6 +688,7 @@ export default function Ejercicio() {
             console.log("Respuestas Recibidas:", response.data);
         } catch (error) {
             console.error("Error al enviar respuestas:", error);
+            servErrorAlert(error)
         }
 
     };
@@ -676,6 +702,7 @@ export default function Ejercicio() {
                 const data = await response.json();
                 setEjercicio(data);
             } catch (error) {
+                servErrorAlert(error)
                 console.error("Error fetching the ejercicio:", error);
             }
         };
