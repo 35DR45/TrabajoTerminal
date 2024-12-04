@@ -125,26 +125,48 @@ export default function Verified_form(){
                             })
                         }
                     } else {
-                        Swal.fire({
-                            title: "Error del servidor",
-                            text: "¡Reintentalo!",
-                            icon: 'error',
-                            background: '#811642',
-                            color: '#f2ffeb',
-                            showCancelButton: false,
-                            timer: 2000,
-                            timerProgressBar: true,
-                            footer: 'Recuerda no compartir tus datos de acceso',
-                            didOpen: (popup) => {
-                                Swal.showLoading();
-                                // Aplicar estilos directamente al popup
-                                popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
-                                popup.style.borderRadius = '15px';       // Bordes redondeados
-                            },
-                        }).then(() => {
-                            navigate("/forgotten");
-                        })
-                        console.error('Error al registrar usuario');
+                        const data = await response.json();
+                        if(data.error == "Misma contra"){
+                            Swal.fire({
+                                title: "Esa contraseña ya fue usada",
+                                text: "Utiliza una contraseña que no hayas usado anteriormente",
+                                icon: 'error',
+                                background: '#811642',
+                                color: '#f2ffeb',
+                                showCancelButton: false,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                footer: 'Recuerda no compartir tus datos de acceso',
+                                didOpen: (popup) => {
+                                    Swal.showLoading();
+                                    // Aplicar estilos directamente al popup
+                                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                                    popup.style.borderRadius = '15px';       // Bordes redondeados
+                                },
+                            })
+                        }else{
+                            Swal.fire({
+                                title: "Error del servidor",
+                                text: "¡Reintentalo!",
+                                icon: 'error',
+                                background: '#811642',
+                                color: '#f2ffeb',
+                                showCancelButton: false,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                footer: 'Recuerda no compartir tus datos de acceso',
+                                didOpen: (popup) => {
+                                    Swal.showLoading();
+                                    // Aplicar estilos directamente al popup
+                                    popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
+                                    popup.style.borderRadius = '15px';       // Bordes redondeados
+                                },
+                            }).then(() => {
+                                navigate("/forgotten");
+                            })
+                            console.error('Error al registrar usuario');
+                        }
+                        
                     }
                 } catch (error) {
                     servErrorAlert(error)

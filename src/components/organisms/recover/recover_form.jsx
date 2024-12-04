@@ -73,7 +73,7 @@ export default function Recover_form() {
                 }
                 try {
                     // Envía los datos del formulario al backend
-                    const response = await fetch('/api/Change', {
+                    const response = await fetch('/api/MailP', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

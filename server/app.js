@@ -145,6 +145,7 @@ db.connect(function(err) {
 app.get('/',(req,res)=>{
     res.json({status: "INICIO"});
 });
+
 app.post('/api/MailP',async(req,res)=>{
     //console.log("Mail solicitado")
     const { user , mail } = req.body
@@ -152,8 +153,8 @@ app.post('/api/MailP',async(req,res)=>{
     var mailOptions = {
         from: 'soprote.tt2024b169@gmail.com',
         to: mail,
-        subject: 'Reestablecimiento de COntraseña TT2024-B169',
-        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para verificar tu correo y cambiar tu contraseña</p><a href="http://13.59.72.188/Forgotten/'+user+'/'+mail+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
+        subject: 'Reestablecimiento de Contraseña TT2024-B169',
+        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para reestablecer tu contraseña</p><a href="http://13.59.72.188/resetpass/'+user+'/'+mail+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
@@ -269,8 +270,6 @@ app.get('/api/validate-role', (req, res) => {
 app.post('/api/Change', async(req, res) => {
     const { user, mail, pass } = req.body
     
-    console.log("intentando cambiar contra");
-    
     if (!user || !mail || !pass) {
         return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
@@ -291,10 +290,7 @@ app.post('/api/Change', async(req, res) => {
         const contraseñaAlmacenada =  userRecord.pass;
         const match = await bcrypt.compare(pass,contraseñaAlmacenada);
         console.log(contraseñaAlmacenada);
-        
-        
-        
-        if(!match){
+        if(match){
             return res.status(400).json({ error: "Misma contra" });
         }
 
