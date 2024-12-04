@@ -87,7 +87,7 @@ loadAndUseModel();
 */
 
 // Ruta absoluta a la carpeta dist
-const distPath = path.join(__dirname, '../dist');
+/*const distPath = path.join(__dirname, '../dist');
 
 // Servir archivos estáticos de la carpeta dist
 app.use(express.static(distPath));
@@ -96,7 +96,7 @@ app.use(express.static(distPath));
 app.get('*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
 });
-
+*/
 // Configurar el middleware de sesión
 
 app.use(session({
