@@ -165,6 +165,7 @@ app.post('/api/MailP',async(req,res)=>{
         }
     });
 });
+
 app.post('/api/MailR',async(req,res)=>{
     //console.log("Mail solicitado")
     const { user , mail , pass , phone, style } = req.body
@@ -200,33 +201,20 @@ app.post('/api/Login',async (req,res)=>{
     const query = "SELECT * FROM Usuario WHERE NombreUsuario = ?";
 
     db.query(query,[user],async (err,result) =>{
-
-        ////console.log("recibido usuario:"+ user);
-        ////console.log("recibido contrasena:"+ pass); 
-        ////console.log(result);
-        
-
         if(err){
-           // //console.log("Error en el login, es: ", err);
             return res.send("Error al iniciar sesion");
-
         } 
 
         if(result.length >= 0){
             for(const user of result){
-                
                 if(user == undefined){
-                   // //console.log("No encontro datos asi que es undefined")
                     return res.status(400).json({error:"Usuario o Contraseña no definidos"})
-
                 }
                 const contraseñaAlmacenada =  user.pass;
                 const match = await bcrypt.compare(pass,contraseñaAlmacenada);
                     if(match){
                         req.session.usuario={id:user.idUsuario,name:user.NombreUsuario,tipo:user.Tipo}
-
                         console.log(req.session.usuario)
-                        ////console.log("Inicio de Sesión Exitoso")
                         return res.json({status:"Inicio de Sesión Exitoso",
                                 idUsuario:user.idUsuario
                         });
@@ -279,18 +267,19 @@ app.get('/api/validate-role', (req, res) => {
         }
 */
 app.post('/api/Change', async(req, res) => {
-    const { user, mail, pass, } = req.body
+    const { user, mail, pass } = req.body
     
+    console.log("intentando cambiar contra");
     
     if (!user || !mail || !pass) {
         return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
     
     try{
-        const queryFind = "SELECT * FROM Usuario WHERE NombreUsuario = ?";
+        const queryFind = "SELECT * FROM Usuario WHERE NombreUsuario = ? AND Correo = ?";
         const queryUpdate = "UPDATE Usuario SET pass = ? WHERE NombreUsuario = ? AND Correo = ?";
 
-        const [rows] = await db.promise().query(queryFind, [user]);
+        const [rows] = await db.promise().query(queryFind, [user, mail]);
         if (rows.length === 0) {
             return res.status(404).json({ error: "Usuario no encontrado" });
         }
@@ -298,6 +287,15 @@ app.post('/api/Change', async(req, res) => {
         const userRecord = rows[0];
         if (userRecord.Correo !== mail) {
             return res.status(400).json({ error: "El correo no coincide" });
+        }
+        const contraseñaAlmacenada =  userRecord.pass;
+        const match = await bcrypt.compare(pass,contraseñaAlmacenada);
+        console.log(contraseñaAlmacenada);
+        
+        
+        
+        if(!match){
+            return res.status(400).json({ error: "Misma contra" });
         }
 
         // Generar hash de la nueva contraseña

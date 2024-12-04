@@ -1,4 +1,3 @@
-
 .Tools_Container{
     width: 100%;
     display: flex;
@@ -22,4 +21,9 @@
     color: white;
     font-weight: bold;
     padding: 20px;
+}
+
+.Tool_Card:hover{
+    color: rgb(196, 194, 194);
+    background-color: #9b2a59;
 }
