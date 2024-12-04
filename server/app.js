@@ -119,8 +119,8 @@ const db=mysql.createConnection({
     host:"localhost",
     //host:"13.59.72.188",
     user: "root",
-    //password: "PaS$R4z32",
-    password: "1234",
+    password: "PaS$R4z32",
+    // password: "1234",
     database: "mydb",
 });
 

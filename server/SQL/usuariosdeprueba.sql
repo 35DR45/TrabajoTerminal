@@ -11,6 +11,8 @@ insert into usuario values (null, "Andres3!", "raven06132@dotvu.net", "$2b$10$wC
 insert into usuario values (null, "Andres4!", "correonuevo@gmail.com ", "$2b$10$CoiF00wDoEw5BracKIa5SeMIJJykEUmZfxk7SRJD2XEUN5LFypOhe", "000", 2, null, null, 1, 2000);
 #Usuario 5 Andres5! pass Andres5!
 insert into usuario values (null, "Andres5!", "millipede94502@mixzu.net", "$2b$10$S.KezbSp5lsLwWsbns3CZeiZeYH6lJ8FarDMv4qkOrX7N6qA4fp5.", "000", 2, null, null, 1, default);
+insert into usuario values (null, "Daniel32%!", "algo@ejemplo.com", "$2b$10$D6aRpLHlJKvdjkig29GHn.lFvy/adUvvE1l0JidiP4dAoel7Sa5au", "000", 2, null, null, 2, default);
+
 
 #insert into usuario values (null, "juan", "a@a.com", "123" , "5500112233", 2, null, 2, 1, default);
 #insert into usuario values (null, "pedro", "b@b.com", "123", "5511223344", 1, 1, null, 1, default);

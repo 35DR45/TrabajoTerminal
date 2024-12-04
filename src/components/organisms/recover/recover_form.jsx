@@ -221,7 +221,7 @@ export default function Recover_form() {
 
     return (
         <div className="form-container">
-            <Btn_Register text='Recuperar contraseña' />
+            <Btn_Register text='Reestablecer contraseña' />
             <form className="reg-form-form" onSubmit={handleSubmit}>
                 <UserName onChange={(e) => setUsername(e.target.value)} />
                 <Email onChange={handleEmailChange} />

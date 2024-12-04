@@ -15,12 +15,12 @@ const TutorForm = () =>{
 
     const servErrorAlert = async (error)=>{
         Swal.fire({
-            title: 'Tutor no disponible',
-            text: `${error}`,
+            title: '¡Oh no! Aún no cuentas con tutor asignado',
+            text: 'Intenta progresando con tus lecciones y ejercicios',
             icon: 'error',
             background: '#811642',
             color: '#f2ffeb',
-            timer:3000,
+            timer:5000,
             allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
             timerProgressBar: true,
             didOpen: (popup) => {
@@ -34,6 +34,7 @@ const TutorForm = () =>{
             }
         })
     }
+    
     useEffect(() => {
         // Función para obtener los datos de la API
         const fetchTutor = async () => {

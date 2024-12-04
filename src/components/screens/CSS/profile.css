@@ -31,6 +31,12 @@
 
 }
 
+.buttons_pair_row> a:nth-of-type(2) button:hover{
+    background-color: #FFC95C;
+    cursor: pointer;
+
+}
+
 .buttons_pair_row  a:last-of-type button:hover {
     cursor: pointer;
     background-color: #78b5da;

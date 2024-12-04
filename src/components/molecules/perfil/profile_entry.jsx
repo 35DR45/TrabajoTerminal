@@ -6,7 +6,7 @@ export default function Profile_Entry({type, placeText, labelText, fetchVal, val
     return(
         <div className="profile_entry">
             <Profile_Label text={labelText}/>
-            <Profile_Input typeProp={type} placeText={placeText} fetchVal={fetchVal} />
+            <p>{fetchVal}</p>
         </div>
     )
 }

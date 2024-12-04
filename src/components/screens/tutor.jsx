@@ -39,7 +39,7 @@ export default function Tutor(){
                         // Aplicar estilos directamente al popup
                         popup.style.border = '5px solid #f2ffeb'; // Color y grosor del borde
                         popup.style.borderRadius = '15px';       // Bordes redondeados
-                      },
+                    },
                 }).then(()=> {
                     navigate(-1);
                 })

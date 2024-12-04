@@ -5,12 +5,21 @@
     flex: row;
     justify-content: space-evenly;
     margin: 30px 0px;
+    flex-wrap: wrap;
+    gap: 40px;
 }
 
-.Card_Course{
-    width: 15%;
+.Tool_Card{
+    background-color: #811642;
+    width: 20%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
+    gap: 20px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    padding: 20px;
 }
