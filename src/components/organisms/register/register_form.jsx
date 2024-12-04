@@ -105,11 +105,10 @@ export default function Register_form() {
                 pass: password,
                 mail: email,
                 style: learningStyle
-
             }
             try {
                 // Envía los datos del formulario al backend
-                const response = await fetch('/api/mail', {
+                const response = await fetch('/api/MailR', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
