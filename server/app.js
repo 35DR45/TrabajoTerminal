@@ -112,7 +112,7 @@ app.use(session({
 
 app.use(cors({
     //origin: 'http://127.0.0.1:5173',
-    origin: 'http://13.59.72.188:80',
+    origin: 'http://18.116.26.214:80',
     methods: ["GET","POST","DELETE","PUT"],
     credentials: true,
 }));
@@ -129,11 +129,11 @@ var transporter = nodemailer.createTransport({
 
 
 const db=mysql.createConnection({
-    host:"localhost",
-    //host:"13.59.72.188",
+    //host:"localhost",
+    host:"mydb.crsi4mgyg6rt.us-east-2.rds.amazonaws.com",
     user: "root",
     password: "PaS$R4z32",
-    // password: "1234",
+    //password: "1234",
     database: "mydb",
 });
 
@@ -154,7 +154,7 @@ app.post('/api/MailP',async(req,res)=>{
         from: 'soprote.tt2024b169@gmail.com',
         to: mail,
         subject: 'Reestablecimiento de Contraseña TT2024-B169',
-        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para reestablecer tu contraseña</p><a href="http://13.59.72.188/resetpass/'+user+'/'+mail+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
+        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para reestablecer tu contraseña</p><a href="http://18.116.26.214/resetpass/'+user+'/'+mail+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
@@ -175,7 +175,7 @@ app.post('/api/MailR',async(req,res)=>{
         from: 'soprote.tt2024b169@gmail.com',
         to: mail,
         subject: 'Verficacion aplicacion TT2024-B169',
-        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para verificar tu correo</p><a href="http://13.59.72.188/api/Register/'+user+'/'+mail+'/'+pass+'/null/'+style+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
+        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para verificar tu correo</p><a href="http://18.116.26.214/api/Register/'+user+'/'+mail+'/'+pass+'/null/'+style+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
