@@ -7,4 +7,9 @@ export default defineConfig({
     proxy:{'/api':'http://localhost:3000'},
   },
   plugins: [react()],
+  build:{
+    rollupOptions:{
+      external: ["react", "react-router", "react-router-dom"]
+    }
+  }
 })
