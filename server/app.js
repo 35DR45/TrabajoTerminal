@@ -1349,7 +1349,7 @@ app.post('/api/Predpy', async (req,res) =>{
                 }else if(maxIndex===1){
                     prediccion="Avanzado"
                 }else{
-                    prediccion="Normal"
+                    prediccion="Estándar"
                 }
             
                 // Enviar la respuesta con el valor más alto y su índice
