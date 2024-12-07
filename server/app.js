@@ -1430,7 +1430,7 @@ app.post('/api/Cesar',(req,res) => {
         }     
         // Si es una letra minúscula (a-z)
         if (code >= 97 && code <= 122) {
-            return String.fromCharCode(((code - 97 + parseInt(ddispl)) % 26) + 97);
+            return String.fromCharCode(((code - 97 + parseInt(displ)) % 26) + 97);
         }
         // Si no es una letra, dejar el carácter tal como está
         return char;
