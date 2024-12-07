@@ -810,7 +810,7 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
     //Esta asigna un tutor considerando un rendimiento de Apoyo
     const queryemparejar1 = "SELECT u.idUsuario,u.NombreUsuario,u.Reputacion,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ?  AND p.AcTutor = 1 AND p.rendimiento = 1 AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 0 AND idUsuario = ? AND idLeccion = ? AND idMateria =? );";
     //Esta asigna un tutor considerando un rendimiento de Normal
-    const queryemparejar2 = "SELECT u.idUsuario,u.NombreUsuario,u.Reputacion,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND p.AcTutor = 1 AND u.Aprendizaje = ?  AND (p.rendimiento = 1 OR p.rendimiento = 2) AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 2 AND idUsuario = ? AND idLeccion = ? AND idMateria =? AND AcTutor = 1);";
+    const queryemparejar2 = "SELECT u.idUsuario,u.NombreUsuario,u.Reputacion,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND p.AcTutor = 1 AND u.Aprendizaje = ?  AND (p.rendimiento = 1 OR p.rendimiento = 2) AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 2 AND idUsuario = ? AND idLeccion = ? AND idMateria = ? );";
     
     db.query(querygetUser,User,(err,result) =>{
 
@@ -866,7 +866,7 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
                         //console.log(random_item)
                         return res.json({"status":"Emparejado","item":random_item})
                     } else{
-                        return res.json({ "status": "Error en la segunda consulta no se encontro tutor" });
+                        return res.json({ "status": "No hay tutor disponible" });
                     }  
                 })
             }
