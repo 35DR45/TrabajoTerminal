@@ -4,7 +4,7 @@ import Tool_Name from "../../atoms/toolsAt/tool_name"
 
 export default function Tool_Card({toolName = "Default tool name", id}){
     return(
-        <Link className="Card_Course" to={`/tools/${id}`}>
+        <Link className="Tool_Card" to={`/tools/${id}`}>
             <img src={ToolImage} alt="Imagen del curso por defecto"/>
         <Tool_Name name={toolName}/>
     </Link>

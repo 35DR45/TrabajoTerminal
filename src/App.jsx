@@ -36,7 +36,7 @@ const App = () =>{
         <Route path="/register/verified" element={<Verified_user/>}/>
         <Route path="/login" element={<Login_Form/>}/>
         <Route path="/forgotten" element={<Recover_Pass/>}/>
-        <Route path="/forgotten/sent" element={<Recovery_sent/>}/>
+        <Route path="/resetpass/:NombreUsuario/:Correo" element={<Recovery_sent/>}/>
         <Route path="/admin" element={<Tutor/>}/>
 
         {/* TODO: admin screen */}
@@ -55,6 +55,7 @@ const App = () =>{
             <CRUDCurso/>
           </ProtectedRoute>
         }/>
+        {/* Student screen */}
         <Route path="/student" element={
           <ProtectedRoute allowedRoles={[1,2]}>
             <Student/>

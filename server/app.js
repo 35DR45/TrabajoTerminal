@@ -112,7 +112,7 @@ app.use(session({
 
 app.use(cors({
     //origin: 'http://127.0.0.1:5173',
-    origin: 'http://13.59.72.188:80',
+    origin: 'http://18.116.26.214:80',
     methods: ["GET","POST","DELETE","PUT"],
     credentials: true,
 }));
@@ -129,11 +129,11 @@ var transporter = nodemailer.createTransport({
 
 
 const db=mysql.createConnection({
-    host:"localhost",
-    //host:"13.59.72.188",
+    //host:"localhost",
+    host:"mydb.crsi4mgyg6rt.us-east-2.rds.amazonaws.com",
     user: "root",
-    //password: "PaS$R4z32",
-    password: "1234",
+    password: "PaS$R4z32",
+    //password: "1234",
     database: "mydb",
 });
 
@@ -145,6 +145,7 @@ db.connect(function(err) {
 app.get('/',(req,res)=>{
     res.json({status: "INICIO"});
 });
+
 app.post('/api/MailP',async(req,res)=>{
     //console.log("Mail solicitado")
     const { user , mail } = req.body
@@ -152,8 +153,8 @@ app.post('/api/MailP',async(req,res)=>{
     var mailOptions = {
         from: 'soprote.tt2024b169@gmail.com',
         to: mail,
-        subject: 'Reestablecimiento de COntraseña TT2024-B169',
-        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para verificar tu correo y cambiar tu contraseña</p><a href="http://13.59.72.188/Forgotten/'+user+'/'+mail+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
+        subject: 'Reestablecimiento de Contraseña TT2024-B169',
+        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para reestablecer tu contraseña</p><a href="http://18.116.26.214/resetpass/'+user+'/'+mail+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
@@ -165,6 +166,7 @@ app.post('/api/MailP',async(req,res)=>{
         }
     });
 });
+
 app.post('/api/MailR',async(req,res)=>{
     //console.log("Mail solicitado")
     const { user , mail , pass , phone, style } = req.body
@@ -173,7 +175,7 @@ app.post('/api/MailR',async(req,res)=>{
         from: 'soprote.tt2024b169@gmail.com',
         to: mail,
         subject: 'Verficacion aplicacion TT2024-B169',
-        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para verificar tu correo</p><a href="http://13.59.72.188/api/Register/'+user+'/'+mail+'/'+pass+'/null/'+style+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
+        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para verificar tu correo</p><a href="http://18.116.26.214/api/Register/'+user+'/'+mail+'/'+pass+'/null/'+style+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
@@ -200,33 +202,20 @@ app.post('/api/Login',async (req,res)=>{
     const query = "SELECT * FROM Usuario WHERE NombreUsuario = ?";
 
     db.query(query,[user],async (err,result) =>{
-
-        ////console.log("recibido usuario:"+ user);
-        ////console.log("recibido contrasena:"+ pass); 
-        ////console.log(result);
-        
-
         if(err){
-           // //console.log("Error en el login, es: ", err);
             return res.send("Error al iniciar sesion");
-
         } 
 
         if(result.length >= 0){
             for(const user of result){
-                
                 if(user == undefined){
-                   // //console.log("No encontro datos asi que es undefined")
                     return res.status(400).json({error:"Usuario o Contraseña no definidos"})
-
                 }
                 const contraseñaAlmacenada =  user.pass;
                 const match = await bcrypt.compare(pass,contraseñaAlmacenada);
                     if(match){
                         req.session.usuario={id:user.idUsuario,name:user.NombreUsuario,tipo:user.Tipo}
-
                         console.log(req.session.usuario)
-                        ////console.log("Inicio de Sesión Exitoso")
                         return res.json({status:"Inicio de Sesión Exitoso",
                                 idUsuario:user.idUsuario
                         });
@@ -279,18 +268,17 @@ app.get('/api/validate-role', (req, res) => {
         }
 */
 app.post('/api/Change', async(req, res) => {
-    const { user, mail, pass, } = req.body
-    
+    const { user, mail, pass } = req.body
     
     if (!user || !mail || !pass) {
         return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
     
     try{
-        const queryFind = "SELECT * FROM Usuario WHERE NombreUsuario = ?";
+        const queryFind = "SELECT * FROM Usuario WHERE NombreUsuario = ? AND Correo = ?";
         const queryUpdate = "UPDATE Usuario SET pass = ? WHERE NombreUsuario = ? AND Correo = ?";
 
-        const [rows] = await db.promise().query(queryFind, [user]);
+        const [rows] = await db.promise().query(queryFind, [user, mail]);
         if (rows.length === 0) {
             return res.status(404).json({ error: "Usuario no encontrado" });
         }
@@ -298,6 +286,12 @@ app.post('/api/Change', async(req, res) => {
         const userRecord = rows[0];
         if (userRecord.Correo !== mail) {
             return res.status(400).json({ error: "El correo no coincide" });
+        }
+        const contraseñaAlmacenada =  userRecord.pass;
+        const match = await bcrypt.compare(pass,contraseñaAlmacenada);
+        console.log(contraseñaAlmacenada);
+        if(match){
+            return res.status(400).json({ error: "Misma contra" });
         }
 
         // Generar hash de la nueva contraseña
@@ -1436,7 +1430,7 @@ app.post('/api/Cesar',(req,res) => {
         }     
         // Si es una letra minúscula (a-z)
         if (code >= 97 && code <= 122) {
-            return String.fromCharCode(((code - 97 + parseInt(ddispl)) % 26) + 97);
+            return String.fromCharCode(((code - 97 + parseInt(displ)) % 26) + 97);
         }
         // Si no es una letra, dejar el carácter tal como está
         return char;

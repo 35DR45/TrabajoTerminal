@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Pass from "../../molecules/login/pass";
 import UserName from "../../molecules/login/userName";
 import '../CSS/register_form.css'
 import Btn_Register from "../../atoms/header/btn_Register";
@@ -11,45 +10,23 @@ export default function Recover_form() {
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [passConfError, setPassConfError] = useState('');
-    const [passError, setPassError] = useState('');
 
 
     const navigate = useNavigate();
     const regexUser = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
-    const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&()=/?¿¡'|°,;.\-\+]).{8,}$/;
     const regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 
     function validations() {
         if (regexUser.test(username)) {
-            return regexPass.test(password);
+            return true;
         } else {
             return false
         }
     }
 
-    // Validar contraseña en cada cambio
-    const handlePasswordChange = (e) => {
-        const value = e.target.value;
-        setPassword(value);
-        if (!regexPass.test(value)) {
-            setPassError("Error: La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un caracter especial.");
-        } else {
-            setPassError(''); // Limpia el mensaje cuando cumple con los criterios
-        }
-    };
-
-    const handlePasswordConfChange = (e) => {
-        const value = e.target.value;
-        if (value != password) {
-            setPassConfError("Error: Las contraseñas no son idénticas.");
-        } else {
-            setPassConfError(''); // Limpia el mensaje cuando cumple con los criterios
-        }
-    }
+    
 
     // Validar email en cada cambio
     const handleEmailChange = (e) => {
@@ -83,21 +60,20 @@ export default function Recover_form() {
             }
         })
     }
+
     const handleSubmit = async (e) => {
         console.log("Se presionó el botón");
         
         e.preventDefault();
         if (validations()) {
-            if (passError === '' && emailError === '' && email !== '' && passConfError === '' && username !== '') {
+            if (emailError === '' && email !== ''  && username !== '') {
                 const FormData = {
                     user: username,
-                    pass: password,
                     mail: email,
                 }
-                console.log(FormData);
                 try {
                     // Envía los datos del formulario al backend
-                    const response = await fetch('/api/Change', {
+                    const response = await fetch('/api/MailP', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -221,16 +197,13 @@ export default function Recover_form() {
 
     return (
         <div className="form-container">
-            <Btn_Register text='Recuperar contraseña' />
+            <h2 className='intro_recover'>Reestablecer contraseña</h2>
+            <h3 className='intro_recover'>Ingresa tu correo y usuario y te haremos llegar un enlacepara reestablecer tu contraseña</h3>
             <form className="reg-form-form" onSubmit={handleSubmit}>
                 <UserName onChange={(e) => setUsername(e.target.value)} />
                 <Email onChange={handleEmailChange} />
                 {emailError && <p className="error">{emailError}</p>}
-                <Pass text="Ingrese nueva contraseña:" onChange={handlePasswordChange} />
-                {passError && <p className="error">{passError}</p>}
-                <Pass text={"Confirmar contraseña:"} onChange={handlePasswordConfChange} />
-                {passConfError && <p className="error">{passConfError}</p>}
-                <button type="submit" className="btn-register-form"><Btn_Register text='Cambiar contraseña' /></button>
+                <button type="submit" className="btn-register-form"><Btn_Register text='solicitar enlace' /></button>
             </form>
         </div>
     )
