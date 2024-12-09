@@ -9,7 +9,7 @@ export default function Error(){
         <>
             <Header/>
             <div className="container_error">
-                <h1>Error 404, este recurso no está disponible ¡Lo sentimos!</h1>
+                <h1>Error, este recurso no está disponible ¡Lo sentimos!</h1>
                 <div className="container_regresar">
                     <h2>No te preocupes, siempre puedes</h2>
                     <Link to={"/"}>volver al inicio</Link>

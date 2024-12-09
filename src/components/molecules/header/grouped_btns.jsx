@@ -51,6 +51,12 @@ export default function Grouped_btns(){
                     <Link to="#" className="btn-header" onClick={handleGoBack}>Regresar</Link>
                 </>
             );
+        }else if(location.pathname === "/error"){
+            return(
+                <>
+                    
+                </>
+            )
         }else{
             return (
                 <>

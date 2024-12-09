@@ -68,6 +68,12 @@ export default function Header(){
             return (
                 <Link to={"/"}>TT 2024-B169</Link>
             );
+        }else if(location.pathname === "/error"){
+            return(
+                <>
+                    
+                </>
+            )
         }else{
             return (
                 <>
