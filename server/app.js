@@ -87,7 +87,7 @@ loadAndUseModel();
 */
 
 // Ruta absoluta a la carpeta dist
-/*const distPath = path.join(__dirname, '../dist');
+/*const distPath = path.join(__dirname, './dist');
 
 // Servir archivos estáticos de la carpeta dist
 app.use(express.static(distPath));
@@ -95,8 +95,8 @@ app.use(express.static(distPath));
 // Redirigir todas las rutas al archivo index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
-});
-*/
+});*/
+
 // Configurar el middleware de sesión
 
 app.use(session({
@@ -112,7 +112,7 @@ app.use(session({
 
 app.use(cors({
     //origin: 'http://127.0.0.1:5173',
-    origin: 'http://13.59.72.188:80',
+    origin: 'http://18.217.248.15:80',
     methods: ["GET","POST","DELETE","PUT"],
     credentials: true,
 }));
@@ -129,11 +129,11 @@ var transporter = nodemailer.createTransport({
 
 
 const db=mysql.createConnection({
-    host:"localhost",
-    //host:"13.59.72.188",
+    //host:"localhost",
+    host:"mydb.crsi4mgyg6rt.us-east-2.rds.amazonaws.com",
     user: "root",
     password: "PaS$R4z32",
-    // password: "1234",
+    //password: "1234",
     database: "mydb",
 });
 
@@ -154,7 +154,7 @@ app.post('/api/MailP',async(req,res)=>{
         from: 'soprote.tt2024b169@gmail.com',
         to: mail,
         subject: 'Reestablecimiento de Contraseña TT2024-B169',
-        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para reestablecer tu contraseña</p><a href="http://13.59.72.188/resetpass/'+user+'/'+mail+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
+        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para reestablecer tu contraseña</p><a href="http://18.217.248.15/resetpass/'+user+'/'+mail+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
@@ -175,7 +175,7 @@ app.post('/api/MailR',async(req,res)=>{
         from: 'soprote.tt2024b169@gmail.com',
         to: mail,
         subject: 'Verficacion aplicacion TT2024-B169',
-        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para verificar tu correo</p><a href="http://13.59.72.188/api/Register/'+user+'/'+mail+'/'+pass+'/null/'+style+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
+        html: '<div style="margin:auto; text-align:center; background-color:#811642"><h1 style="color:white">Verfica tu correo</h1><p style="color:white">Haz click en la imagen para verificar tu correo</p><a href="http://18.217.248.15/api/Register/'+user+'/'+mail+'/'+pass+'/null/'+style+'" class="email-button"><img src="https://socialmedier.com/wp-content/uploads/2023/12/CONFIRMA-EMAIL-300x295.png" style="margin: auto"></a>'
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
@@ -804,7 +804,7 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
     //Esta asigna un tutor considerando un rendimiento de Apoyo
     const queryemparejar1 = "SELECT u.idUsuario,u.NombreUsuario,u.Reputacion,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND u.Aprendizaje = ?  AND p.AcTutor = 1 AND p.rendimiento = 1 AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 0 AND idUsuario = ? AND idLeccion = ? AND idMateria =? );";
     //Esta asigna un tutor considerando un rendimiento de Normal
-    const queryemparejar2 = "SELECT u.idUsuario,u.NombreUsuario,u.Reputacion,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND p.AcTutor = 1 AND u.Aprendizaje = ?  AND (p.rendimiento = 1 OR p.rendimiento = 2) AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 2 AND idUsuario = ? AND idLeccion = ? AND idMateria =? AND AcTutor = 1);";
+    const queryemparejar2 = "SELECT u.idUsuario,u.NombreUsuario,u.Reputacion,u.Telefono,p.idLeccion FROM Usuario u INNER JOIN Progreso p ON u.idUsuario = p.idUsuario WHERE u.Tutorado IS NULL AND u.Tipo = 2 AND NOT p.idUsuario = ? AND p.AcTutor = 1 AND u.Aprendizaje = ?  AND (p.rendimiento = 1 OR p.rendimiento = 2) AND p.Leccion_Tipo = 1 AND p.idLeccion = ? AND (p.idLeccion, p.idMateria) IN (SELECT idLeccion, idMateria FROM Progreso WHERE rendimiento = 2 AND idUsuario = ? AND idLeccion = ? AND idMateria = ? );";
     
     db.query(querygetUser,User,(err,result) =>{
 
@@ -860,7 +860,7 @@ app.get('/api/Pair/:User/:Rendimiento/:idLeccion/:idMateria',(req,res) => {
                         //console.log(random_item)
                         return res.json({"status":"Emparejado","item":random_item})
                     } else{
-                        return res.json({ "status": "Error en la segunda consulta no se encontro tutor" });
+                        return res.json({ "status": "No hay tutor disponible" });
                     }  
                 })
             }
@@ -1343,7 +1343,7 @@ app.post('/api/Predpy', async (req,res) =>{
                 }else if(maxIndex===1){
                     prediccion="Avanzado"
                 }else{
-                    prediccion="Normal"
+                    prediccion="Estándar"
                 }
             
                 // Enviar la respuesta con el valor más alto y su índice
@@ -1430,7 +1430,7 @@ app.post('/api/Cesar',(req,res) => {
         }     
         // Si es una letra minúscula (a-z)
         if (code >= 97 && code <= 122) {
-            return String.fromCharCode(((code - 97 + parseInt(ddispl)) % 26) + 97);
+            return String.fromCharCode(((code - 97 + parseInt(displ)) % 26) + 97);
         }
         // Si no es una letra, dejar el carácter tal como está
         return char;
