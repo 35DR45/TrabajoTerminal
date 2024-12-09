@@ -1,0 +1,14 @@
+.privacidad_contenedor{
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+table, th, td{
+    border: solid 2px;
+    width: 50%;
+    text-align: center;
+}

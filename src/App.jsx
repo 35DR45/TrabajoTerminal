@@ -26,6 +26,7 @@ import Contenido_Ejercicio from "./components/screens/Contenido_Ejercicio";
 import Admin  from "./components/screens/admin_main"
 import CRUDUser  from "./components/screens/CRUD_user"
 import CRUDCurso  from "./components/screens/CRUD_curso"
+import Aviso from "./components/screens/aviso";
 
 const App = () =>{
   return (
@@ -38,6 +39,7 @@ const App = () =>{
         <Route path="/forgotten" element={<Recover_Pass/>}/>
         <Route path="/resetpass/:NombreUsuario/:Correo" element={<Recovery_sent/>}/>
         <Route path="/admin" element={<Tutor/>}/>
+        <Route path="/privacidad" element={<Aviso/>}/>
 
         {/* TODO: admin screen */}
         <Route path="/adminad" element={
