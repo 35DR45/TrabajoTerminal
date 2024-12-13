@@ -4,7 +4,7 @@ import UserName from "../../molecules/login/userName";
 import '../CSS/register_form.css'
 import Btn_Register from "../../atoms/header/btn_Register";
 import Email from "../../molecules/register/email";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 export default function Register_form() {
 
@@ -222,6 +222,8 @@ export default function Register_form() {
                 {emailError && <p className="error">{emailError}</p>}
 
                 <label htmlFor="learningStyle">Selecciona tu estilo de aprendizaje:</label>
+                <label htmlFor="learningStyle">¿No conoces tu estilo de aprendizaje?</label>
+                <Link to={"https://www.psicoactiva.com/test/educacion-y-aprendizaje/test-de-estilos-de-aprendizaje/"}>¡Responde este cuestionario para conocerlo!</Link>
                 <select
                     id="learningStyle"
                     className='dropdown_register'
